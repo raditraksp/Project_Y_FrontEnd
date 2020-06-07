@@ -1,12 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src="https://1.bp.blogspot.com/-d1AihF-pIso/T_aO8agrGPI/AAAAAAAAAy4/xFh0NcJFn44/w1200-h630-p-k-no-nu/mantap+bos,+jempol%21.jpg" className="App-logo" alt="logo" />
         <p>
           JASAJA <code>PROJECT</code> IN THE HOUSE YO.
         </p>
