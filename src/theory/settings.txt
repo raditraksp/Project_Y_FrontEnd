@@ -1,0 +1,43 @@
+SETTING REDUX
+
+1. Setting Redux ( Reducer , Global State)
+    - Untuk membuat file reducer biasanya ditaruh di folder bernama 'reducers'.
+    - Buat satu file untuk mengumpulkan semua reducer nantinya , file tersebut bernama 'index.js'
+    - Buat satu file untuk satu buah reducer, contoh : AuthReducer.js
+    - Didalam file tersebut akan ada sebuah function, dimana function tersebut nantinya akan di export untuk kemudian di import di index.js (yg ada di dalam folder reducers)
+    - Dalam setiap reducer akan memiliki satu object 'init' yang digunakan sebagai data awal (inisialisasi) saat pertama kali aplikasi dijalan / diakses / dibuka
+
+    - Ketika semua reducer sudah jadi, maka di kumpulkan (import) di file 'index.js' yang ada didalam folder 'reducers'
+    - Fungsi dari file index ini adalah untuk menggabungkan / combine semua reducer dengan 'brankas' masing - masing
+    - Kita akan melakukan itu dengan meng-import combineReducers dari 'react-redux'
+    - Hasil dari combineReducers akan kita export untuk kemudian di import di index.js (pada folder src)
+
+
+2. Menghubungkan React App dengan Redux (index js pada folder src)
+    - import hasil combineReducer (index js pada folder reducers)
+    - Hasil dari combineReducer sifatnya belum siap pakai
+    - import createStore untuk mengolah hasil dari combineReducer menjadi siap pakai
+    - Ketika sudah siap pakai (store_result), akan dihubungkan ke ReactApp
+    - Yang bertugas untuk menghubungkan adalah Provider dari 'react-redux
+
+
+HOW TO USE REDUX
+
+1. Hubungkan komponen ke redux
+    - Sebuah komponen akan dihubungkan ke redux oleh function 'connect' dari 'react-redux'
+    - Setelah terhubung, komponen dapat 'Mengirim' dan 'Menerima' data dari redux
+
+2. Mengirim data ke redux (Login Komponen)
+    - Untuk mengirim, akan dibutuhkan action creator (onLoginUser)
+    - action creator (ac) dibuat di folder 'actions' di file 'index.js'
+    - ac adalah sebuah function yang 'return object'
+    - object yang di return dinamakan 'action' , sebuah object yang memiliki 'type' dan 'payload'
+    - kemudian action ini akan di export untuk di import pada komponen yang akan mengirim data
+    - Import action creator yang sudah dibuat pada komponen yang membutuhkan
+    - Taruh action creator ini ke dalam 'connect' pada bagian export default di baris kode paling bawah
+
+3. Menerima data dari redux (Header Komponen)
+    - Untuk menerima, akan dibutuhkan function, namanya tidak ditentukan, umumnya 'mapStateToProps'
+    - Tentukan data apa yang akan digunakan di komponen tersebut
+    - mapStateToProps akan me-return sebuah object berisi data yang akan digunakan
+    - Data dari state akan dianggap sebagai properties, maka kita mengaksesnya menggunakan 'this.props'
