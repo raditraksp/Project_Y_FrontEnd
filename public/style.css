@@ -1,0 +1,35 @@
+.bg {   
+    background-image: url('./bg_login.jpg');
+    background-size: cover;
+    height : 91.5vh
+  }
+
+  .form-login {
+    position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  box-shadow: 20px 20px 20px #2c2c2c;
+  }
+
+  .banner {
+    background-image: url(./banner-header2.jpg);
+    height: 75vh;
+    background-size: cover;
+    
+  }
+
+  .text-w {
+    width: 100%;
+  }
+
+  .header {
+    position: fixed;
+}
+ 
