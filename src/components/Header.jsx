@@ -1,108 +1,92 @@
-import React, { Component } from 'react'
+import React, {useState, useRef} from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import {Link} from 'react-router-dom'
-import {Redirect} from 'react-router-dom'
-import axios from 'axios'
+import axios from '../config/api'
+import {loginAction} from '../config/redux/actions'
 import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    NavbarText,
-    Button, 
-    Modal, 
-    ModalHeader, 
-    ModalBody, 
-    ModalFooter 
-} from 'reactstrap';
+   Button,
+   Collapse,
+   DropdownToggle,
+   DropdownMenu,
+   DropdownItem,
+   Navbar,
+   NavbarToggler, 
+   Nav,
+   NavLink,
+   NavItem,
+   NavbarText,
+   NavbarBrand,
+   UncontrolledDropdown,
+   Modal,
+   ModalHeader, 
+   ModalBody, 
+   ModalFooter 
+   } from 'reactstrap';
 
-import {connect} from 'react-redux'
-import {onLogoutUser} from '../actions/index'
-// Import action creator
-import {onLoginUser} from '../actions/index'
-// Akan me-redirect ke alamat tertentu
+export default function Header() {
 
-class Header extends Component {
-
-    state = {
-        isOpen : false,
-        modal: false
-    }
-
-  
-
-    funLogin  = () =>{
-        this.setState({modal:true})
-    }
-    toggle = () => this.setState({ isOpen : !this.state.isOpen })
-    modal = () => this.setState({ modal : !this.state.modal })
-
-    onButtonClick = () => {
-        let _username = this.username.value
-        let _pswd = this.password.value
-
-        // Get data with parameters
-        let link = 'http://localhost:2022/users'
-        let data = {username : _username, pswd: _pswd}
+    const [isOpen, setIsOpen] = useState(false)
+    const [modal, setModal] = useState(false)
+    const username = useSelector(state =>  state.auth.username)
+    const dispatch = useDispatch()
         
-        axios.get(link,{params : data}).then((res) => {
 
-            if(res.data.length > 0){
-                // res.data[0] = {id : 1, username: 'rochafi', password: 'satuduatiga'}
-                // user ditemukan : simpan info user ke redux
-                this.props.onLoginUser(res.data[0])
-                this.setState({modal:false})
-            } else {
-                // user tidak ditemukan : munculkan notif
-                alert('username or password is incorrect')
-            }
-            
+    const isToggle = () => setIsOpen((prevState) => !prevState)
+    const funModal = () => setModal((prevState) => !prevState)
+
+    const usernameRef = useRef()
+    const passwordRef = useRef()
+
+    const onButtonClick = () => {
+        const username = usernameRef.current.value
+        const password = passwordRef.current.value
+
+        axios.post('/user/login', {username, password})
+        .then(({data : {token, user : {id, username}}}) => {
+           
+           // simpan ke redux
+           dispatch(loginAction({id, username, token}))
+
         })
+        .catch(err => alert(err.response.data.message))
+        setModal((prevState) => !prevState)
+  }
 
-    }
-
-    // Menentukan apa yang harus ditampilkan di header (Register dan login) atau (Hello, username)
-    renderNav = () => {
-
+    const renderNav = () => {
         // Jika tidak login
-        if(this.props.uname == ""){ 
-            return (
-                <Nav className="ml-auto " navbar>
-                    <NavItem>
-                        <NavLink tag={Link} to="/Register">SignUp</NavLink>
-                    </NavItem>
-                    <NavItem>
-                    <button onClick={() => {this.funLogin()}} className="btn btn-outline-secondary mb-2 px-4 btn-block">Login</button>
-                    </NavItem>
-                </Nav>
-            )
-        }
-
-        // Jika login
-        return (
-            <Nav className="ml-auto " navbar>
+        
+        return !username ? (
+            <Nav className="ml-auto" navbar>
+                <NavItem>
+                    <NavLink tag={Link} to="/register">Register</NavLink>
+                </NavItem>
+                <NavItem>
+                    <button onClick={funModal} className="btn btn-outline-secondary mb-2 px-4 btn-block">Login</button>
+                </NavItem>
+            </Nav>
+        ) :(
+            <Nav className="ml-auto" navbar>
                 <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
-                        Hello, {this.props.uname}
+                        Hello, {username}
                     </DropdownToggle>
                     <DropdownMenu right>
-                        <DropdownItem tag={Link} to="/manageproduct">
-                            Manage Product
-                        </DropdownItem>
 
-                        <DropdownItem tag={Link} to="/chart">
-                            chart
-                        </DropdownItem>
+                        <NavLink tag={Link} to="/manageproduct" >
+                            <DropdownItem> Manage Product</DropdownItem>
+                        </NavLink>
+
+                        <NavLink tag={Link} to="/profile">
+                            <DropdownItem>Profile</DropdownItem>
+                        </NavLink>
+
+                        <NavLink tag={Link} to="/editprofile">
+                            <DropdownItem>Edit Profile</DropdownItem>
+                        </NavLink>
 
                         <DropdownItem divider />
 
-                        <DropdownItem onClick={this.props.onLogoutUser}>
+                        <DropdownItem onClick={() => dispatch({type: 'LOGOUT_SUCCESS'})}>
                             Logout
                         </DropdownItem>
 
@@ -112,20 +96,19 @@ class Header extends Component {
         )
     }
 
-    render() {
-            return (
-                <div> 
-                    <Navbar color="light" light expand="md">
-                        <NavbarBrand tag={Link} to="/">reactstrap</NavbarBrand>
-                        <NavbarToggler onClick={this.toggle} />
-                        <Collapse isOpen={this.state.isOpen} navbar>
-                            
-                            {this.renderNav()}
+    return (
+        <div>
+            <Navbar color="light" light expand="md">
+                <NavbarBrand tag={Link} to="/">reactstrap</NavbarBrand>
+                <NavbarToggler onClick={isToggle} />
+                <Collapse isOpen={isOpen} navbar>
+                    
+                    {renderNav()}
 
-                        </Collapse>
-                    </Navbar>
+                </Collapse>
+            </Navbar>
 
-                    <Modal isOpen={this.state.modal} toggle={this.modal}>
+            <Modal isOpen={modal} toggle={funModal}>
                         
                 <ModalBody>
                 <div className="border-bottom border-secondary card-title text-center ">
@@ -135,28 +118,16 @@ class Header extends Component {
                                 <form className='form-group'>
                                     <div className="card-title ">
                                     </div>
-                                    <input ref={(input) => {this.username = input}} type='text' placeholder="Username" className='form-control' required/>
+                                    <input ref={usernameRef} type='text' placeholder="Username" className='form-control' required/>
     
                                     <div className="card-title ">
                                     </div>
-                                    <input ref={(input) => {this.password = input}} type='password' placeholder="Password" className='form-control'/>
+                                    <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
                                 </form>
     
-                                <button className="btn btn-success btn-block" onClick={this.onButtonClick} >Login</button>
+                                <button className="btn btn-success btn-block" onClick={onButtonClick} >Login</button>
                 </ModalBody>
             </Modal>
-                </div>
-            )
-    }
+        </div>
+    )
 }
-
-let mapStateToProps = (state) => {
-    return {
-        uname : state.auth.username
-    }
-}
-
-export default connect(mapStateToProps, {onLoginUser,onLogoutUser})(Header)
-
-// const [isOpen, setIsOpen] = useState(false);
-// const togglex = () => setIsOpen(!isOpen);

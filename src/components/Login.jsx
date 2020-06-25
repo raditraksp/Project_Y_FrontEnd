@@ -1,82 +1,56 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-// Digunakan untuk menghubungkan komponen dengan redux
-import { connect } from 'react-redux'
-// Import action creator
-import {onLoginUser} from '../actions/index'
-// Akan me-redirect ke alamat tertentu
-import {Redirect} from 'react-router-dom'
+import React, { useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import {Link, Redirect} from 'react-router-dom'
+import axios from '../config/api'
+import { loginAction } from '../config/redux/actions'
 
-class Login extends Component {
+export default function Login() {
 
-    onButtonClick = () => {
-        let _username = this.username.value
-        let _pswd = this.password.value
+   const usernameRef = useRef()
+   const passwordRef = useRef()
 
-        // Get data with parameters
-        let link = 'http://localhost:2022/users'
-        let data = {username : _username, pswd: _pswd}
-        
-        axios.get(link,{params : data}).then((res) => {
+   const dispatch = useDispatch()
+   const username = useSelector(state => state.auth.username )
 
-            if(res.data.length > 0){
-                // res.data[0] = {id : 1, username: 'rochafi', password: 'satuduatiga'}
-                // user ditemukan : simpan info user ke redux
-                this.props.onLoginUser(res.data[0])
-            } else {
-                // user tidak ditemukan : munculkan notif
-                alert('username or password is incorrect')
-            }
+   const onButtonClick = () => {
+         const username = usernameRef.current.value
+         const password = passwordRef.current.value
+
+         axios.post('/user/login', {username, password})
+         .then(({data : {token, user : {id, username}}}) => {
             
-        })
+            // simpan ke redux
+            dispatch(loginAction({id, username, token}))
 
-    }
+         })
+         .catch(err => alert(err.response.data.message))
+   }
 
-    render() {
+   return (
+      !username ? (<div className="mt-5 row">
+         <div className="col-sm-3 mx-auto card">
+            <div className="card-body">
+                  <div className="border-bottom border-secondary card-title">
+                     <h1>Login</h1>
+                  </div>
+                  <div className="card-title mt-1">
+                     <h4>Username</h4>
+                  </div>
+                  <form className="input-group"><input ref={usernameRef} className="form-control" type="text"/></form>
+                  <div className="card-title mt-1">
+                     <h4>Password</h4>
+                  </div>
+                  <form className="input-group"><input ref={passwordRef} className="form-control" type="password"/></form>
+                  <div className="d-flex justify-content-center my-3">
+                     <button className="btn btn-success btn-block" onClick={onButtonClick}>Login</button>
+                  </div>
+                  {/* {this.onErrorLogin()} */}
+                  <p className="lead">Don't have account ? <Link to="/register">Sign Up!</Link></p>
+            </div>
+         </div>
+      </div>) : (
+         <Redirect to='/' />
+      )
 
-        // this.props.username = "rochafi"
-
-        if(!this.props.uname){ // Jika belum login
-            return (
-                <div className='bg'>
-                    <div className="container-fluid">
-                    <div className="row">
-                        <div className=" col-5 mx-auto mt-5 form-login">
-                            <div className="card-body">
-                                <div className="border-bottom border-secondary card-title text-center">
-                                    <h1>Login</h1>
-                                </div>
-    
-                                <form className='form-group'>
-                                    <div className="card-title ">
-                                        <h4>Username</h4>
-                                    </div>
-                                    <input ref={(input) => {this.username = input}} type='text' className='form-control' required/>
-    
-                                    <div className="card-title ">
-                                        <h4>Password</h4>
-                                    </div>
-                                    <input ref={(input) => {this.password = input}} type='password' className='form-control'/>
-                                </form>
-    
-                                <button className="btn btn-success btn-block" onClick={this.onButtonClick} >Login</button>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            )
-        } else {
-            return <Redirect to="/"/>
-        }
-
-    }
+   )
 }
-
-let mapStateToProps = (state) => {
-    return {
-        uname: state.auth.username
-    }
-}
-
-export default connect(mapStateToProps, {onLoginUser})(Login)

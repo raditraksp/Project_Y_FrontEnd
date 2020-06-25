@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
-import {Route, BrowserRouter} from 'react-router-dom'
+import React, {useState, useEffect} from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { loginAction } from '../config/redux/actions'
 
 // Components
 import Header from './Header'
@@ -10,26 +12,27 @@ import ManageProduct from './ManageProduct'
 import DetailProduct from './DetailProduct'
 import Chart from './Chart'
 
-// Keeplogin
-import {onLoginUser} from '../actions/index'
-import {connect} from 'react-redux'
 
-class App extends Component{
+export default function App() {
 
 
-    componentDidMount(){
-        let userData = localStorage.getItem('userData')
-        let user = JSON.parse(userData)
+    const [loading, setLoading] = useState(true)
+    const dispatch = useDispatch()
+ 
+    useEffect(() => {
+       const user = JSON.parse(localStorage.getItem('user'))
+ 
+       if(user) dispatch(loginAction(user)) 
+       setLoading(false)
+ 
+    }, [])
 
-        if(user){
-            this.props.onLoginUser(user)
-        }
-    }
-
-    render(){
-        return(
+    return loading ? (
+        <h1 className="text-center">L O A D I N G ...</h1>
+     ) : (
+        <div>
             <BrowserRouter>
-                <div>
+                <div class="header">
                     <Header/>
                     <Route path="/" exact component={Home} />
                     <Route path="/register" component={Register} />
@@ -39,8 +42,6 @@ class App extends Component{
                     <Route path="/detailproduct/:idPrdct" component={DetailProduct} />
                 </div>
             </BrowserRouter>
+            </div>
         )
     }
-}
-
-export default connect(null, {onLoginUser})(App)

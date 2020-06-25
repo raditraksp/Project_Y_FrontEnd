@@ -140,16 +140,8 @@ class Home extends Component {
                         <div className="ml-5 pt-2">
                         <h1>Find the perfect freelance services 
                          your business</h1>
-                         <div className="container-fluid">
-                            <div className="row">
-                            <div className="col-10 ">
-                        <input ref={ (input) => { this.name = input } } placeholder='Try "building mobile app"' className="form-control text-w" type="text"/>                       
-                        </div>
-                        <div>
-                        <button className="btn btn-success">Search</button>
-                        </div>
-                        </div>
-                        </div>
+                         <input ref={ (input) => { this.name = input } } placeholder='Try "building mobile app"' className="form-control text-w" type="text"/>
+                         <button className="btn btn-success">Search</button>
                         </div>
                         </div>
                         </div>
