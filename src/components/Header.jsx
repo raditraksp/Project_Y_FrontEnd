@@ -111,21 +111,20 @@ export default function Header() {
             <Modal isOpen={modal} toggle={funModal}>
                         
                 <ModalBody>
-                <div className="border-bottom border-secondary card-title text-center ">
-                                    <h1>Login to Jasaja</h1>
-                                </div>
-    
-                                <form className='form-group'>
-                                    <div className="card-title ">
-                                    </div>
-                                    <input ref={usernameRef} type='text' placeholder="Username" className='form-control' required/>
-    
-                                    <div className="card-title ">
-                                    </div>
-                                    <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
-                                </form>
-    
-                                <button className="btn btn-success btn-block" onClick={onButtonClick} >Login</button>
+                    <div className="border-bottom border-secondary card-title text-center ">
+                        <h1>Login to Jasaja</h1>
+                    </div>
+                    <form className='form-group'>
+                        <div className="card-title ">
+                        </div>
+                        <input ref={usernameRef} type='text' placeholder="Username" className='form-control' required/>
+
+                        <div className="card-title ">
+                        </div>
+                        <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
+                    </form>
+
+                    <button className="btn btn-success btn-block" onClick={onButtonClick} >Login</button>
                 </ModalBody>
             </Modal>
         </div>
