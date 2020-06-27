@@ -11,6 +11,7 @@ import Login from './Login'
 import ManageProduct from './ManageProduct'
 import DetailProduct from './DetailProduct'
 import Chart from './Chart'
+import Profile from './Profile'
 
 
 export default function App() {
@@ -40,6 +41,8 @@ export default function App() {
                     <Route path="/manageproduct" component={ManageProduct} />
                     <Route path="/chart" component={Chart} />
                     <Route path="/detailproduct/:idPrdct" component={DetailProduct} />
+                    <Route path="/profile" component={Profile} />
+
                 </div>
             </BrowserRouter>
             </div>
