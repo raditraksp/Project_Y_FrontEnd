@@ -99,7 +99,7 @@ export default function Header() {
     return (
         <div>
             <Navbar color="light" light expand="md">
-                <NavbarBrand tag={Link} to="/">reactstrap</NavbarBrand>
+                <NavbarBrand tag={Link} to="/">Jasaja.com</NavbarBrand>
                 <NavbarToggler onClick={isToggle} />
                 <Collapse isOpen={isOpen} navbar>
                     
