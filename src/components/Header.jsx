@@ -1,8 +1,8 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import {Link} from 'react-router-dom'
 import axios from '../config/api'
-import {loginAction} from '../config/redux/actions'
+import {loginAction,logoutAction} from '../config/redux/actions'
 import {
    Button,
    Collapse,
@@ -29,6 +29,7 @@ export default function Header() {
     const [modal, setModal] = useState(false)
     const username = useSelector(state =>  state.auth.username)
     const dispatch = useDispatch()
+    
         
 
     const isToggle = () => setIsOpen((prevState) => !prevState)
@@ -51,6 +52,11 @@ export default function Header() {
         .catch(err => alert(err.response.data.message))
         setModal((prevState) => !prevState)
   }
+
+  useEffect(() => {
+    renderNav()
+ }, [])
+
 
     const renderNav = () => {
         // Jika tidak login
@@ -86,7 +92,7 @@ export default function Header() {
 
                         <DropdownItem divider />
 
-                        <DropdownItem onClick={() => dispatch({type: 'LOGOUT_SUCCESS'})}>
+                        <DropdownItem onClick={logoutAction}>
                             Logout
                         </DropdownItem>
 

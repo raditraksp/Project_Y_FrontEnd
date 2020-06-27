@@ -1,83 +1,75 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-
-class Register extends Component {
-
-
-    onButtonClick = () => {
-        // Ambil value
-        let username = this.username.value
-        let email = this.email.value
-        let pswd = this.password.value
-
-        // Simpan di json
-        // GET, POST, PUT, PATCH
-        let link = 'http://localhost:2022/users'
-        let data = {username, email, pswd}
-
-        // Get data
-        axios.get(link).then((res) => {
-            // Check duplicate data
-            // res.data = [{}, {}, {}]
-            // user = {username, email, pswd}
-            let takenUser = res.data.filter((user) => {
-                return user.username == username
-            })
-
-            if(takenUser.length > 0){
-                return alert(`Username ${username} sudah terpakai`)
-            } 
-
-            let takenEmail = res.data.filter((user) => {
-                return user.email == email
-            })
-
-            if(takenEmail.length > 0){
-                return alert(`Email ${email} sudah terpakai`)
-            }
-
-            // Post data
-            axios.post(link, data).then((res) => {alert('Register berhasil')})
-
-        })
-
-    }
+import React, {useRef} from 'react'
+import axios from '../config/api'
+import {Redirect} from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 
-    render() {
-        return (
-            <div className="container-fluid">
-                <div className="row">
-                <div className=" col-5 mx-auto mt-5 card">
-                    <div className="card-body">
-                        <div className="border-bottom border-secondary card-title text-center">
-                            <h1>Register</h1>
-                        </div>
+export default function Register() {
+   const username = useSelector(state => state.auth.username)
 
-                        <form className='form-group'>
-                            <div className="card-title ">
-                                <h4>Username</h4>
-                            </div>
-                            <input ref={(input) => {this.username = input}} type='text' className='form-control' required/>
+   const usernameRef = useRef()
+   const nameRef = useRef()
+   const emailRef = useRef()
+   const passwordRef = useRef()
+   const phone_numberRef = useRef()
 
-                            <div className="card-title ">
-                                <h4>Email</h4>
-                            </div>
-                            <input ref={(input) => {this.email = input}} type='text' className='form-control' required/>
+   const registerUser = (e) => {
+      e.preventDefault()
 
-                            <div className="card-title ">
-                                <h4>Password</h4>
-                            </div>
-                            <input ref={(input) => {this.password = input}} type='password' className='form-control'/>
-                        </form>
+      const username = usernameRef.current.value
+      const name = nameRef.current.value
+      const email = emailRef.current.value
+      const password = passwordRef.current.value
+      const phone_number = phone_numberRef.current.value
 
-                        <button className="btn btn-success btn-block" onClick={this.onButtonClick}>Register</button>
-                    </div>
-                </div>
-                </div>
+      const body = {
+         username, name, email, password, phone_number
+      }
+
+      axios.post('/register', body)
+         .then(res => {
+            alert(res.data.message)
+         })
+         .catch(err => {
+            alert(err.response.data.message)
+         })
+   }
+
+   return !username ? (
+      <div className=" mt-5 row" >
+         <div className="card col-sm-3 mx-auto" >
+            <div className="card-body" >
+               <div className="border-bottom border-secondary card-title" >
+                  <h1>Register</h1>
+               </div>
+               <form onSubmit={registerUser} className="form-group" >
+                  <div>
+                     <h4>username</h4>
+                     <input className="form-control" ref={usernameRef} type="text"/>
+                  </div>
+                  <div>
+                     <h4>name</h4>
+                     <input className="form-control" ref={nameRef} type="text"/>
+                  </div>
+                  <div>
+                     <h4>phone number</h4>
+                     <input className="form-control" ref={phone_numberRef} type="text"/>
+                  </div>
+                  <div>
+                     <h4>email</h4>
+                     <input className="form-control" ref={emailRef} type="email"/>
+                  </div>
+                  <div>
+                     <h4>password</h4>
+                     <input className="form-control" ref={passwordRef} type="password"/>
+                  </div>
+
+                  <input onClick={registerUser} className="btn btn-block btn-outline-success mt-2" type="submit" value="Register"/>
+               </form>
             </div>
-        )
-    }
+         </div>
+      </div>
+   ): (
+      <Redirect to='/' />
+   )
 }
-
-export default Register
