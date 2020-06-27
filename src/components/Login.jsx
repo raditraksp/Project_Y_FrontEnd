@@ -23,7 +23,7 @@ export default function Login() {
             dispatch(loginAction({id, username, token}))
 
          })
-         .catch(err => alert(err.response.data.message))
+         .catch(err => alert(err))
    }
 
    return (
