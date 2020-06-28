@@ -24,6 +24,7 @@ import {
     } from 'reactstrap';
 
 
+
 export default function ManageProduct() {
 
     
@@ -80,23 +81,11 @@ export default function ManageProduct() {
           })
     }
 
-    // toggle setelah klib button edit
-    const editToggle = (id) => {
-        // getData()
-        // .then((res)=>{setModal(true)})
-        alert('Edit Product')
-    }
-
-    // Cancel edit
-    const onCancelToggle = () => {
-        setModal(false)
-    }
-
     const renderList = () => {
         if (products.length === 0) return <div className="text-center"> <h3>No Product Added</h3> </div>
         return products.map((product) => {
             const srcPic = `http://localhost:2022/product/picture/${product.product_photo}`
-            console.log(product)
+            // simpan ke redux
 
             return (
             <tr>
@@ -122,10 +111,12 @@ export default function ManageProduct() {
                     {product.price_premium}
                 </td>
                 <td>
-                    <img className="card m-auto" src={srcPic} height="100" width="100" />  
+                    <img className="card m-auto" src={srcPic} height="150" width="2git00" />  
                 </td>
                 <td>
-                    <button type="button" onClick={() => {editToggle(product.id)}} className="btn btn-outline-secondary mb-2 px-4 btn-block">Edit</button>
+                    <Link to={`/product/editproduct/${product.id}`}>
+                        <button type="button" className="btn btn-outline-secondary mb-2 px-4 btn-block">Edit</button>
+                    </Link>
                     <button type="button" onClick={() => {deleteProduct(product.id)}}  className="btn btn-outline-danger btn-block">Delete</button>
                 </td>
             </tr>

@@ -16,18 +16,7 @@ export default function AddProduct() {
     const detailBasicRef = useRef()
     const pricePremiumRef = useRef()
     const detailPremiumRef = useRef()
-    const productPhotoRef = useRef()
-    
-    // // ADD PRODUCT
-    // const [product, setProduct] = useState("")
-    // const [category, setCategory] = useState("")
-    // const [detailBasic, setDetailBasic] = useState("")
-    // const [priceBasic, setPriceBasic] = useState("")
-    // const [detailPremium, setDetailPremium] = useState("")
-    // const [pricePremium, setPricePremium] = useState("")
-    // const [source, setSource] = useState([])
-
-    
+    const productPhotoRef = useRef()    
 
     const addProduct = () => {
         const data = new FormData()
@@ -42,6 +31,10 @@ export default function AddProduct() {
         const product_photo  = productPhotoRef.current.files[0]
 
 
+        if(isNaN(price_basic && price_premium)) return alert('Inputan harga harus berupa angka!')
+        if(!category) return alert('Category belum dipilih!')
+        if(!product_photo) return alert('Photo belum diupload')
+
         // Data (name, email, password, image) yang sudah berhasil di ambil, akan 'dimasukkan' ke formData
         data.append("product", product)
         data.append("category_id", category)
@@ -50,8 +43,9 @@ export default function AddProduct() {
         data.append("price_premium", price_premium)
         data.append("detail_premium", detail_premium)
         data.append("product_photo", product_photo)
-        // Kirim ke API
         
+        
+        // Kirim ke API
         axios.post('/products', data, config)
          .then(res => Swal.fire(
             'New Product Added!',
@@ -96,12 +90,12 @@ export default function AddProduct() {
                                 <div className="card-title ">
                                 </div>
                                 <label >Premium Price:</label>
-                                <input ref={pricePremiumRef} type='text' placeholder="Input premium price" className='form-control'/>
+                                <input ref={pricePremiumRef} type='text' placeholder="Input premium price (Isi angka 0 jika tidak ada product premium)" className='form-control'/>
                                 
                                 <div className="card-title ">
                                 </div>
                                 <label >Product Premium Detail:</label>
-                                <textarea ref={detailPremiumRef} type='text' placeholder="input detail premium" className='form-control'/>
+                                <textarea ref={detailPremiumRef} type='text' placeholder="Input detail premium (Kosongkan kolom jika tidak ada product premium)" className='form-control'/>
                                 
                                 <div className="card-title ">
                                 </div>

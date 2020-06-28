@@ -12,6 +12,7 @@ import ManageProduct from './Product/ManageProduct'
 import DetailProduct from './DetailProduct'
 import Chart from './Chart'
 import AddProduct from './Product/AddProduct'
+import EditProduct from './Product/EditProduct'
 
 
 export default function App() {
@@ -42,6 +43,7 @@ export default function App() {
                     <Route path="/chart" component={Chart} />
                     <Route path="/detailproduct/:idPrdct" component={DetailProduct} />
                     <Route path="/product/addproduct" component={AddProduct} />
+                    <Route path="/product/editproduct/:product_id" component={EditProduct} />
                 </div>
             </BrowserRouter>
             </div>
