@@ -58,53 +58,53 @@ export default function AddProduct() {
         return (
             <div className="container">
             <h1 className="text-center display-4">Add Product</h1>
-                            <form className='form-group'>
-                                <div className="card-title ">
-                                </div>
-                                <label >Product Name:</label>
-                                <input ref={productRef} type='text' placeholder="Input Product Name" className='form-control' required/>
-        
-                                <div className="card-title ">
-                                </div>
-                                <label for="category">Choose product category:</label>
-                                    <select ref={categoryRef} id="category" name="category" className='form-control'>
-                                        <option value="1">Design</option>
-                                        <option value="2">Software Development</option>
-                                        <option value="3">Games</option>
-                                        <option value="4">Training Online</option>
-                                        <option value="5">Song</option>
-                                        <option value="6">Adds</option>
-                                        <option value="7">Other</option>
-                                    </select>
-        
-                                <div className="card-title ">
-                                </div>
-                                <label >Basic Price:</label>
-                                <input ref={priceBasicRef} type='text' placeholder="Input basic price" className='form-control'/>
-                                
-                                <div className="card-title ">
-                                </div>
-                                <label >Product Basic Detail:</label>
-                                <textarea ref={detailBasicRef} type='des' placeholder="Input detail basic" className='form-control'/>
-                                
-                                <div className="card-title ">
-                                </div>
-                                <label >Premium Price:</label>
-                                <input ref={pricePremiumRef} type='text' placeholder="Input premium price (Isi angka 0 jika tidak ada product premium)" className='form-control'/>
-                                
-                                <div className="card-title ">
-                                </div>
-                                <label >Product Premium Detail:</label>
-                                <textarea ref={detailPremiumRef} type='text' placeholder="Input detail premium (Kosongkan kolom jika tidak ada product premium)" className='form-control'/>
-                                
-                                <div className="card-title ">
-                                </div>
-                                <label >Product Photo:</label>
-                                <input ref={productPhotoRef} type='file' className='form-control'/>  
-                            </form>
-                            <div>
-                                <button className="btn btn-success btn-block w-25 m-auto" onClick={addProduct}>Add</button>
-                            </div>
+                <form className='form-group'>
+                    <div className="card-title ">
+                    </div>
+                    <label >Product Name:</label>
+                    <input ref={productRef} type='text' placeholder="Input Product Name" className='form-control' required/>
+
+                    <div className="card-title ">
+                    </div>
+                    <label for="category">Choose product category:</label>
+                        <select ref={categoryRef} id="category" name="category" className='form-control'>
+                            <option value="1">Design</option>
+                            <option value="2">Software Development</option>
+                            <option value="3">Games</option>
+                            <option value="4">Training Online</option>
+                            <option value="5">Song</option>
+                            <option value="6">Adds</option>
+                            <option value="7">Other</option>
+                        </select>
+
+                    <div className="card-title ">
+                    </div>
+                    <label >Basic Price:</label>
+                    <input ref={priceBasicRef} type='text' placeholder="Input basic price" className='form-control'/>
+                    
+                    <div className="card-title ">
+                    </div>
+                    <label >Product Basic Detail:</label>
+                    <textarea ref={detailBasicRef} type='des' placeholder="Input detail basic" className='form-control'/>
+                    
+                    <div className="card-title ">
+                    </div>
+                    <label >Premium Price:</label>
+                    <input ref={pricePremiumRef} type='text' placeholder="Input premium price (Isi angka 0 jika tidak ada product premium)" className='form-control'/>
+                    
+                    <div className="card-title ">
+                    </div>
+                    <label >Product Premium Detail:</label>
+                    <textarea ref={detailPremiumRef} type='text' placeholder="Input detail premium (Kosongkan kolom jika tidak ada product premium)" className='form-control'/>
+                    
+                    <div className="card-title ">
+                    </div>
+                    <label >Product Photo:</label>
+                    <input ref={productPhotoRef} type='file' className='form-control'/>  
+                </form>
+                <div>
+                    <button className="btn btn-success btn-block w-25 m-auto" onClick={addProduct}>Add</button>
+                </div>
 
             </div>
         )

@@ -5,6 +5,7 @@ import {Provider} from 'react-redux'
 // createStore akan mengolah hasil dari combineReducers
 import store from './config/redux'
 import App from './components/App'
+import 'bootstrap/dist/css/bootstrap.min.css'
 // import hasil combineReducer (belum siap pakai)
 
 

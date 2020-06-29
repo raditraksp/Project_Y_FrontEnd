@@ -1,27 +1,9 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import axios from '../../config/api'
 import Swal from 'sweetalert2'
 import {Link} from 'react-router-dom'
-import {
-    Button,
-    Collapse,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    Navbar,
-    NavbarToggler, 
-    Nav,
-    NavLink,
-    NavItem,
-    NavbarText,
-    NavbarBrand,
-    UncontrolledDropdown,
-    Modal,
-    ModalHeader, 
-    ModalBody, 
-    ModalFooter 
-    } from 'reactstrap';
+
 
 
 
@@ -52,9 +34,6 @@ export default function ManageProduct() {
 
       // button delete product
     const deleteProduct = (id) => {
-        // axios.delete(`/products/${id}`)
-        // // .then( this.getData() ) => bisa langsung seperti ini kalau case delete
-        // .then((res)=>{this.getData()})
         Swal.fire({
             title: 'Apakah kamu yakin?',
             text: "Kamu tidak bisa mengembalikannya lagi!",
@@ -81,45 +60,56 @@ export default function ManageProduct() {
           })
     }
 
+    
+
+
     const renderList = () => {
         if (products.length === 0) return <div className="text-center"> <h3>No Product Added</h3> </div>
         return products.map((product) => {
             const srcPic = `http://localhost:2022/product/picture/${product.product_photo}`
             // simpan ke redux
 
+
             return (
-            <tr>
-                <td>
-                    {product.id}
-                </td>
-                <td>
-                    {product.product}
-                </td>
-                <td>
-                    {product.category}
-                </td>
-                <td>
-                    {product.detail_basic}
-                </td>
-                <td>
-                    {product.price_basic}
-                </td>
-                <td>
-                    {product.detail_premium}
-                </td>
-                <td>
-                    {product.price_premium}
-                </td>
-                <td>
-                    <img className="card m-auto" src={srcPic} height="150" width="2git00" />  
-                </td>
-                <td>
-                    <Link to={`/product/editproduct/${product.id}`}>
-                        <button type="button" className="btn btn-outline-secondary mb-2 px-4 btn-block">Edit</button>
-                    </Link>
-                    <button type="button" onClick={() => {deleteProduct(product.id)}}  className="btn btn-outline-danger btn-block">Delete</button>
-                </td>
-            </tr>
+                    <tr> 
+                        <td>
+                            {product.id}
+                        </td>
+                        <td>
+                            {product.product}
+                        </td>
+                        <td>
+                            {product.category}
+                        </td>
+                        <td>
+                            {product.status}
+                        </td>
+                        <td>
+                            {product.detail_basic}
+                        </td>
+                        <td>
+                            {product.price_basic}
+                        </td>
+                        <td>
+                            {product.detail_premium}
+                        </td>
+                        <td>
+                            {product.price_premium}
+                        </td>
+                        <td>
+                            <img className="card m-auto" src={srcPic} height="150" width="200" />  
+                        </td>
+                        <td>
+                            <Link to={`/product/editproduct/${product.id}`}>
+                                <button type="button" className="btn btn-outline-secondary mb-2 px-4 btn-block">Edit</button>
+                            </Link>
+                            <Link to={`/product/detailproduct/${product.id}`}>
+                                <button type="button" className="btn btn-outline-primary mb-2 px-4 btn-block">Detail</button>
+                            </Link>
+                            <button type="button" onClick={() => {deleteProduct(product.id)}}  className="btn btn-outline-danger btn-block">Delete</button>
+                        </td>
+                    </tr>
+
         )
         })
     }
@@ -137,6 +127,7 @@ export default function ManageProduct() {
                         <th scope="col">ID</th>
                         <th scope="col">PRODUCT NAME</th>
                         <th scope="col">CATEGORY</th>
+                        <th scope="col">STATUS</th>
                         <th scope="col">DETAIL BASIC</th>
                         <th scope="col">BASIC PRICE</th>
                         <th scope="col">DETAIL PREMIUM</th>
