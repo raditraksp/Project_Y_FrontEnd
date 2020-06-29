@@ -32,6 +32,6 @@ export default function Profile() {
          </Jumbotron>
       </div>
    ) : (
-      <Redirect to='/login' />
+      <Redirect to='/' />
    )
 }

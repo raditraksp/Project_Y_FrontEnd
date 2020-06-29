@@ -7,7 +7,6 @@ import { loginAction } from '../config/redux/actions'
 import Header from './Header'
 import Home from './Home'
 import Register from './Register'
-import Login from './Login'
 import ManageProduct from './Product/ManageProduct'
 import DetailProduct from './DetailProduct'
 import Chart from './Chart'
@@ -37,7 +36,6 @@ export default function App() {
                     <Header/>
                     <Route path="/" exact component={Home} />
                     <Route path="/register" component={Register} />
-                    <Route path="/login" component={Login} />
                     <Route path="/manageproduct" component={ManageProduct} />
                     <Route path="/chart" component={Chart} />
                     <Route path="/detailproduct/:idPrdct" component={DetailProduct} />
