@@ -29,6 +29,7 @@ export default function Header() {
     const [modal, setModal] = useState(false)
     const username = useSelector(state =>  state.auth.username)
     const dispatch = useDispatch()
+    const token = useSelector(state => state.auth.token)
     
         
 
@@ -52,6 +53,16 @@ export default function Header() {
         .catch(err => alert(err.response.data.message))
         setModal((prevState) => !prevState)
   }
+       const funLogout = () => {
+           const config = {headers: {Authorization: token}}
+            axios.delete('/logout',config)
+            .then(dispatch(logoutAction())) 
+        }
+    
+
+            
+        
+
 
   useEffect(() => {
     renderNav()
@@ -92,7 +103,7 @@ export default function Header() {
 
                         <DropdownItem divider />
 
-                        <DropdownItem onClick={logoutAction}>
+                        <DropdownItem onClick={funLogout}>
                             Logout
                         </DropdownItem>
 
@@ -117,21 +128,20 @@ export default function Header() {
             <Modal isOpen={modal} toggle={funModal}>
                         
                 <ModalBody>
-                <div className="border-bottom border-secondary card-title text-center ">
-                                    <h1>Login to Jasaja</h1>
-                                </div>
-    
-                                <form className='form-group'>
-                                    <div className="card-title ">
-                                    </div>
-                                    <input ref={usernameRef} type='text' placeholder="Username" className='form-control' required/>
-    
-                                    <div className="card-title ">
-                                    </div>
-                                    <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
-                                </form>
-    
-                                <button className="btn btn-success btn-block" onClick={onButtonClick} >Login</button>
+                    <div className="border-bottom border-secondary card-title text-center ">
+                        <h1>Login to Jasaja</h1>
+                    </div>
+                    <form className='form-group'>
+                        <div className="card-title ">
+                        </div>
+                        <input ref={usernameRef} type='text' placeholder="Username" className='form-control' required/>
+
+                        <div className="card-title ">
+                        </div>
+                        <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
+                    </form>
+
+                    <button className="btn btn-success btn-block" onClick={onButtonClick} >Login</button>
                 </ModalBody>
             </Modal>
         </div>

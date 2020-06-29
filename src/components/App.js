@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { loginAction } from '../config/redux/actions'
 
@@ -11,7 +11,7 @@ import Login from './Login'
 import ManageProduct from './Product/ManageProduct'
 import DetailProduct from './DetailProduct'
 import Chart from './Chart'
-import Profile from './Profile'
+import Profile from '../components/users/Profile'
 
 
 export default function App() {

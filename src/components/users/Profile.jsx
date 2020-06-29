@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Jumbotron} from 'reactstrap'
-import axios from '../config/api'
+import axios from '../../config/api'
 import { useSelector } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
