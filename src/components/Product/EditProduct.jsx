@@ -22,16 +22,13 @@ export default function EditProduct() {
         getData()
      }, [])
 
-
+    // STATE PRODUCT YANG DIPILIH
     const [products, setProducts] = useState({})  
-    // const productRef = useRef()
-    // const product = productRef.current.value
-    // setProducts((prevProduct) => {return {...prevProduct, product: product}})
     
    
-    // const [source, setSource] = useState([])
     const productRef = useRef()
     const categoryRef = useRef()
+    const detailProductRef = useRef()
     const priceBasicRef = useRef()
     const detailBasicRef = useRef()
     const pricePremiumRef = useRef()
@@ -42,6 +39,7 @@ export default function EditProduct() {
     const onSaveData = () => {
         const product = productRef.current.value
         const category = categoryRef.current.value
+        const detail_product = detailProductRef.current.value
         const price_basic = parseInt(priceBasicRef.current.value)
         const detail_basic = detailBasicRef.current.value
         const price_premium = parseInt(pricePremiumRef.current.value)
@@ -51,6 +49,7 @@ export default function EditProduct() {
         const data = {
             product, 
             category_id: category, 
+            detail_product,
             price_basic, 
             detail_basic, 
             price_premium, 
@@ -142,6 +141,10 @@ export default function EditProduct() {
                             <option value="6">Adds</option>
                             <option value="7">Other</option>
                         </select>
+                    <div className="card-title ">
+                    </div>
+                    <label >Product Detail:</label>
+                    <textarea ref={detailProductRef} type='text' placeholder={products.detail_product} className='form-control'/>
 
                     <div className="card-title ">
                     </div>
@@ -151,7 +154,7 @@ export default function EditProduct() {
                     <div className="card-title ">
                     </div>
                     <label >Product Basic Detail:</label>
-                    <textarea ref={detailBasicRef} type='des' defaultValue={products.detail_basic} className='form-control'/>
+                    <textarea ref={detailBasicRef} type='text' defaultValue={products.detail_basic} className='form-control'/>
                     
                     <div className="card-title ">
                     </div>

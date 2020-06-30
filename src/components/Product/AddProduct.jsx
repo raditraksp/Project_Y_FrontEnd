@@ -12,6 +12,7 @@ export default function AddProduct() {
       // ADD PRDUCT
     const productRef = useRef()
     const categoryRef = useRef()
+    const detailProductRef = useRef()
     const priceBasicRef = useRef()
     const detailBasicRef = useRef()
     const pricePremiumRef = useRef()
@@ -24,6 +25,7 @@ export default function AddProduct() {
     
         const product = productRef.current.value
         const category = categoryRef.current.value
+        const detail_product = detailProductRef.current.value
         const price_basic = parseInt(priceBasicRef.current.value)
         const detail_basic = detailBasicRef.current.value
         const price_premium = parseInt(pricePremiumRef.current.value)
@@ -38,6 +40,7 @@ export default function AddProduct() {
         // Data (name, email, password, image) yang sudah berhasil di ambil, akan 'dimasukkan' ke formData
         data.append("product", product)
         data.append("category_id", category)
+        data.append("detail_product", detail_product)
         data.append("price_basic", price_basic)
         data.append("detail_basic", detail_basic)
         data.append("price_premium", price_premium)
@@ -76,6 +79,10 @@ export default function AddProduct() {
                             <option value="6">Adds</option>
                             <option value="7">Other</option>
                         </select>
+                    <div className="card-title ">
+                    </div>
+                    <label >Product Detail:</label>
+                    <textarea ref={detailProductRef} type='text' placeholder="Input detail product" className='form-control'/>
 
                     <div className="card-title ">
                     </div>
@@ -85,7 +92,7 @@ export default function AddProduct() {
                     <div className="card-title ">
                     </div>
                     <label >Product Basic Detail:</label>
-                    <textarea ref={detailBasicRef} type='des' placeholder="Input detail basic" className='form-control'/>
+                    <textarea ref={detailBasicRef} type='text' placeholder="Input detail basic" className='form-control'/>
                     
                     <div className="card-title ">
                     </div>

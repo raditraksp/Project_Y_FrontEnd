@@ -10,6 +10,9 @@ import Register from './Register'
 import Login from './Login'
 import Chart from './Chart'
 
+// User
+import Profile from './User/Profile'
+
 // Product
 import ManageProduct from './Product/ManageProduct'
 import AddProduct from './Product/AddProduct'
@@ -41,9 +44,9 @@ export default function App() {
                     <Route path="/" exact component={Home} />
                     <Route path="/register" component={Register} />
                     <Route path="/login" component={Login} />
+                    <Route path="/profile" component={Profile} />
                     <Route path="/manageproduct" component={ManageProduct} />
                     <Route path="/chart" component={Chart} />
-                    <Route path="/detailproduct/:idPrdct" component={DetailProduct} />
                     <Route path="/product/addproduct" component={AddProduct} />
                     <Route path="/product/editproduct/:product_id" component={EditProduct} />
                     <Route path="/product/detailproduct/:product_id" component={DetailProduct} />

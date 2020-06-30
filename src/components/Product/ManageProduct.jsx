@@ -9,14 +9,7 @@ export default function ManageProduct() {
 
     
     const token = useSelector(state => state.auth.token)
-    const [products, setProducts] = useState([])
-    const [isOpen, setIsOpen] = useState(false)
-    const [modal, setModal] = useState(false)
-    
-
-    const isToggle = () => setIsOpen((prevState) => !prevState)
-    const funModal = () => setModal((prevState) => !prevState)
-    
+    const [products, setProducts] = useState([])        
 
     const getData = () => {
         const config = {headers: {Authorization: token}}
@@ -95,7 +88,7 @@ export default function ManageProduct() {
                             {product.price_premium}
                         </td>
                         <td>
-                            <img className="card m-auto" src={srcPic} height="150" width="200" />  
+                            <img className="card m-auto" src={srcPic} height="100" width="150" />  
                         </td>
                         <td>
                             <Link to={`/product/editproduct/${product.id}`}>
