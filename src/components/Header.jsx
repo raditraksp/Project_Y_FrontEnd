@@ -60,10 +60,6 @@ export default function Header() {
         }
     
 
-            
-        
-
-
   useEffect(() => {
     renderNav()
  }, [])
@@ -116,13 +112,18 @@ export default function Header() {
     return (
         <div>
             <Navbar color="light" light expand="md">
-                <NavbarBrand tag={Link} to="/">Jasaja.com</NavbarBrand>
+                <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>
+                <Nav className="mr-auto" navbar>
+                    <NavItem className="">
+                        <NavLink href="http://localhost:3000/manageproductadmin">Manage Product Admin</NavLink>
+                    </NavItem>
+                </Nav>      
                 <NavbarToggler onClick={isToggle} />
-                <Collapse isOpen={isOpen} navbar>
-                    
-                    {renderNav()}
+                    <Collapse isOpen={isOpen} navbar>
+                        
+                        {renderNav()}
 
-                </Collapse>
+                    </Collapse>          
             </Navbar>
 
             <Modal isOpen={modal} toggle={funModal}>

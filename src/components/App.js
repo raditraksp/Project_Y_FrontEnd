@@ -9,7 +9,7 @@ import Home from './Home'
 import Register from './Register'
 
 // User
-import Profile from './User/Profile'
+import Profile from './Users/Profile'
 // import ForgetPasswordEmail from './Users/ForgetPasswordEmail'
 
 // Product
@@ -18,6 +18,8 @@ import AddProduct from './Product/AddProduct'
 import EditProduct from './Product/EditProduct'
 import DetailProduct from './Product/DetailProduct'
 
+// ADMIN
+import ManageProductAdmin from './Admin/ManageProductAdmin'
 
 export default function App() {
 
@@ -43,10 +45,10 @@ export default function App() {
                     <Route path="/" exact component={Home} />
                     <Route path="/register" component={Register} />
                     <Route path="/profile" component={Profile} />
-                    <Route path="/profile" component={Profile} />
                     {/* <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} /> */}
 
                     <Route path="/manageproduct" component={ManageProduct} />
+                    <Route path="/manageproductadmin" component={ManageProductAdmin} />
                     <Route path="/product/addproduct" component={AddProduct} />
                     <Route path="/product/editproduct/:product_id" component={EditProduct} />
                     <Route path="/product/detailproduct/:product_id" component={DetailProduct} />

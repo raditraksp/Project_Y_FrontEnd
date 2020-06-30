@@ -31,6 +31,8 @@ export default function ListProduct(props) {
         alert('Add to cart')
     }
 
+    if(!props.products.length) return <h1>KOSONG</h1>
+    
     const renderList = props.products.map((product) => {
             const srcPic = `http://localhost:2022/product/picture/${product.product_photo}`
             // simpan ke redux
@@ -45,7 +47,7 @@ export default function ListProduct(props) {
                             <img  src="https://placeimg.com/640/480/tech" style={{height:30, width:30, border:1, borderRadius:50}} alt=""/>
                         </div>
                         <div className="col-10 my-2">
-                            <h5 class="card-title">{user.username}</h5>
+                            <h5 class="card-title">{product.username}</h5>
                         </div>
                     </div>
                     <h5 class="card-title ">{product.product}</h5>
