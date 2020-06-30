@@ -7,14 +7,10 @@ import { loginAction } from '../config/redux/actions'
 import Header from './Header'
 import Home from './Home'
 import Register from './Register'
-import ManageProduct from './Product/ManageProduct'
-import DetailProduct from './Product/DetailProduct'
-import EditProduct from './Product/EditProduct'
-import AddProduct from './Product/AddProduct'
-import Profile from './Users/Profile'
-import ForgetPasswordEmail from './Users/ForgetPasswordEmail'
-import Login from './Login'
-import Chart from './Chart'
+
+// User
+import Profile from './User/Profile'
+// import ForgetPasswordEmail from './Users/ForgetPasswordEmail'
 
 // Product
 import ManageProduct from './Product/ManageProduct'
@@ -46,10 +42,11 @@ export default function App() {
                     <Header/>
                     <Route path="/" exact component={Home} />
                     <Route path="/register" component={Register} />
-                    <Route path="/manageproduct" component={ManageProduct} />
                     <Route path="/profile" component={Profile} />
-                    <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} />
+                    <Route path="/profile" component={Profile} />
+                    {/* <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} /> */}
 
+                    <Route path="/manageproduct" component={ManageProduct} />
                     <Route path="/product/addproduct" component={AddProduct} />
                     <Route path="/product/editproduct/:product_id" component={EditProduct} />
                     <Route path="/product/detailproduct/:product_id" component={DetailProduct} />
