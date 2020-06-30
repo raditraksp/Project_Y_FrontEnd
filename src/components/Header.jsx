@@ -140,7 +140,9 @@ export default function Header() {
                         </div>
                         <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
                     </form>
-
+                    <NavLink tag={Link} to="/forgetPasswordEmail">
+                            <DropdownItem>Forget Password?</DropdownItem>
+                        </NavLink>
                     <button className="btn btn-success btn-block" onClick={onButtonClick} >Login</button>
                 </ModalBody>
             </Modal>
