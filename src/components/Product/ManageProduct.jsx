@@ -5,8 +5,6 @@ import Swal from 'sweetalert2'
 import {Link} from 'react-router-dom'
 
 
-
-
 export default function ManageProduct() {
 
     

@@ -28,3 +28,14 @@
   .text-w {
     width: 70%;
   }
+
+  .height {
+    height: 75vh
+  }
+
+  .card-img-top {
+    max-height: 400px;
+    min-height: 200px;
+    
+}
+

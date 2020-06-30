@@ -1,8 +1,8 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import {Link} from 'react-router-dom'
 import axios from '../config/api'
-import {loginAction} from '../config/redux/actions'
+import {loginAction,logoutAction} from '../config/redux/actions'
 import {
    Button,
    Collapse,
@@ -29,6 +29,8 @@ export default function Header() {
     const [modal, setModal] = useState(false)
     const username = useSelector(state =>  state.auth.username)
     const dispatch = useDispatch()
+    const token = useSelector(state => state.auth.token)
+    
         
 
     const isToggle = () => setIsOpen((prevState) => !prevState)
@@ -51,6 +53,21 @@ export default function Header() {
         .catch(err => alert(err.response.data.message))
         setModal((prevState) => !prevState)
   }
+       const funLogout = () => {
+           const config = {headers: {Authorization: token}}
+            axios.delete('/logout',config)
+            .then(dispatch(logoutAction())) 
+        }
+    
+
+            
+        
+
+
+  useEffect(() => {
+    renderNav()
+ }, [])
+
 
     const renderNav = () => {
         // Jika tidak login
@@ -86,7 +103,7 @@ export default function Header() {
 
                         <DropdownItem divider />
 
-                        <DropdownItem onClick={() => dispatch({type: 'LOGOUT_SUCCESS'})}>
+                        <DropdownItem onClick={funLogout}>
                             Logout
                         </DropdownItem>
 
@@ -123,7 +140,9 @@ export default function Header() {
                         </div>
                         <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
                     </form>
-
+                    <NavLink tag={Link} to="/forgetPasswordEmail">
+                            <DropdownItem>Forget Password?</DropdownItem>
+                        </NavLink>
                     <button className="btn btn-success btn-block" onClick={onButtonClick} >Login</button>
                 </ModalBody>
             </Modal>
