@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react'
 import { useSelector } from 'react-redux'
 import { Button } from 'reactstrap';
-import {useParams} from 'react-router-dom'
+import {useParams, Redirect} from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 import axios from '../../config/api'
@@ -67,7 +67,6 @@ export default function EditProduct() {
           }).then((res) => {
             // res.value bernilai true jika kita memilih 'Ya' , sebaliknya
             if (res.value) {
-                const config = {headers: {Authorization: token}}
                 axios.patch(`/product/${products.id}`, data, config)
                 .then((res) => { 
 
@@ -120,7 +119,7 @@ export default function EditProduct() {
         .catch(err => console.log(err))
    }
 
-        return (
+        return token ?(
             <div className="container">
                 <h1 className="text-center display-4">Edit Product</h1>
                 <form className='form-group'>
@@ -185,5 +184,7 @@ export default function EditProduct() {
 
             </div>
             
-        )
+        ): (
+            <Redirect to='/' />
+          )
     }

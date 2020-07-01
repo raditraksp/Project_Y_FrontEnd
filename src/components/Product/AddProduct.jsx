@@ -1,8 +1,11 @@
 import React, {useState, useEffect, useRef} from 'react'
 import { useSelector } from 'react-redux'
 import { Button } from 'reactstrap';
-import axios from '../../config/api'
 import Swal from 'sweetalert2'
+import {Redirect} from 'react-router-dom'
+
+
+import axios from '../../config/api'
 
 
 
@@ -58,7 +61,7 @@ export default function AddProduct() {
          .catch(err => console.log({err}))
    }
 
-        return (
+        return token ? (
             <div className="container">
             <h1 className="text-center display-4">Add Product</h1>
                 <form className='form-group'>
@@ -114,5 +117,7 @@ export default function AddProduct() {
                 </div>
 
             </div>
-        )
+        ): (
+            <Redirect to='/' />
+          )
     }

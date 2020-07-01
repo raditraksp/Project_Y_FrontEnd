@@ -30,6 +30,8 @@ export default function Header() {
     const username = useSelector(state =>  state.auth.username)
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
+    const role_id = useSelector(state => state.auth.role_id)
+
     
         
 
@@ -79,6 +81,9 @@ export default function Header() {
             </Nav>
         ) :(
             <Nav className="ml-auto" navbar>
+                <NavItem>
+                        <NavLink href="/products/cart">Cart</NavLink>
+                    </NavItem>
                 <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
                         Hello, {username}
@@ -93,14 +98,10 @@ export default function Header() {
                             <DropdownItem>Profile</DropdownItem>
                         </NavLink>
 
-                        <NavLink tag={Link} to="/editprofile">
-                            <DropdownItem>Edit Profile</DropdownItem>
-                        </NavLink>
-
                         <DropdownItem divider />
 
                         <DropdownItem onClick={funLogout}>
-                            Logout
+                            <a href="/" className="text-decoration-none text-dark">Logout</a>
                         </DropdownItem>
 
                     </DropdownMenu>
@@ -109,13 +110,47 @@ export default function Header() {
         )
     }
 
-    return (
+    return role_id != 1 ? (
+        <div>
+            <Navbar  color="light" light expand="md">
+                <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>    
+                <NavbarToggler onClick={isToggle} />
+                    <Collapse isOpen={isOpen} navbar>
+                        
+                        {renderNav()}
+
+                    </Collapse>          
+            </Navbar>
+
+            <Modal isOpen={modal} toggle={funModal}>
+                        
+                <ModalBody>
+                    <div className="border-bottom border-secondary card-title text-center ">
+                        <h1>Login to Jasaja</h1>
+                    </div>
+                    <form className='form-group'>
+                        <div className="card-title ">
+                        </div>
+                        <input ref={usernameRef} type='text' placeholder="Username" className='form-control' required/>
+
+                        <div className="card-title ">
+                        </div>
+                        <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
+                    </form>
+                    <NavLink tag={Link} to="/forgetPasswordEmail">
+                            <DropdownItem>Forget Password?</DropdownItem>
+                        </NavLink>
+                    <button className="btn btn-success btn-block" onClick={onButtonClick} >Login</button>
+                </ModalBody>
+            </Modal>
+        </div>
+    ) : (
         <div>
             <Navbar color="light" light expand="md">
                 <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>
                 <Nav className="mr-auto" navbar>
-                    <NavItem className="">
-                        <NavLink href="http://localhost:3000/manageproductadmin">Manage Product Admin</NavLink>
+                    <NavItem >
+                        <NavLink href="/manageproductadmin">Manage Product Admin</NavLink>
                     </NavItem>
                 </Nav>      
                 <NavbarToggler onClick={isToggle} />
