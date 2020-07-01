@@ -44,10 +44,10 @@ export default function Header() {
         const password = passwordRef.current.value
 
         axios.post('/user/login', {username, password})
-        .then(({data : {token, user : {id, username}}}) => {
+        .then(({data : {token, user : {id, username, role_id, email}}}) => {
            
            // simpan ke redux
-           dispatch(loginAction({id, username, token}))
+           dispatch(loginAction({id, username, token, role_id, email}))
 
         })
         .catch(err => alert(err.response.data.message))
