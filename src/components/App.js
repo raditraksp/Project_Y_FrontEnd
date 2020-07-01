@@ -9,8 +9,8 @@ import Home from './Home'
 import Register from './Register'
 
 // User
-import Profile from './User/Profile'
-// import ForgetPasswordEmail from './Users/ForgetPasswordEmail'
+import Profile from './Users/Profile'
+import ForgetPasswordEmail from './Users/ForgetPasswordEmail'
 
 // Product
 import ManageProduct from './Product/ManageProduct'
@@ -44,7 +44,7 @@ export default function App() {
                     <Route path="/register" component={Register} />
                     <Route path="/profile" component={Profile} />
                     <Route path="/profile" component={Profile} />
-                    {/* <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} /> */}
+                    <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} />
 
                     <Route path="/manageproduct" component={ManageProduct} />
                     <Route path="/product/addproduct" component={AddProduct} />
