@@ -11,26 +11,28 @@ import {
 
 export default function ListProduct(props) {    
 
-    const [user, setUser] = useState({})
-    const token = useSelector(state => state.auth.token)
-    const userName = useSelector(state => state.auth.username)
-    const Id = useSelector(state => state.auth.id)
-    const {id, username, phone_number , email, avatar} = user
+    // const [user, setUser] = useState({})
+    // const token = useSelector(state => state.auth.token)
+    // const userName = useSelector(state => state.auth.username)
+    // const Id = useSelector(state => state.auth.id)
+    // const {id, username, phone_number , email, avatar} = user
 
-    useEffect(() => {
-        const config = { headers: { Authorization : token } }
+    // useEffect(() => {
+    //     const config = { headers: { Authorization : token } }
   
-        axios.get(`/user/profile`, config)
-           .then(res => setUser(res.data))
-           .catch(err => alert(err.response.data.message))
+    //     axios.get(`/user/profile`, config)
+    //        .then(res => setUser(res.data))
+    //        .catch(err => alert(err.response.data.message))
         
-     }, []
-     )
+    //  }, []
+    //  )
 
     const addToCart = () => {
         alert('Add to cart')
     }
 
+    // if(!props.products.length) return <h1>KOSONG</h1>
+    
     const renderList = props.products.map((product) => {
             const srcPic = `http://localhost:2022/product/picture/${product.product_photo}`
             // simpan ke redux
@@ -45,7 +47,7 @@ export default function ListProduct(props) {
                             <img  src="https://placeimg.com/640/480/tech" style={{height:30, width:30, border:1, borderRadius:50}} alt=""/>
                         </div>
                         <div className="col-10 my-2">
-                            <h5 class="card-title">{user.username}</h5>
+                            <h5 class="card-title">{product.username}</h5>
                         </div>
                     </div>
                     <h5 class="card-title ">{product.product}</h5>

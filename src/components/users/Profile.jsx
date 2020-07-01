@@ -1,14 +1,14 @@
 import React, {useState, useEffect, useRef} from 'react'
 import axios from '../../config/api'
 import { useSelector } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import {
    Card, CardImg, CardText, CardBody,
    CardTitle, CardSubtitle, Button, ListGroup, ListGroupItem, Modal,
    ModalHeader, 
    ModalBody, 
-   ModalFooter 
+   ModalFooter
  } from 'reactstrap';
 import { $CombinedState } from 'redux'
 
@@ -16,10 +16,12 @@ import { $CombinedState } from 'redux'
 export default function Profile() {
 
    const [user, setUser] = useState({})
+   const [avatar, setAvatar] = useState({})
    const token = useSelector(state => state.auth.token)
-   const userName = useSelector(state => state.auth.username)
-   const Id = useSelector(state => state.auth.id)
-   const {id, username, name, phone_number , email, avatar, address, birth_of_date, gender, ktp_number } = user
+   const username = useSelector(state => state.auth.username)
+   const email = useSelector(state => state.auth.email)
+   // const Id = useSelector(state => state.auth.id)
+   const {name, phone_number, address, birth_of_date, gender, ktp_number } = user
    // const [isOpen, setIsOpen] = useState(false)
    const [modal, setModal] = useState(false)
    const [modal2, setModal2] = useState(false)
@@ -33,13 +35,22 @@ export default function Profile() {
    const noktpRef = useRef()
    const genderRef = useRef()
    const avatarRef = useRef()
+   const avatarSrc = `http://localhost:2022/user/avatar/${user.user_id}?unq=${new Date()}`
 
    const getData = () => {
       const config = { headers: { Authorization : token } }
 
       axios.get(`/user/profile`, config)
-         .then(res => setUser(res.data))
+         .then(res => setUser(res.data.result[0]))
+         
          .catch(err => alert(err.response.data.message))
+
+         axios.get(`/user/profile`, config)
+         .then(res => setAvatar(res.data.avatar))
+         
+         .catch(err => alert(err.response.data.message))
+
+         
    }
 
    useEffect(() => {
@@ -47,7 +58,7 @@ export default function Profile() {
       
    }, []
    )
-
+      console.log()
    const onSaveData = () => {
       const name = nameRef.current.value
       const phone_number = phone_numberRef.current.value
@@ -93,8 +104,9 @@ export default function Profile() {
   }
 
   const changeImage = (e) => {
-     setUser({avatar : URL.createObjectURL(e.target.files[0])})
+     setAvatar({avatar : URL.createObjectURL(e.target.files[0])})
   }
+
 
   const onSavePhoto = () => {
    const data = new FormData()
@@ -134,13 +146,13 @@ export default function Profile() {
 
  
 
-   return userName ?(
+   return username ?(
       <div className="container-fluid">
          <div className="row">
             <div className="col-4 ml-5 mt-5">
                         <div>
                   <Card>
-                  <CardImg className="card-img-top" src={avatar} alt={username}/>
+                  <CardImg className="card-img-top" src={avatarSrc} alt={username}/>
                   <CardBody>
                   <ListGroup>
                <ListGroupItem color="light">username : {username}</ListGroupItem>
@@ -149,6 +161,9 @@ export default function Profile() {
                <ListGroupItem color="dark">email : {email}</ListGroupItem>
                </ListGroup>
                   <button onClick={funModal} className="btn btn-block btn-dark mt-2 mb-1" >Edit Profile</button>
+                  <Link to= {`/editpassword/${user.user_id}`}>
+                  <button className="btn btn-block btn-dark mt-2 mb-1 text-decoration-none" >Change Password</button>
+                  </Link>
                   </CardBody>
                   </Card>
                       </div>
@@ -169,23 +184,29 @@ export default function Profile() {
                            <div className="col-6">
                            <form className='form-group'>
                         <div className="card-title ">
+                           Name :
                         </div>
                         <input ref={nameRef} type='text' defaultValue={name} className='form-control' required/>
 
                         <div className="card-title ">
+                           Phone Number :
                         </div>
                         <input ref={phone_numberRef} type='text' defaultValue={phone_number} className='form-control'/>
                         
                         <div className="card-title ">
+                           Birth of Date :
                         </div>
                         <input ref={birthRef} type='date' defaultValue={birth_of_date} className='form-control'/>
                         <div className="card-title ">
+                           Address :
                         </div>
                         <textarea ref={addressRef} type='text' defaultValue={address} className='form-control'/>
                         <div className="card-title ">
+                           KTP number :
                         </div>
                         <input ref={noktpRef} type='text' defaultValue={ktp_number} className='form-control'/>
                         <div className="card-title ">
+                           Gender :
                         </div>
                         <input ref={genderRef} type='text' defaultValue={WebGLRenderbuffer} className='form-control'/>
                         
@@ -197,7 +218,7 @@ export default function Profile() {
                                           <form className='form-group'>
                                  <div className="card-title mt-5">
                                  </div>
-                                 <img className="card ml-3" src={avatar} height="200" width="200" />  
+                                 <img className="card ml-3" src={avatarSrc} height="200" width="200" />  
                                  <label >Avatar : </label>
                                  <input onChange={changeImage} ref={avatarRef} type='file' className='form-control'/>  
                               </form>

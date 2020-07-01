@@ -44,10 +44,10 @@ export default function Header() {
         const password = passwordRef.current.value
 
         axios.post('/user/login', {username, password})
-        .then(({data : {token, user : {id, username}}}) => {
+        .then(({data : {token, user : {id, username, role_id, email}}}) => {
            
            // simpan ke redux
-           dispatch(loginAction({id, username, token}))
+           dispatch(loginAction({id, username, token, role_id, email}))
 
         })
         .catch(err => alert(err.response.data.message))
@@ -59,10 +59,6 @@ export default function Header() {
             .then(dispatch(logoutAction())) 
         }
     
-
-            
-        
-
 
   useEffect(() => {
     renderNav()
@@ -116,13 +112,18 @@ export default function Header() {
     return (
         <div>
             <Navbar color="light" light expand="md">
-                <NavbarBrand tag={Link} to="/">Jasaja.com</NavbarBrand>
+                <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>
+                <Nav className="mr-auto" navbar>
+                    <NavItem className="">
+                        <NavLink href="http://localhost:3000/manageproductadmin">Manage Product Admin</NavLink>
+                    </NavItem>
+                </Nav>      
                 <NavbarToggler onClick={isToggle} />
-                <Collapse isOpen={isOpen} navbar>
-                    
-                    {renderNav()}
+                    <Collapse isOpen={isOpen} navbar>
+                        
+                        {renderNav()}
 
-                </Collapse>
+                    </Collapse>          
             </Navbar>
 
             <Modal isOpen={modal} toggle={funModal}>

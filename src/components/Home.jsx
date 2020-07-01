@@ -16,8 +16,8 @@ export default function Home() {
         
 
     const getData = () => {
-        const config = {headers: {Authorization: token}}
-         axios.get('/products', config)
+        // const config = {headers: {Authorization: token}}
+         axios.get('/products')
             .then(res => setProducts(res.data))
             .catch(err => console.log({err}))
     } 
