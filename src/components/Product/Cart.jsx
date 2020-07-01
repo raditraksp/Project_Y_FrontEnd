@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import axios from '../../config/api'
 import Swal from 'sweetalert2'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button
@@ -58,7 +58,6 @@ export default function Cart() {
     const renderList = () => {
         return carts.map((cart) => {
             if (carts.length === 0) return <div className="text-center"> <h3>No Product in Cart</h3> </div>
-            return carts.map((cart) => {
                 const srcPic = `http://localhost:2022/product/picture/${cart.picture}`
 
                 return (
@@ -93,10 +92,9 @@ export default function Cart() {
                         </tr>
 
                     )
-                    })
                 })
     }
-    return (
+    return token ? (
         <div className="fluid-container">
         {/* List Product */}
         <h1 className="text-center display-4">CART</h1>
@@ -124,5 +122,7 @@ export default function Cart() {
         
     </div>
         
-    )
+    ) : (
+        <Redirect to='/' />
+      )
 }

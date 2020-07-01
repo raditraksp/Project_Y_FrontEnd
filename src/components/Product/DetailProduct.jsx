@@ -32,7 +32,6 @@ export default function DetailProduct() {
         const data = {
             user_id :id,
             seller_id:products.user_id,
-            category_id: products.category_id, 
             product_id: products.id,
             product_name: products.product, 
             detail_product: detail,
