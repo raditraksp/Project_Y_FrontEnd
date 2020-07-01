@@ -17,13 +17,11 @@ export default function Register() {
       e.preventDefault()
 
       const username = usernameRef.current.value
-      const name = nameRef.current.value
       const email = emailRef.current.value
       const password = passwordRef.current.value
-      const phone_number = phone_numberRef.current.value
 
       const body = {
-         username, name, email, password, phone_number
+         username, email, password
       }
 
       axios.post('/register', body)
@@ -46,14 +44,6 @@ export default function Register() {
                   <div>
                      <h4>username</h4>
                      <input className="form-control" ref={usernameRef} type="text"/>
-                  </div>
-                  <div>
-                     <h4>name</h4>
-                     <input className="form-control" ref={nameRef} type="text"/>
-                  </div>
-                  <div>
-                     <h4>phone number</h4>
-                     <input className="form-control" ref={phone_numberRef} type="text"/>
                   </div>
                   <div>
                      <h4>email</h4>

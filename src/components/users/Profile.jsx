@@ -17,9 +17,10 @@ export default function Profile() {
 
    const [user, setUser] = useState({})
    const token = useSelector(state => state.auth.token)
-   const userName = useSelector(state => state.auth.username)
-   const Id = useSelector(state => state.auth.id)
-   const {id, username, name, phone_number , email, avatar, address, birth_of_date, gender, ktp_number } = user
+   const username = useSelector(state => state.auth.username)
+   const email = useSelector(state => state.auth.email)
+   // const Id = useSelector(state => state.auth.id)
+   const {name, phone_number , avatar, address, birth_of_date, gender, ktp_number } = user
    // const [isOpen, setIsOpen] = useState(false)
    const [modal, setModal] = useState(false)
    const [modal2, setModal2] = useState(false)
@@ -134,7 +135,7 @@ export default function Profile() {
 
  
 
-   return userName ?(
+   return username ?(
       <div className="container-fluid">
          <div className="row">
             <div className="col-4 ml-5 mt-5">
