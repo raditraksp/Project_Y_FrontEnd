@@ -43,7 +43,7 @@ export default function App() {
      ) : (
         <div>
             <BrowserRouter>
-                <div class="header">
+                <div className="header">
                     <Header/>
                     <Route path="/" exact component={Home} />
                     <Route path="/register" component={Register} />

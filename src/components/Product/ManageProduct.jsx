@@ -71,7 +71,7 @@ export default function ManageProduct() {
                             {product.product}
                         </td>
                         <td>
-                            {product.category}
+                            {/* {product.category} */}
                         </td>
                         <td>
                             {product.status}

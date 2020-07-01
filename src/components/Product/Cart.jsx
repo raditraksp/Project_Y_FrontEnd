@@ -76,9 +76,6 @@ export default function Cart() {
                                 {cart.detail_product}
                             </td>
                             <td>
-                                {cart.category}
-                            </td>
-                            <td>
                                 {cart.price}
                             </td>
                             <td>
@@ -114,7 +111,6 @@ export default function Cart() {
                 <th scope="col">SELLER</th>
                 <th scope="col">PRODUCT NAME</th>
                 <th scope="col">DETAIL</th>
-                <th scope="col">CATEGORY</th>
                 <th scope="col">PRICE</th>
                 <th scope="col">STATUS</th>
                 <th scope="col">PICTURE</th>

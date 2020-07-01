@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux'
 // import {onLoginUser} from '../actions/index'
 // Akan me-redirect ke alamat tertentu
 import {Redirect} from 'react-router-dom'
-import ProductItems from './ProductItems'
 import ListProduct from './Product/ListProduct'
 import axios from '../config/api'
 
