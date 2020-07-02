@@ -18,6 +18,9 @@ import AddProduct from './Product/AddProduct'
 import EditProduct from './Product/EditProduct'
 import DetailProduct from './Product/DetailProduct'
 
+// CART
+import Cart from './Product/Cart'
+
 // ADMIN
 import ManageProductAdmin from './Admin/ManageProductAdmin'
 
@@ -40,12 +43,14 @@ export default function App() {
      ) : (
         <div>
             <BrowserRouter>
-                <div class="header">
+                <div className="header">
                     <Header/>
                     <Route path="/" exact component={Home} />
                     <Route path="/register" component={Register} />
                     <Route path="/profile" component={Profile} />
                     {/* <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} /> */}
+                    
+                    <Route path="/products/cart" component={Cart} />
 
                     <Route path="/manageproduct" component={ManageProduct} />
                     <Route path="/manageproductadmin" component={ManageProductAdmin} />

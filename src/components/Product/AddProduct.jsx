@@ -1,8 +1,11 @@
 import React, {useState, useEffect, useRef} from 'react'
 import { useSelector } from 'react-redux'
 import { Button } from 'reactstrap';
-import axios from '../../config/api'
 import Swal from 'sweetalert2'
+import {Redirect} from 'react-router-dom'
+
+
+import axios from '../../config/api'
 
 
 
@@ -24,7 +27,6 @@ export default function AddProduct() {
         const config = {headers: {Authorization: token}}
     
         const product = productRef.current.value
-        const category = categoryRef.current.value
         const detail_product = detailProductRef.current.value
         const price_basic = parseInt(priceBasicRef.current.value)
         const detail_basic = detailBasicRef.current.value
@@ -34,12 +36,12 @@ export default function AddProduct() {
 
 
         if(isNaN(price_basic && price_premium)) return alert('Inputan harga harus berupa angka!')
-        if(!category) return alert('Category belum dipilih!')
+        // if(!category) return alert('Category belum dipilih!')
         if(!product_photo) return alert('Photo belum diupload')
 
         // Data (name, email, password, image) yang sudah berhasil di ambil, akan 'dimasukkan' ke formData
         data.append("product", product)
-        data.append("category_id", category)
+        // data.append("category_id", category)
         data.append("detail_product", detail_product)
         data.append("price_basic", price_basic)
         data.append("detail_basic", detail_basic)
@@ -58,7 +60,8 @@ export default function AddProduct() {
          .catch(err => console.log({err}))
    }
 
-        return (
+    
+        return token ? (
             <div className="container">
             <h1 className="text-center display-4">Add Product</h1>
                 <form className='form-group'>
@@ -67,7 +70,7 @@ export default function AddProduct() {
                     <label >Product Name:</label>
                     <input ref={productRef} type='text' placeholder="Input Product Name" className='form-control' required/>
 
-                    <div className="card-title ">
+                    {/* <div className="card-title ">
                     </div>
                     <label for="category">Choose product category:</label>
                         <select ref={categoryRef} id="category" name="category" className='form-control'>
@@ -78,7 +81,7 @@ export default function AddProduct() {
                             <option value="5">Song</option>
                             <option value="6">Adds</option>
                             <option value="7">Other</option>
-                        </select>
+                        </select> */}
                     <div className="card-title ">
                     </div>
                     <label >Product Detail:</label>
@@ -114,5 +117,7 @@ export default function AddProduct() {
                 </div>
 
             </div>
-        )
+        ): (
+            <Redirect to='/' />
+          )
     }
