@@ -2,13 +2,14 @@ import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import axios from '../../config/api'
 import Swal from 'sweetalert2'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 
 
 export default function ManageProductAdmin() {
 
     
     const token = useSelector(state => state.auth.token)
+    const role_id = useSelector(state => state.auth.role_id)
     const [products, setProducts] = useState([])        
 
     const getData = () => {
@@ -132,7 +133,7 @@ export default function ManageProductAdmin() {
         })
     }
     
-    return (
+    return role_id === 1 ? (
         <div className="fluid-container">
                 {/* List Product */}
                 <h1 className="text-center display-4">Manage Product</h1>
@@ -161,5 +162,7 @@ export default function ManageProductAdmin() {
                 </table>
               
             </div>
+    ) : (
+        <Redirect to='/' />
     )
 }

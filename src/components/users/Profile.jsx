@@ -52,6 +52,7 @@ export default function Profile() {
 
          
    }
+   console.log(user)
 
    useEffect(() => {
       getData()
@@ -211,8 +212,6 @@ export default function Profile() {
                         <input ref={genderRef} type='text' defaultValue={WebGLRenderbuffer} className='form-control'/>
                         
                     </form>
-
-                    
                            </div>
                            <div className="col-6">
                                           <form className='form-group'>

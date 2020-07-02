@@ -2,13 +2,14 @@ import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import axios from '../../config/api'
 import Swal from 'sweetalert2'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 
 
 export default function ManageProduct() {
 
     
     const token = useSelector(state => state.auth.token)
+
     const [products, setProducts] = useState([])        
 
     const getData = () => {
@@ -70,7 +71,7 @@ export default function ManageProduct() {
                             {product.product}
                         </td>
                         <td>
-                            {product.category}
+                            {/* {product.category} */}
                         </td>
                         <td>
                             {product.status}
@@ -105,33 +106,36 @@ export default function ManageProduct() {
         })
     }
     
-    return (
+    return token ?(
         <div className="fluid-container">
-                {/* List Product */}
-                <h1 className="text-center display-4">Manage Product</h1>
-                <Link to="/product/addproduct">
-                    <button type="button" className="btn btn-success mb-2 px-4 btn-block w-25 float-right mr-3">Add Product</button>
-                </Link>
-                <table class="table table-hover text-center mb-5">
-                    <thead>
-                        <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">PRODUCT NAME</th>
-                        <th scope="col">CATEGORY</th>
-                        <th scope="col">STATUS</th>
-                        <th scope="col">DETAIL BASIC</th>
-                        <th scope="col">BASIC PRICE</th>
-                        <th scope="col">DETAIL PREMIUM</th>
-                        <th scope="col">PREMIUM PRICE</th>
-                        <th scope="col">PICTURE</th>
-                        <th scope="col">ACTION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {renderList()}
-                    </tbody>
-                </table>
-              
-            </div>
+            {/* List Product */}
+            <h1 className="text-center display-4">Manage Product</h1>
+            <Link to="/product/addproduct">
+                <button type="button" className="btn btn-success mb-2 px-4 btn-block w-25 float-right mr-3">Add Product</button>
+            </Link>
+            <label className="ml-3 font-italic">Note: Status 0 = Pending, Status 1 = Approved, Status 2 = Rejected</label>
+            <table class="table table-hover text-center mb-5">
+                <thead>
+                    <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">PRODUCT NAME</th>
+                    <th scope="col">CATEGORY</th>
+                    <th scope="col">STATUS</th>
+                    <th scope="col">DETAIL BASIC</th>
+                    <th scope="col">BASIC PRICE</th>
+                    <th scope="col">DETAIL PREMIUM</th>
+                    <th scope="col">PREMIUM PRICE</th>
+                    <th scope="col">PICTURE</th>
+                    <th scope="col">ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {renderList()}
+                </tbody>
+            </table>
+            
+        </div>
+    ) : (
+      <Redirect to='/' />
     )
 }
