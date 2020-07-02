@@ -8,21 +8,26 @@ import axios from '../../config/api'
 
 export default function EditPassword() {
 
+    const token = useSelector(state => state.auth.token)
+
     const oldPasswordRef = useRef()
-    const newPasswordRef1 = useRef()
-    const newPasswordRef2 = useRef()
-    
+    const newPassword1Ref = useRef()
+    const newPassword2Ref = useRef()
+
     const sendpassword = () => {
+
+        const config = {headers: {Authorization: token}}
+
         const oldPassword = oldPasswordRef.current.value
-        const newPassword1 = newPasswordRef1.current.value
-        const newPassword2 = newPasswordRef2.current.value
-        
-        axios.post('/change_password',{oldPassword,newPassword1,newPassword2})
+        const newPassword1 = newPassword1Ref.current.value
+        const newPassword2 = newPassword2Ref.current.value
+
+        axios.patch(`/changepassword`, {oldPassword,newPassword1,newPassword2}, config)
         .then(res => {
-            alert('berhasil')
-        }).catch(err => {
-            alert(console.log(err))
-         })
+            alert(res)
+        }).catch( err => {
+            console.log(err)
+        })
         
    
          
@@ -39,17 +44,16 @@ export default function EditPassword() {
                   <form className='form-group'>
                         <div className="card-title ">
                         </div>
-                        <input ref={oldPasswordRef} type='password' placeholder="password" className='form-control'/>
+                        <input ref={oldPasswordRef} type='password' placeholder="Old Password" className='form-control'/>
                         <div className="card-title ">
                         </div>
-                        <input ref={newPasswordRef1} type='password' placeholder="password" className='form-control'/>
+                        <input ref={newPassword1Ref} type='password' placeholder="New Password" className='form-control'/>
                         <div className="card-title ">
                         </div>
-                        <input ref={newPasswordRef2} type='password' placeholder="password" className='form-control'/>
+                        <input ref={newPassword2Ref} type='password' placeholder=" Confirm New Password" className='form-control'/>
                     </form>
-                    
                   
-                  <button onClick={sendpassword} className="btn btn-block btn-dark mt-2 mb-1">verifed password</button>
+                  <button onClick={sendpassword} className="btn btn-block btn-dark mt-2 mb-1">Change password</button>
                   </CardBody>
                   </Card>
                 </div>
