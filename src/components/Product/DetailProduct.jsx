@@ -28,6 +28,7 @@ export default function DetailProduct() {
 
     const addToCart = (price, detail) => {
 
+        if (!token) return alert ('Anda Belum Login')
         const config = {headers: {Authorization: token}}
         const data = {
             user_id :id,
@@ -42,7 +43,7 @@ export default function DetailProduct() {
         .then(res => {
             Swal.fire(
                 'New Product Added!',
-                'Mohon menunggu untuk konfirmasi dari admin untuk persetujuan dari product anda akan jual, paling lama 1x24 jam',
+                'Product ditambahkan ke dalam cart!',
                 'success'
               )
             console.log(res.data)
