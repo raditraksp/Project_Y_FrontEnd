@@ -10,7 +10,10 @@ import Register from './Register'
 
 // User
 import Profile from './Users/Profile'
-// import ForgetPasswordEmail from './Users/ForgetPasswordEmail'
+import ForgetPasswordEmail from './Users/ForgetPasswordEmail'
+import ChangePassword from './Users/ChangePassword'
+import EditPassword from './Users/EditPassword'
+
 
 // Product
 import ManageProduct from './Product/ManageProduct'
@@ -48,10 +51,11 @@ export default function App() {
                     <Route path="/" exact component={Home} />
                     <Route path="/register" component={Register} />
                     <Route path="/profile" component={Profile} />
-                    {/* <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} /> */}
-                    
+                    <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} />
+                    <Route path="/changePassword/:token/:user_id" component={ChangePassword} />
+                    <Route path="/editPassword/" component={EditPassword} />
+                    {/* <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} /> */}                    
                     <Route path="/products/cart" component={Cart} />
-
                     <Route path="/manageproduct" component={ManageProduct} />
                     <Route path="/manageproductadmin" component={ManageProductAdmin} />
                     <Route path="/product/addproduct" component={AddProduct} />
