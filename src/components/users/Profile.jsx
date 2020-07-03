@@ -59,7 +59,7 @@ export default function Profile() {
       
    }, []
    )
-      console.log()
+
    const onSaveData = () => {
       const name = nameRef.current.value
       const phone_number = phone_numberRef.current.value
@@ -94,8 +94,8 @@ export default function Profile() {
               .then((res) => { 
 
                   Swal.fire(
-                      'avatar Updated!',
-                      'Data avatar berhasil diubah',
+                      'Profile Updated!',
+                      'Profile berhasil diubah',
                       'success'
                     )
                   getData()
@@ -188,16 +188,23 @@ export default function Profile() {
                            Name :
                         </div>
                         <input ref={nameRef} type='text' defaultValue={name} className='form-control' required/>
-
                         <div className="card-title ">
-                           Phone Number :
+                           Gender :
                         </div>
-                        <input ref={phone_numberRef} type='text' defaultValue={phone_number} className='form-control'/>
+                        <select ref={genderRef} class="form-control">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        </select>   
+                        
                         
                         <div className="card-title ">
                            Birth of Date :
                         </div>
                         <input ref={birthRef} type='date' defaultValue={birth_of_date} className='form-control'/>
+                        <div className="card-title ">
+                           Phone Number :
+                        </div>               
+                        <input ref={phone_numberRef} type='text' defaultValue={phone_number} className='form-control'/>      
                         <div className="card-title ">
                            Address :
                         </div>
@@ -206,12 +213,8 @@ export default function Profile() {
                            KTP number :
                         </div>
                         <input ref={noktpRef} type='text' defaultValue={ktp_number} className='form-control'/>
-                        <div className="card-title ">
-                           Gender :
-                        </div>
-                        <input ref={genderRef} type='text' defaultValue={WebGLRenderbuffer} className='form-control'/>
                         
-                    </form>
+                        </form>
                            </div>
                            <div className="col-6">
                                           <form className='form-group'>

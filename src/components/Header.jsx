@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import axios from '../config/api'
 import {loginAction,logoutAction} from '../config/redux/actions'
 import {
@@ -32,8 +32,7 @@ export default function Header() {
     const token = useSelector(state => state.auth.token)
     const role_id = useSelector(state => state.auth.role_id)
 
-    
-        
+    const config = {headers: {Authorization: token}}    
 
     const isToggle = () => setIsOpen((prevState) => !prevState)
     const funModal = () => setModal((prevState) => !prevState)
@@ -54,23 +53,24 @@ export default function Header() {
         })
         .catch(err => alert(err.response.data.message))
         setModal((prevState) => !prevState)
-  }
-       const funLogout = () => {
-           const config = {headers: {Authorization: token}}
-            axios.delete('/logout',config)
-            .then(dispatch(logoutAction())) 
-        }
+    }
+
+    const funLogout = () => {
+        axios.delete('/logout',config)
+        .then(dispatch(logoutAction())) 
+        
+    }
     
 
-  useEffect(() => {
-    renderNav()
- }, [])
+    useEffect(() => {
+        renderNav()
+    }, [])
 
 
     const renderNav = () => {
         // Jika tidak login
-        
-        return !username ? (
+        if(!username){
+        return  (
             <Nav className="ml-auto" navbar>
                 <NavItem>
                     <NavLink tag={Link} to="/register">Register</NavLink>
@@ -79,35 +79,71 @@ export default function Header() {
                     <button onClick={funModal} className="btn btn-outline-secondary mb-2 px-4 btn-block">Login</button>
                 </NavItem>
             </Nav>
-        ) :(
-            <Nav className="ml-auto" navbar>
-                <NavItem>
-                        <NavLink href="/products/cart">Cart</NavLink>
-                    </NavItem>
-                <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret>
-                        Hello, {username}
-                    </DropdownToggle>
-                    <DropdownMenu right>
+        )}
+        // JIKA USER BIASA YANG LOGIN
+        else if (role_id === 2){
+            return (
+                <Nav className="ml-auto" navbar>
+                    <NavItem>
+                            <NavLink href="/products/cart">Cart</NavLink>
+                        </NavItem>
+                    <UncontrolledDropdown nav inNavbar>
+                        <DropdownToggle nav caret>
+                            Hello, {username}
+                        </DropdownToggle>
+                        <DropdownMenu right>
+                            <NavLink tag={Link} to="/profile">
+                                <DropdownItem>Profile</DropdownItem>
+                            </NavLink>
+                            <NavLink tag={Link} to="/historytransactionuser">
+                                <DropdownItem>History Transaction</DropdownItem>
+                            </NavLink>
 
-                        <NavLink tag={Link} to="/manageproduct" >
-                            <DropdownItem> Manage Product</DropdownItem>
-                        </NavLink>
+                            <DropdownItem divider />
 
-                        <NavLink tag={Link} to="/profile">
-                            <DropdownItem>Profile</DropdownItem>
-                        </NavLink>
+                            <NavLink tag={Link} to="/">
+                                <DropdownItem onClick={funLogout}>Logout</DropdownItem>
+                            </NavLink>
 
-                        <DropdownItem divider />
+                        </DropdownMenu>
+                    </UncontrolledDropdown>
+                </Nav>
+            )}
+            //
+            else if (role_id === 3){
+                return (
+                    <Nav className="ml-auto" navbar>
+                        <NavItem>
+                                <NavLink href="/products/cart">Cart</NavLink>
+                            </NavItem>
+                        <UncontrolledDropdown nav inNavbar>
+                            <DropdownToggle nav caret>
+                                Hello, {username}
+                            </DropdownToggle>
+                            <DropdownMenu right>
+    
+                                <NavLink tag={Link} to="/manageproduct" >
+                                    <DropdownItem> Manage Product</DropdownItem>
+                                </NavLink>
 
-                        <DropdownItem onClick={funLogout}>
-                            <a href="/" className="text-decoration-none text-dark">Logout</a>
-                        </DropdownItem>
-
-                    </DropdownMenu>
-                </UncontrolledDropdown>
-            </Nav>
-        )
+                                <NavLink tag={Link} to="/report" >
+                                    <DropdownItem>Report</DropdownItem>
+                                </NavLink>
+    
+                                <NavLink tag={Link} to="/profile">
+                                    <DropdownItem>Profile</DropdownItem>
+                                </NavLink>
+    
+                                <DropdownItem divider />
+    
+                                <NavLink tag={Link} to="/">
+                                    <DropdownItem onClick={funLogout}>Logout</DropdownItem>
+                                </NavLink>
+    
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
+                    </Nav>
+                )}
     }
 
     return role_id != 1 ? (

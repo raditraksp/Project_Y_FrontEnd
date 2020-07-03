@@ -13,6 +13,8 @@ import Profile from './Users/Profile'
 import ForgetPasswordEmail from './Users/ForgetPasswordEmail'
 import ChangePassword from './Users/ChangePassword'
 import EditPassword from './Users/EditPassword'
+import HistoryTransactionUser from './Users/HistoryTransactionUser.jsx'
+import Report from './Users/Report'
 
 
 // Product
@@ -54,6 +56,11 @@ export default function App() {
                     <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} />
                     <Route path="/changePassword/:token/:user_id" component={ChangePassword} />
                     <Route path="/editPassword/" component={EditPassword} />
+                    <Route path="/historytransactionuser/" component={HistoryTransactionUser} />
+                    <Route path="/Report/" component={Report} />
+                    
+
+
                     {/* <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} /> */}                    
                     <Route path="/products/cart" component={Cart} />
                     <Route path="/manageproduct" component={ManageProduct} />

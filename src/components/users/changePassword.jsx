@@ -15,14 +15,14 @@ export default function ChangePassword() {
         const password = passwordRef.current.value
         const password2 = passwordRef2.current.value
         password == password2 ?(
-            axios.patch(`user/forget/${user_id}`,{password})
+            axios.patch(`user/forget/${token}/${user_id}`,{password})
         .then(res => {
             axios.delete(`/deletetoken/${user_id}`)
             alert("password berhasil di ganti")
             window.location = '/'
          })
          .catch(err => {
-            alert(console.log(user_id))
+            console.log(err)
          })
         ) : (alert("password doesnt match"))
         

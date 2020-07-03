@@ -24,7 +24,7 @@ export default function EditPassword() {
 
         axios.patch(`/changepassword`, {oldPassword,newPassword1,newPassword2}, config)
         .then(res => {
-            alert(res)
+            alert("berhasil")
         }).catch( err => {
             console.log(err)
         })
