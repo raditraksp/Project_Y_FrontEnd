@@ -13,6 +13,7 @@ import Profile from './Users/Profile'
 import ForgetPasswordEmail from './Users/ForgetPasswordEmail'
 import ChangePassword from './Users/ChangePassword'
 import EditPassword from './Users/EditPassword'
+import Subscription from './Users/Subscription'
 
 
 // Product
@@ -51,6 +52,7 @@ export default function App() {
                     <Route path="/" exact component={Home} />
                     <Route path="/register" component={Register} />
                     <Route path="/profile" component={Profile} />
+                    <Route path="/subscription" component={Subscription} />
                     <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} />
                     <Route path="/changePassword/:token/:user_id" component={ChangePassword} />
                     <Route path="/editPassword/" component={EditPassword} />

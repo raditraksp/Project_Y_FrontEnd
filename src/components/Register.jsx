@@ -8,10 +8,8 @@ export default function Register() {
    const username = useSelector(state => state.auth.username)
 
    const usernameRef = useRef()
-   const nameRef = useRef()
    const emailRef = useRef()
    const passwordRef = useRef()
-   const phone_numberRef = useRef()
 
    const registerUser = (e) => {
       e.preventDefault()

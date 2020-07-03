@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import axios from '../config/api'
 import {loginAction,logoutAction} from '../config/redux/actions'
 import {
@@ -22,18 +22,20 @@ import {
    ModalBody, 
    ModalFooter 
    } from 'reactstrap';
+import Swal from 'sweetalert2'
+
 
 export default function Header() {
 
     const [isOpen, setIsOpen] = useState(false)
     const [modal, setModal] = useState(false)
+    const [user, setUser] = useState({})
     const username = useSelector(state =>  state.auth.username)
     const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
     const role_id = useSelector(state => state.auth.role_id)
 
-    
-        
+    const config = {headers: {Authorization: token}}    
 
     const isToggle = () => setIsOpen((prevState) => !prevState)
     const funModal = () => setModal((prevState) => !prevState)
@@ -54,65 +56,157 @@ export default function Header() {
         })
         .catch(err => alert(err.response.data.message))
         setModal((prevState) => !prevState)
-  }
-       const funLogout = () => {
-           const config = {headers: {Authorization: token}}
-            axios.delete('/logout',config)
-            .then(dispatch(logoutAction())) 
-        }
-    
+    }
 
-  useEffect(() => {
-    renderNav()
- }, [])
+    useEffect(() => {
+        renderNav()
+        getUserDetail()
+    }, [])
 
+    const getUserDetail = () => {
+        axios.get(`/user/profile`, config)
+        .then((res)=>setUser(res.data.result[0]))
+        .catch((err)=>console.log(err))
+    }
+
+    const funLogout = () => {
+        axios.delete('/logout', config)
+        .then(dispatch(logoutAction())) 
+        
+    }
+
+    const buttonBecomeSeller = () => {
+        
+        if(!user.ktp_number) return alert('Lengkapi profile anda terlebih dahulu')
+
+        Swal.fire({
+            title: 'Apakah kamu yakin ingin menjadi penjual?',
+            text: "Halaman akan terlogout otomatis!",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya!'
+          }).then((res) => {
+            // res.value bernilai true jika kita memilih 'Ya' , sebaliknya
+            if (res.value) {
+                axios.get('/becomeseller', config)
+                .then((result)=> {
+                    axios.delete('/logout', config)
+                    Swal.fire(
+                        'Selamat anda sudah terdaftar sebagai penjual!',
+                        'Mohon login ulang terlebih dahulu',
+                        'success'
+                    )
+                    dispatch(logoutAction())
+                })
+            }
+          })
+
+    }
 
     const renderNav = () => {
         // Jika tidak login
-        
-        return !username ? (
-            <Nav className="ml-auto" navbar>
+        if(!username){
+        return  (
+            <Nav className="bg-transparant font-weight-bold ml-auto" navbar>
                 <NavItem>
                     <NavLink tag={Link} to="/register">Register</NavLink>
                 </NavItem>
                 <NavItem>
-                    <button onClick={funModal} className="btn btn-outline-secondary mb-2 px-4 btn-block">Login</button>
+                    <button onClick={funModal} className="btn btn-outline-secondary font-weight-bold mb-2 px-4 btn-block">Login</button>
                 </NavItem>
             </Nav>
-        ) :(
-            <Nav className="ml-auto" navbar>
-                <NavItem>
-                        <NavLink href="/products/cart">Cart</NavLink>
+        )}else if (role_id === 1){
+            return (
+                <Nav className="bg-transparant ml-auto" navbar>
+                    <NavItem >
+                        <NavLink href="/manageproductadmin">Manage Product Admin</NavLink>
                     </NavItem>
-                <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret>
-                        Hello, {username}
-                    </DropdownToggle>
-                    <DropdownMenu right>
+                    <UncontrolledDropdown nav inNavbar>
+                        <DropdownToggle className="font-weight-bold" nav caret>
+                             Hello, {username}
+                        </DropdownToggle>
+                        <DropdownMenu right>
+                            <NavLink tag={Link} to="/profile">
+                                <DropdownItem>Profile</DropdownItem>
+                            </NavLink>
 
-                        <NavLink tag={Link} to="/manageproduct" >
-                            <DropdownItem> Manage Product</DropdownItem>
-                        </NavLink>
+                            <DropdownItem divider />
 
-                        <NavLink tag={Link} to="/profile">
-                            <DropdownItem>Profile</DropdownItem>
-                        </NavLink>
+                            <NavLink tag={Link} to="/">
+                                <DropdownItem onClick={funLogout}>Logout</DropdownItem>
+                            </NavLink>
 
-                        <DropdownItem divider />
+                        </DropdownMenu>
+                    </UncontrolledDropdown>
+                </Nav>
+            )}
+        // JIKA USER BIASA YANG LOGIN
+        else if (role_id === 2){
+            return (
+                <Nav className="bg-transparant  ml-auto" navbar>
+                    <NavItem>
+                        <button onClick={buttonBecomeSeller} className="btn btn-primary">Become a Seller!</button>
+                    </NavItem>
+                    <NavItem>
+                            <NavLink href="/products/cart">Cart</NavLink>
+                    </NavItem>
+                    <UncontrolledDropdown nav inNavbar>
+                        <DropdownToggle className="font-weight-bold" nav caret>
+                            Hello, {username}
+                        </DropdownToggle>
+                        <DropdownMenu right>
+                            <NavLink tag={Link} to="/profile">
+                                <DropdownItem>Profile</DropdownItem>
+                            </NavLink>
 
-                        <DropdownItem onClick={funLogout}>
-                            <a href="/" className="text-decoration-none text-dark">Logout</a>
-                        </DropdownItem>
+                            <DropdownItem divider />
 
-                    </DropdownMenu>
-                </UncontrolledDropdown>
-            </Nav>
-        )
+                            <NavLink tag={Link} to="/">
+                                <DropdownItem onClick={funLogout}>Logout</DropdownItem>
+                            </NavLink>
+
+                        </DropdownMenu>
+                    </UncontrolledDropdown>
+                </Nav>
+            )}
+            //
+            else if (role_id === 3){
+                return (
+                    <Nav className="bg-transparant ml-auto" navbar>
+                        <NavItem >
+                                <NavLink href="/products/cart">Cart</NavLink>
+                            </NavItem>
+                        <UncontrolledDropdown nav inNavbar>
+                            <DropdownToggle className="font-weight-bold" nav caret>
+                                Hello, {username}
+                            </DropdownToggle>
+                            <DropdownMenu right>
+    
+                                <NavLink tag={Link} to="/manageproduct" >
+                                    <DropdownItem> Manage Product</DropdownItem>
+                                </NavLink>
+    
+                                <NavLink tag={Link} to="/profile">
+                                    <DropdownItem>Profile</DropdownItem>
+                                </NavLink>
+    
+                                <DropdownItem divider />
+    
+                                <NavLink tag={Link} to="/">
+                                    <DropdownItem onClick={funLogout}>Logout</DropdownItem>
+                                </NavLink>
+    
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
+                    </Nav>
+                )}
     }
 
     return role_id != 1 ? (
         <div>
-            <Navbar  color="light" light expand="md">
+            <Navbar  className="bg-transparant" light expand="md">
                 <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>    
                 <NavbarToggler onClick={isToggle} />
                     <Collapse isOpen={isOpen} navbar>
@@ -146,13 +240,8 @@ export default function Header() {
         </div>
     ) : (
         <div>
-            <Navbar color="light" light expand="md">
-                <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>
-                <Nav className="mr-auto" navbar>
-                    <NavItem >
-                        <NavLink href="/manageproductadmin">Manage Product Admin</NavLink>
-                    </NavItem>
-                </Nav>      
+            <Navbar className="bg-transparant" light expand="md">
+                <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>    
                 <NavbarToggler onClick={isToggle} />
                     <Collapse isOpen={isOpen} navbar>
                         
