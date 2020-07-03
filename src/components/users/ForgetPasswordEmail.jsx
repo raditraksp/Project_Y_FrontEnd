@@ -30,10 +30,10 @@ export default function ForgetPasswordEmail() {
                   <form className='form-group'>
                         <div className="card-title ">
                         </div>
-                        <input ref={emailRef} type='text' placeholder="email" className='form-control'/>
+                        <input ref={emailRef} type='text' placeholder="Input your Email" className='form-control'/>
                     </form>
                   
-                  <button onClick={sendEmail} className="btn btn-block btn-dark mt-2 mb-1">verifed email</button>
+                  <button onClick={sendEmail} className="btn btn-block btn-dark mt-2 mb-1">Verify Email</button>
                   </CardBody>
                   </Card>
                 </div>

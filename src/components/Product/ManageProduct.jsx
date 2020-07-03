@@ -9,11 +9,12 @@ export default function ManageProduct() {
 
     
     const token = useSelector(state => state.auth.token)
+    const role_id = useSelector(state => state.auth.role_id)
+    const config = {headers: {Authorization: token}}
 
     const [products, setProducts] = useState([])        
 
     const getData = () => {
-        const config = {headers: {Authorization: token}}
          axios.get('/products/me', config)
             .then(res => setProducts(res.data))
             .catch(err => console.log({err}))
@@ -54,13 +55,12 @@ export default function ManageProduct() {
 
     
 
-
+    
     const renderList = () => {
-        if (products.length === 0) return <div className="text-center"> <h3>No Product Added</h3> </div>
+        if (products.length === 0) return <div className="text-center my-3"> <h3>No Product Added</h3> </div>
         return products.map((product) => {
             const srcPic = `http://localhost:2022/product/picture/${product.product_photo}`
             // simpan ke redux
-
 
             return (
                     <tr> 
@@ -69,9 +69,6 @@ export default function ManageProduct() {
                         </td>
                         <td>
                             {product.product}
-                        </td>
-                        <td>
-                            {/* {product.category} */}
                         </td>
                         <td>
                             {product.status}
@@ -89,7 +86,7 @@ export default function ManageProduct() {
                             {product.price_premium}
                         </td>
                         <td>
-                            <img className="card m-auto" src={srcPic} height="100" width="150" />  
+                            <img className="card m-auto" src={srcPic} height="100" width="150" alt="no pic"/>  
                         </td>
                         <td>
                             <Link to={`/product/editproduct/${product.id}`}>
@@ -106,7 +103,8 @@ export default function ManageProduct() {
         })
     }
     
-    return token ?(
+    if(token && role_id === 3){
+        return  (
         <div className="fluid-container">
             {/* List Product */}
             <h1 className="text-center display-4">Manage Product</h1>
@@ -119,7 +117,6 @@ export default function ManageProduct() {
                     <tr>
                     <th scope="col">ID</th>
                     <th scope="col">PRODUCT NAME</th>
-                    <th scope="col">CATEGORY</th>
                     <th scope="col">STATUS</th>
                     <th scope="col">DETAIL BASIC</th>
                     <th scope="col">BASIC PRICE</th>
@@ -135,7 +132,9 @@ export default function ManageProduct() {
             </table>
             
         </div>
-    ) : (
-      <Redirect to='/' />
-    )
+    )}
+    else {
+    return (
+        <Redirect to='/' />
+    )}
 }

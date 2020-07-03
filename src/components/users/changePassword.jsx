@@ -41,13 +41,13 @@ export default function ChangePassword() {
                   <form className='form-group'>
                         <div className="card-title ">
                         </div>
-                        <input ref={passwordRef} type='password' placeholder="password" className='form-control'/>
+                        <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
                         <div className="card-title ">
                         </div>
-                        <input ref={passwordRef2} type='password' placeholder="password" className='form-control'/>
+                        <input ref={passwordRef2} type='password' placeholder="Confirm Password" className='form-control'/>
                     </form>
                   
-                  <button onClick={sendpassword} className="btn btn-block btn-dark mt-2 mb-1">verifed password</button>
+                  <button onClick={sendpassword} className="btn btn-block btn-dark mt-2 mb-1">Change Password</button>
                   </CardBody>
                   </Card>
                 </div>
