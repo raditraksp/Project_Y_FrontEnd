@@ -105,6 +105,36 @@ export default function Header() {
 
     }
 
+    const buttonSub = () => {
+        
+        if(!user.ktp_number) return alert('Lengkapi profile anda terlebih dahulu')
+
+        Swal.fire({
+            title: 'Apakah kamu yakin ingin menjadi penjual?',
+            text: "Halaman akan terlogout otomatis!",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya!'
+          }).then((res) => {
+            // res.value bernilai true jika kita memilih 'Ya' , sebaliknya
+            if (res.value) {
+                axios.get('/becomeseller', config)
+                .then((result)=> {
+                    axios.delete('/logout', config)
+                    Swal.fire(
+                        'Selamat anda sudah terdaftar sebagai penjual!',
+                        'Mohon login ulang terlebih dahulu',
+                        'success'
+                    )
+                    dispatch(logoutAction())
+                })
+            }
+          })
+
+    }
+
     const renderNav = () => {
         // Jika tidak login
         if(!username){
