@@ -17,7 +17,7 @@ export default function ListProduct(props) {
             return (
                 <div key={product.id} className="card col-2 mx-4 my-4">
                     <a className="text-decoration-none" href={srcDetail}>   
-                        <img className="card-img-top align-self-center mt-2 py-0" src={srcPic} style={{height: 200}} alt="Card image cap"/>
+                        <img className="card-img-top align-self-center mt-2 py-0" src={srcPic} alt="Card image cap"/>
                     </a>
                     <div className="card-body p-0">
                     <div className="row my-1">

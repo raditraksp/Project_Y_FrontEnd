@@ -27,6 +27,7 @@ import Cart from './Product/Cart'
 
 // ADMIN
 import ManageProductAdmin from './Admin/ManageProductAdmin'
+import CheckTransferSub from './Admin/CheckTransferSub'
 
 export default function App() {
 
@@ -56,13 +57,15 @@ export default function App() {
                     <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} />
                     <Route path="/changePassword/:token/:user_id" component={ChangePassword} />
                     <Route path="/editPassword/" component={EditPassword} />
-                    {/* <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} /> */}                    
+                    {/* PRODUCT  */}
                     <Route path="/products/cart" component={Cart} />
                     <Route path="/manageproduct" component={ManageProduct} />
-                    <Route path="/manageproductadmin" component={ManageProductAdmin} />
                     <Route path="/product/addproduct" component={AddProduct} />
                     <Route path="/product/editproduct/:product_id" component={EditProduct} />
                     <Route path="/product/detailproduct/:product_id" component={DetailProduct} />
+                    {/* ADMIN */}
+                    <Route path="/manageproductadmin" component={ManageProductAdmin} />
+                    <Route path="/checkupgrade" component={CheckTransferSub} />
                 </div>
             </BrowserRouter>
             </div>

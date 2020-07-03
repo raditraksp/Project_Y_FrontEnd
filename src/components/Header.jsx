@@ -20,20 +20,22 @@ import {
    Modal,
    ModalHeader, 
    ModalBody, 
-   ModalFooter 
+   ModalFooter, 
+   Label
    } from 'reactstrap';
 import Swal from 'sweetalert2'
 
 
 export default function Header() {
 
+    const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false)
     const [modal, setModal] = useState(false)
     const [user, setUser] = useState({})
     const username = useSelector(state =>  state.auth.username)
-    const dispatch = useDispatch()
     const token = useSelector(state => state.auth.token)
     const role_id = useSelector(state => state.auth.role_id)
+    const status_sub = useSelector(state => state.auth.status_subscription)
 
     const config = {headers: {Authorization: token}}    
 
@@ -48,10 +50,10 @@ export default function Header() {
         const password = passwordRef.current.value
 
         axios.post('/user/login', {username, password})
-        .then(({data : {token, user : {id, username, role_id, email}}}) => {
+        .then(({data : {token, user : {id, username, role_id, email, status_subscription}}}) => {
            
            // simpan ke redux
-           dispatch(loginAction({id, username, token, role_id, email}))
+           dispatch(loginAction({id, username, token, role_id, email, status_subscription}))
 
         })
         .catch(err => alert(err.response.data.message))
@@ -59,8 +61,8 @@ export default function Header() {
     }
 
     useEffect(() => {
-        renderNav()
         getUserDetail()
+        renderNav()
     }, [])
 
     const getUserDetail = () => {
@@ -105,36 +107,6 @@ export default function Header() {
 
     }
 
-    const buttonSub = () => {
-        
-        if(!user.ktp_number) return alert('Lengkapi profile anda terlebih dahulu')
-
-        Swal.fire({
-            title: 'Apakah kamu yakin ingin menjadi penjual?',
-            text: "Halaman akan terlogout otomatis!",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya!'
-          }).then((res) => {
-            // res.value bernilai true jika kita memilih 'Ya' , sebaliknya
-            if (res.value) {
-                axios.get('/becomeseller', config)
-                .then((result)=> {
-                    axios.delete('/logout', config)
-                    Swal.fire(
-                        'Selamat anda sudah terdaftar sebagai penjual!',
-                        'Mohon login ulang terlebih dahulu',
-                        'success'
-                    )
-                    dispatch(logoutAction())
-                })
-            }
-          })
-
-    }
-
     const renderNav = () => {
         // Jika tidak login
         if(!username){
@@ -147,11 +119,15 @@ export default function Header() {
                     <button onClick={funModal} className="btn btn-outline-secondary font-weight-bold mb-2 px-4 btn-block">Login</button>
                 </NavItem>
             </Nav>
+            // ADMIN
         )}else if (role_id === 1){
             return (
                 <Nav className="bg-transparant ml-auto" navbar>
                     <NavItem >
                         <NavLink href="/manageproductadmin">Manage Product Admin</NavLink>
+                    </NavItem>
+                    <NavItem >
+                        <NavLink href="/checkupgrade">Check Upgrade</NavLink>
                     </NavItem>
                     <UncontrolledDropdown nav inNavbar>
                         <DropdownToggle className="font-weight-bold" nav caret>
@@ -182,6 +158,12 @@ export default function Header() {
                     <NavItem>
                             <NavLink href="/products/cart">Cart</NavLink>
                     </NavItem>
+                    <NavItem>
+                            <NavLink href="/products/cart">Order</NavLink>
+                    </NavItem>
+                    <NavItem>
+                            <NavLink href="/products/cart">Progress</NavLink>
+                    </NavItem>
                     <UncontrolledDropdown nav inNavbar>
                         <DropdownToggle className="font-weight-bold" nav caret>
                             Hello, {username}
@@ -201,13 +183,45 @@ export default function Header() {
                     </UncontrolledDropdown>
                 </Nav>
             )}
-            //
-            else if (role_id === 3){
+            // SELLER BASSIC
+            else if (role_id === 3 && status_sub === 1){
                 return (
                     <Nav className="bg-transparant ml-auto" navbar>
-                        <NavItem >
-                                <NavLink href="/products/cart">Cart</NavLink>
-                            </NavItem>
+                        <NavItem>
+                            <Link to="/subscription">
+                                <button className="btn btn-primary">Upgrade to Premium!</button>
+                            </Link>
+                        </NavItem>
+                        <UncontrolledDropdown nav inNavbar>
+                            <DropdownToggle className="font-weight-bold" nav caret>
+                                Hello, {username}
+                            </DropdownToggle>
+                            <DropdownMenu right>
+    
+                                <NavLink tag={Link} to="/manageproduct" >
+                                    <DropdownItem> Manage Product</DropdownItem>
+                                </NavLink>
+    
+                                <NavLink tag={Link} to="/profile">
+                                    <DropdownItem>Profile</DropdownItem>
+                                </NavLink>
+    
+                                <DropdownItem divider />
+    
+                                <NavLink tag={Link} to="/">
+                                    <DropdownItem onClick={funLogout}>Logout</DropdownItem>
+                                </NavLink>
+    
+                            </DropdownMenu>
+                        </UncontrolledDropdown>
+                    </Nav>
+                )}
+            else if (role_id === 3 && status_sub === 2){
+                return (
+                    <Nav className="bg-transparant ml-auto" navbar>
+                    <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">
+                        <Label className="ml-auto"> PREMIUM MEMBER </Label> 
+                    </NavbarBrand>    
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle className="font-weight-bold" nav caret>
                                 Hello, {username}
@@ -234,9 +248,9 @@ export default function Header() {
                 )}
     }
 
-    return role_id != 1 ? (
-        <div>
-            <Navbar  className="bg-transparant" light expand="md">
+    return (token) ?(
+        <div className="container-fluid mx-auto">
+            <Navbar  className="bg-white" light expand="md">
                 <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>    
                 <NavbarToggler onClick={isToggle} />
                     <Collapse isOpen={isOpen} navbar>
@@ -244,6 +258,29 @@ export default function Header() {
                         {renderNav()}
 
                     </Collapse>          
+            </Navbar>
+            <Navbar  className="bg-light" expand="md">
+                <NavItem className="mx-auto">
+                    <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Programming & Tech</NavLink>
+                </NavItem>
+                <NavItem className="mx-auto">
+                    <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Writing & Translation</NavLink>
+                </NavItem>
+                <NavItem className="mx-auto">
+                    <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Video & Animation</NavLink>
+                </NavItem>
+                <NavItem className="mx-auto">
+                    <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Music & Audio</NavLink>
+                </NavItem>
+                <NavItem className="mx-auto">
+                    <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Design & Graphic</NavLink>
+                </NavItem>
+                <NavItem className="mx-auto">
+                    <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Business</NavLink>
+                </NavItem>
+                <NavItem className="mx-auto">
+                    <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Lifestyle</NavLink>
+                </NavItem>
             </Navbar>
 
             <Modal isOpen={modal} toggle={funModal}>
@@ -269,8 +306,8 @@ export default function Header() {
             </Modal>
         </div>
     ) : (
-        <div>
-            <Navbar className="bg-transparant" light expand="md">
+        <div className="container-fluid mx-auto">
+            <Navbar  className="bg-transparant" light expand="md">
                 <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>    
                 <NavbarToggler onClick={isToggle} />
                     <Collapse isOpen={isOpen} navbar>

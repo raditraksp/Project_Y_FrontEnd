@@ -54,7 +54,6 @@ export default function Profile() {
       
    }, []
    )
-      console.log()
    const onSaveData = () => {
       const name = nameRef.current.value
       const phone_number = phone_numberRef.current.value

@@ -38,7 +38,7 @@ export default function Home() {
         alert('alert search')
     }
 
-    const renderBackground = () => {
+    const renderJumbotron = () => {
         if(!token){
             return (
                 <div className="jumbotron">
@@ -63,9 +63,32 @@ export default function Home() {
 
         return (
             <div>
-                {renderBackground()}
+                <div>
+                    {renderJumbotron()}
+                </div>
                 {/* List Products */}
-                {renderProducts()}
+                <div className="w-75 mx-auto">
+                    <div className="card" style={{marginTop:100}}>
+                        <label className="h4 font-weight-bold pl-3 pt-3"> RECOMMENDED PRODUCT</label>
+                        {renderProducts()}
+                        <a className="text-decoration-none h6 font-weight-bold pr-3 text-dark ml-auto" href="#">More ... </a>
+                    </div>
+                    <div className="card" style={{marginTop:100}}>
+                        <label className="h4 font-weight-bold pl-3 pt-3"> BEST RATING</label>
+                        {renderProducts()}
+                        <a className="text-decoration-none h6 font-weight-bold pr-3 text-dark ml-auto" href="#">More ... </a>
+                    </div>
+                    <div className="card" style={{marginTop:100}}>
+                        <label className="h4 font-weight-bold pl-3 pt-3"> NEWEST PRODUCT ADDED</label>
+                        {renderProducts()}
+                        <a className="text-decoration-none h6 font-weight-bold pr-3 text-dark ml-auto" href="#">More ... </a>
+                    </div >
+                    <div className="card" style={{marginTop:100}}>
+                        <label className="h4 font-weight-bold pl-3 pt-3"> POPULAR PRODUCT </label>
+                        {renderProducts()}
+                        <a className="text-decoration-none h6 font-weight-bold pr-3 text-dark ml-auto" href="#">More ... </a>
+                    </div>
+                </div>
             </div>
         )
     }
