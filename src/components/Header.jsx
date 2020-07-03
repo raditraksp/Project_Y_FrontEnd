@@ -82,8 +82,8 @@ export default function Header() {
         ) :(
             <Nav className="ml-auto" navbar>
                 <NavItem>
-                        <NavLink href="/products/cart">Cart</NavLink>
-                    </NavItem>
+                    <NavLink href="/products/cart">Cart</NavLink>
+                </NavItem>
                 <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
                         Hello, {username}
@@ -96,6 +96,10 @@ export default function Header() {
 
                         <NavLink tag={Link} to="/profile">
                             <DropdownItem>Profile</DropdownItem>
+                        </NavLink>
+
+                        <NavLink tag={Link} to="/orders">
+                            <DropdownItem>Orders</DropdownItem>       
                         </NavLink>
 
                         <DropdownItem divider />

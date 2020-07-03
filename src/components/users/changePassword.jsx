@@ -22,7 +22,7 @@ export default function ChangePassword() {
             window.location = '/'
          })
          .catch(err => {
-            alert(console.log(user_id))
+            alert("tidak berhasil terganti")
          })
         ) : (alert("password doesnt match"))
         

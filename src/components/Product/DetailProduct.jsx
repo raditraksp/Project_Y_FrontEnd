@@ -23,9 +23,6 @@ export default function DetailProduct() {
         getData()
      }, [])
 
-
-    
-
     const addToCart = (price, detail) => {
 
         if (!token) return alert ('Anda Belum Login')
