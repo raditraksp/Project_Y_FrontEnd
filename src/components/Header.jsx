@@ -31,7 +31,13 @@ export default function Header() {
     const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false)
     const [modal, setModal] = useState(false)
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState({})    
+    const [checkSearch, setCheckSearch] = useState("")
+
+    const searchRef = useRef()
+
+        
+           
     const username = useSelector(state =>  state.auth.username)
     const token = useSelector(state => state.auth.token)
     const role_id = useSelector(state => state.auth.role_id)
@@ -45,6 +51,13 @@ export default function Header() {
     const usernameRef = useRef()
     const passwordRef = useRef()
 
+    const onButtonSearch = () => {
+        const search = searchRef.current.value
+        
+        if(search == "") return console.log('inputan kosong')
+        setCheckSearch(`/searchproduct/${search}`)
+ }
+
     const onButtonClick = () => {
         const username = usernameRef.current.value
         const password = passwordRef.current.value
@@ -57,6 +70,11 @@ export default function Header() {
 
         })
         .catch(err => alert(err.response.data.message))
+        setModal((prevState) => !prevState)
+    }
+
+    const forgetPassword = () => {
+        window.location.href = '/forgetPasswordEmail'
         setModal((prevState) => !prevState)
     }
 
@@ -137,6 +155,9 @@ export default function Header() {
                             <NavLink tag={Link} to="/profile">
                                 <DropdownItem>Profile</DropdownItem>
                             </NavLink>
+                            <NavLink tag={Link} to="/historytransactionuser">
+                                <DropdownItem>History Transaction</DropdownItem>
+                            </NavLink>
 
                             <DropdownItem divider />
 
@@ -171,6 +192,9 @@ export default function Header() {
                         <DropdownMenu right>
                             <NavLink tag={Link} to="/profile">
                                 <DropdownItem>Profile</DropdownItem>
+                            </NavLink>
+                            <NavLink tag={Link} to="/report">
+                                <DropdownItem>Report</DropdownItem>
                             </NavLink>
 
                             <DropdownItem divider />
@@ -252,38 +276,49 @@ export default function Header() {
         <div className="container-fluid mx-auto">
             <Navbar  className="bg-white" light expand="md">
                 <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>    
+                <div className="row w-25 mx-auto my-2">
+                    <div className="col-10 p-0">
+                        <input ref={searchRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Try "logo design"'/>
+                    </div>
+                    <div className="col-2 p-0">
+                        {/* <button onClick={onButtonSearch} className="btn btn-primary btn-lg my-auto" >Search</button> */}
+                        <Link to={checkSearch }>
+                            <button className="btn btn-primary btn-lg my-auto" onClick={onButtonSearch} >Search</button>
+                        </Link>
+                    </div>
+                </div>
                 <NavbarToggler onClick={isToggle} />
                     <Collapse isOpen={isOpen} navbar>
                         
                         {renderNav()}
 
                     </Collapse>          
-            </Navbar>
-            <Navbar  className="bg-light" expand="md">
-                <NavItem className="mx-auto">
-                    <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Programming & Tech</NavLink>
-                </NavItem>
-                <NavItem className="mx-auto">
-                    <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Writing & Translation</NavLink>
-                </NavItem>
-                <NavItem className="mx-auto">
-                    <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Video & Animation</NavLink>
-                </NavItem>
-                <NavItem className="mx-auto">
-                    <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Music & Audio</NavLink>
-                </NavItem>
-                <NavItem className="mx-auto">
-                    <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Design & Graphic</NavLink>
-                </NavItem>
-                <NavItem className="mx-auto">
-                    <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Business</NavLink>
-                </NavItem>
-                <NavItem className="mx-auto">
-                    <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Lifestyle</NavLink>
-                </NavItem>
-            </Navbar>
+                </Navbar>
+                <Navbar  className="bg-light" expand="md">
+                    <NavItem className="mx-auto">
+                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Programming & Tech</NavLink>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Writing & Translation</NavLink>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Video & Animation</NavLink>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Music & Audio</NavLink>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Design & Graphic</NavLink>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Business</NavLink>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Lifestyle</NavLink>
+                    </NavItem>
+                </Navbar>
 
-            <Modal isOpen={modal} toggle={funModal}>
+            {/* <Modal isOpen={modal} toggle={funModal}>
                         
                 <ModalBody>
                     <div className="border-bottom border-secondary card-title text-center ">
@@ -298,17 +333,26 @@ export default function Header() {
                         </div>
                         <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
                     </form>
-                    <NavLink tag={Link} to="/forgetPasswordEmail">
-                            <DropdownItem>Forget Password?</DropdownItem>
-                        </NavLink>
-                    <button className="btn btn-success btn-block" onClick={onButtonClick} >Login</button>
+                    <button className="btn btn-outline-dark mb-2" onClick={forgetPassword} >Forget password?</button>
+                    <button className="btn btn-dark btn-block" onClick={onButtonClick} >Login</button>
                 </ModalBody>
-            </Modal>
+            </Modal> */}
         </div>
     ) : (
         <div className="container-fluid mx-auto">
             <Navbar  className="bg-transparant" light expand="md">
                 <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>    
+                <div className="row w-25 mx-auto my-2">
+                    <div className="col-10 p-0">
+                        <input ref={searchRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Try "logo design"'/>
+                    </div>
+                    <div className="col-2 p-0">
+                        {/* <button onClick={onButtonSearch} className="btn btn-primary btn-lg my-auto" >Search</button> */}
+                        <Link to={checkSearch }>
+                            <button className="btn btn-primary btn-lg my-auto" onClick={onButtonSearch} >Search</button>
+                        </Link>
+                    </div>
+                </div>
                 <NavbarToggler onClick={isToggle} />
                     <Collapse isOpen={isOpen} navbar>
                         
@@ -332,9 +376,7 @@ export default function Header() {
                         </div>
                         <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
                     </form>
-                    <NavLink tag={Link} to="/forgetPasswordEmail">
-                            <DropdownItem>Forget Password?</DropdownItem>
-                        </NavLink>
+                    <button onClick={forgetPassword} >Forget password?</button>
                     <button className="btn btn-success btn-block" onClick={onButtonClick} >Login</button>
                 </ModalBody>
             </Modal>

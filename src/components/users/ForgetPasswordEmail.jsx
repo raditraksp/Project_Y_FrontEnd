@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from 'react'
 import {Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button} from 'reactstrap'
 import axios from '../../config/api'
+import Swal from 'sweetalert2'
 
 export default function ForgetPasswordEmail() {
 
@@ -12,10 +13,14 @@ export default function ForgetPasswordEmail() {
         const email = emailRef.current.value
         axios.post('user/forget',{email})
         .then(res => {
-            alert(res.data.message)
+                Swal.fire('Silakan cek email kamu untuk verifikasi')
          })
          .catch(err => {
-            alert(err.response.data.message)
+            Swal.fire({
+                icon: 'error',
+                title: '',
+                text: 'Email tidak di temukan',
+              })
          })
    
          

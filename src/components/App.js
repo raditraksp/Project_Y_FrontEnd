@@ -13,6 +13,8 @@ import Profile from './Users/Profile'
 import ForgetPasswordEmail from './Users/ForgetPasswordEmail'
 import ChangePassword from './Users/ChangePassword'
 import EditPassword from './Users/EditPassword'
+import HistoryTransactionUser from './Users/HistoryTransactionUser.jsx'
+import Report from './Users/Report'
 import Subscription from './Users/Subscription'
 
 
@@ -21,6 +23,7 @@ import ManageProduct from './Product/ManageProduct'
 import AddProduct from './Product/AddProduct'
 import EditProduct from './Product/EditProduct'
 import DetailProduct from './Product/DetailProduct'
+import SearchProduct from './Product/SearchProduct'
 
 // CART
 import Cart from './Product/Cart'
@@ -57,12 +60,18 @@ export default function App() {
                     <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} />
                     <Route path="/changePassword/:token/:user_id" component={ChangePassword} />
                     <Route path="/editPassword/" component={EditPassword} />
+                    <Route path="/historytransactionuser/" component={HistoryTransactionUser} />
+                    <Route path="/report/" component={Report} />
+
+
                     {/* PRODUCT  */}
+                    {/* <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} /> */}                    
                     <Route path="/products/cart" component={Cart} />
                     <Route path="/manageproduct" component={ManageProduct} />
                     <Route path="/product/addproduct" component={AddProduct} />
                     <Route path="/product/editproduct/:product_id" component={EditProduct} />
                     <Route path="/product/detailproduct/:product_id" component={DetailProduct} />
+                    <Route path="/searchproduct/:product_name" component={SearchProduct} />
                     {/* ADMIN */}
                     <Route path="/manageproductadmin" component={ManageProductAdmin} />
                     <Route path="/checkupgrade" component={CheckTransferSub} />

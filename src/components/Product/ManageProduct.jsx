@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import { useSelector } from 'react-redux'
 import axios from '../../config/api'
 import Swal from 'sweetalert2'
@@ -11,6 +11,7 @@ export default function ManageProduct() {
     const token = useSelector(state => state.auth.token)
     const role_id = useSelector(state => state.auth.role_id)
     const config = {headers: {Authorization: token}}
+    const searchRef = useRef()
 
     const [products, setProducts] = useState([])        
 
@@ -51,6 +52,21 @@ export default function ManageProduct() {
                 })
             }
           })
+    }
+
+    const onButtonSearch = () => {
+        const search = searchRef.current.value
+        axios.get('/products')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return (
+                    data.product.toLowerCase().includes(search.toLowerCase())
+                )
+            })
+            setProducts(filterResult)
+        })
+        
     }
 
     
@@ -111,6 +127,17 @@ export default function ManageProduct() {
             <Link to="/product/addproduct">
                 <button type="button" className="btn btn-success mb-2 px-4 btn-block w-25 float-right mr-3">Add Product</button>
             </Link>
+
+            <div className="row w-25 mx-2 mb-5">
+                <div className="col-10 p-0">
+                    <input ref={searchRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Try "logo design"'/>
+                </div>
+                <div className="col-2 p-0">
+                    {/* <button onClick={onButtonSearch} className="btn btn-primary btn-lg my-auto" >Search</button> */}
+                        <button className="btn btn-primary btn-lg my-auto" onClick={onButtonSearch} >Search</button>
+                </div>
+            </div>
+
             <label className="ml-3 font-italic">Note: Status 0 = Pending, Status 1 = Approved, Status 2 = Rejected</label>
             <table class="table table-hover text-center mb-5">
                 <thead>
