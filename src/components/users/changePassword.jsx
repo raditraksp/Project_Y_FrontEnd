@@ -12,28 +12,34 @@ export default function ChangePassword() {
     const passwordRef = useRef()
     const passwordRef2 = useRef()
     const {token,user_id} = useParams()
+    const tokenRedux = useSelector(state => state.auth.token)
+    const user_idToken = useSelector(state => state.auth.user_id)
     const sendpassword = () => {
         const password = passwordRef.current.value
         const password2 = passwordRef2.current.value
-        password == password2 ?(
-            axios.patch(`user/forget/${token}/${user_id}`,{password})
-        .then(res => {
-            axios.delete(`/deletetoken/${user_id}`)
-            Swal.fire('Password berhasil di ganti')
-            window.location = '/'
-         })
-         .catch(err => {
-            alert(err)
-         })
-        ) : (Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-            footer: '<a href>Why do I have this issue?</a>'
-          }))
-        
-   
-         
+        tokenRedux == token && user_idToken == user_id ?(
+            password == password2 ?(
+                axios.patch(`user/forget/${token}/${user_id}`,{password})
+            .then(res => {
+                axios.delete(`/deletetoken/${user_id}`)
+                Swal.fire('Password berhasil di ganti')
+                window.location = '/'
+             })
+             .catch(err => {
+                alert(err)
+             })
+            ) : (Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password tidak sama',
+              }))   
+        ) : (
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Pastikan kamu menggunakan Link yang dari email',
+              })
+        )
     }
 
     return (
