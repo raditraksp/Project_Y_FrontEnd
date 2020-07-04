@@ -12,6 +12,7 @@ export default function DetailProduct() {
     
     
     const token = useSelector(state => state.auth.token)
+    const role_id = useSelector(state => state.auth.role_id)
     const id = useSelector(state => state.auth.id)
     const config = {headers: {Authorization: token}}
     
@@ -51,6 +52,7 @@ export default function DetailProduct() {
     const addToCart = (price, detail) => {
 
         if (!token) return alert ('Anda Belum Login')
+        if (role_id ===3) return alert ('Penjual tidak bisa membeli product, Silahkan login/mendaftar sebagai pembeli')
         const data = {
             user_id :id,
             seller_id:products.user_id,

@@ -1,14 +1,41 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React, { useState, useEffect, useRef } from 'react'
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button
   } from 'reactstrap';
+import {useParams} from 'react-router-dom'
+import { useSelector } from 'react-redux'
+// Import action creator
+// import {onLoginUser} from '../actions/index'
+// Akan me-redirect ke alamat tertentu
+// import ListProduct from '.'
+import axios from '../../config/api'
 
 
-export default function ListProduct(props) {    
+export default function SearchProduct() {   
+    let {product_name} = useParams()
+    const [products, setProducts] = useState([])
+
+    useEffect(() => {
+        getData()
+     }, [])
+
     
-    const renderList = props.products.map((product) => {
+    const getData = () => {
+        axios.get('/products')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return (
+                    data.product.toLowerCase().includes(product_name.toLowerCase())
+                )
+            })
+            setProducts(filterResult)
+        })
+        
+    }
+    
+    const renderSearch = products.map((product) => {
             const srcPic = `http://localhost:2022/product/picture/${product.product_photo}`
             const srcDetail = `/product/detailproduct/${product.id}`
             const sellerAvatar = `http://localhost:2022/user/avatar/${product.user_id}?unq=${new Date()}`
@@ -42,7 +69,7 @@ export default function ListProduct(props) {
     })
     return (
             <div className= "row">
-                {renderList}    
+                {renderSearch}    
             </div>
         
     )
