@@ -4,6 +4,7 @@ import {Card, CardImg, CardText, CardBody,
 import { useSelector } from 'react-redux'
 import { useParams, Redirect } from 'react-router-dom'
 import axios from '../../config/api'
+import Swal from 'sweetalert2'
 
 
 export default function ChangePassword() {
@@ -18,13 +19,18 @@ export default function ChangePassword() {
             axios.patch(`user/forget/${token}/${user_id}`,{password})
         .then(res => {
             axios.delete(`/deletetoken/${user_id}`)
-            alert("password berhasil di ganti")
+            Swal.fire('Password berhasil di ganti')
             window.location = '/'
          })
          .catch(err => {
-            console.log(err)
+            alert(err)
          })
-        ) : (alert("password doesnt match"))
+        ) : (Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: '<a href>Why do I have this issue?</a>'
+          }))
         
    
          
@@ -41,13 +47,13 @@ export default function ChangePassword() {
                   <form className='form-group'>
                         <div className="card-title ">
                         </div>
-                        <input ref={passwordRef} type='password' placeholder="password" className='form-control'/>
+                        <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
                         <div className="card-title ">
                         </div>
-                        <input ref={passwordRef2} type='password' placeholder="password" className='form-control'/>
+                        <input ref={passwordRef2} type='password' placeholder="Confirm Password" className='form-control'/>
                     </form>
                   
-                  <button onClick={sendpassword} className="btn btn-block btn-dark mt-2 mb-1">verifed password</button>
+                  <button onClick={sendpassword} className="btn btn-block btn-dark mt-2 mb-1">Change Password</button>
                   </CardBody>
                   </Card>
                 </div>
