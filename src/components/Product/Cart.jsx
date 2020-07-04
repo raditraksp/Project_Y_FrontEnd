@@ -6,7 +6,7 @@ import {Link, Redirect} from 'react-router-dom'
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button
-  } from 'reactstrap';
+} from 'reactstrap';
 
 
 export default function Cart() {    
@@ -17,14 +17,14 @@ export default function Cart() {
 
     const getData = () => {
         const config = {headers: {Authorization: token}}
-         axios.get('/products/cart', config)
+        axios.get('/products/cart', config)
             .then(res => setCart(res.data))
             .catch(err => console.log({err}))
     } 
 
     useEffect(() => {
         getData()
-     }, [])
+    }, [])
 
      // button delete product
     const deleteCart = (cart_id) => {
@@ -36,7 +36,7 @@ export default function Cart() {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ya!'
-          }).then((res) => {
+        }).then((res) => {
             // res.value bernilai true jika kita memilih 'Ya' , sebaliknya
             if (res.value) {
                 const config = {headers: {Authorization: token}}
@@ -51,7 +51,7 @@ export default function Cart() {
                     getData() 
                 })
             }
-          })
+        })
     }
 
     // button checkout
@@ -64,7 +64,7 @@ export default function Cart() {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ya!'
-          }).then((res) => {
+        }).then((res) => {
             // res.value bernilai true jika kita memilih 'Ya' , sebaliknya
             if (res.value) {
                 const config = {headers: {Authorization: token}}
@@ -81,7 +81,7 @@ export default function Cart() {
                     getData() 
                 })
             }
-          })
+        })
     }
     
     const renderList = () => {
@@ -153,5 +153,5 @@ export default function Cart() {
         
     ) : (
         <Redirect to='/' />
-      )
+    )
 }

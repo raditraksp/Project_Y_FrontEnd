@@ -128,7 +128,6 @@ export default function ManageProductAdmin() {
                             </Link>
                         </td>
                     </tr>
-
         )
         })
     }
@@ -159,8 +158,7 @@ export default function ManageProductAdmin() {
                     <tbody>
                         {renderList()}
                     </tbody>
-                </table>
-              
+                </table>             
             </div>
     ) : (
         <Redirect to='/' />

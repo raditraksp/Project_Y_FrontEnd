@@ -3,7 +3,7 @@ const init = {
    id: "",
    username: "",
    token : "",
-   role : ""
+   role_id: ""
 }
 
 export default (state = init , {type, payload}) => {

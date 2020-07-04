@@ -103,11 +103,10 @@ export default function Profile() {
           }
         })
   }
-
+  
   const changeImage = (e) => {
      setAvatar({avatar : URL.createObjectURL(e.target.files[0])})
-  }
-
+   }
 
   const onSavePhoto = () => {
    const data = new FormData()
@@ -131,7 +130,7 @@ export default function Profile() {
            const config = {headers: {Authorization: token}}
 
            axios.post(`/user/avatar`, data, config)
-           .then((res) => { 
+           .then(() => { 
 
                Swal.fire(
                    'avatar Updated!',
@@ -214,10 +213,10 @@ export default function Profile() {
                     </form>
                            </div>
                            <div className="col-6">
-                                          <form className='form-group'>
+                              <form className='form-group'>
                                  <div className="card-title mt-5">
                                  </div>
-                                 <img className="card ml-3" src={avatarSrc} height="200" width="200" />  
+                                 <img className="card ml-3" src={avatar.avatar} height="200" width="200" />  
                                  <label >Avatar : </label>
                                  <input onChange={changeImage} ref={avatarRef} type='file' className='form-control'/>  
                               </form>
