@@ -58,6 +58,11 @@ export default function Header() {
         setModal((prevState) => !prevState)
     }
 
+    const forgetPassword = () => {
+        window.location.href = '/forgetPasswordEmail'
+        setModal((prevState) => !prevState)
+    }
+
     useEffect(() => {
         renderNav()
         getUserDetail()
@@ -161,6 +166,9 @@ export default function Header() {
                             <NavLink tag={Link} to="/profile">
                                 <DropdownItem>Profile</DropdownItem>
                             </NavLink>
+                            <NavLink tag={Link} to="/historytransactionuser">
+                                <DropdownItem>History Transaction</DropdownItem>
+                            </NavLink>
 
                             <DropdownItem divider />
 
@@ -189,6 +197,9 @@ export default function Header() {
                         <DropdownMenu right>
                             <NavLink tag={Link} to="/profile">
                                 <DropdownItem>Profile</DropdownItem>
+                            </NavLink>
+                            <NavLink tag={Link} to="/report">
+                                <DropdownItem>Report</DropdownItem>
                             </NavLink>
 
                             <DropdownItem divider />
@@ -261,10 +272,8 @@ export default function Header() {
                         </div>
                         <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
                     </form>
-                    <NavLink tag={Link} to="/forgetPasswordEmail">
-                            <DropdownItem>Forget Password?</DropdownItem>
-                        </NavLink>
-                    <button className="btn btn-success btn-block" onClick={onButtonClick} >Login</button>
+                    <button className="btn btn-outline-dark mb-2" onClick={forgetPassword} >Forget password?</button>
+                    <button className="btn btn-dark btn-block" onClick={onButtonClick} >Login</button>
                 </ModalBody>
             </Modal>
         </div>
@@ -280,7 +289,7 @@ export default function Header() {
                     </Collapse>          
             </Navbar>
 
-            <Modal isOpen={modal} toggle={funModal}>
+            {/* <Modal isOpen={modal} toggle={funModal}>
                         
                 <ModalBody>
                     <div className="border-bottom border-secondary card-title text-center ">
@@ -295,12 +304,10 @@ export default function Header() {
                         </div>
                         <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
                     </form>
-                    <NavLink tag={Link} to="/forgetPasswordEmail">
-                            <DropdownItem>Forget Password?</DropdownItem>
-                        </NavLink>
+                    <button onClick={forgetPassword} >Forget password?</button>
                     <button className="btn btn-success btn-block" onClick={onButtonClick} >Login</button>
                 </ModalBody>
-            </Modal>
+            </Modal> */}
         </div>
     )
 }

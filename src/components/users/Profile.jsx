@@ -39,14 +39,8 @@ export default function Profile() {
       axios.get(`/user/profile`, config)
          .then(res => setUser(res.data.result[0]))
          
-         .catch(err => alert(err.response.data.message))
+         .catch(err => console.log(err))
 
-         axios.get(`/user/profile`, config)
-         .then(res => setAvatar(res.data.avatar))
-         
-         .catch(err => alert(err.response.data.message))
-
-         
    }
 
    useEffect(() => {
@@ -54,7 +48,6 @@ export default function Profile() {
       
    }, []
    )
-      console.log()
    const onSaveData = () => {
       const name = nameRef.current.value
       const phone_number = phone_numberRef.current.value
@@ -62,8 +55,6 @@ export default function Profile() {
       const address = addressRef.current.value
       const ktp_number = noktpRef.current.value
       const gender = genderRef.current.value
-
-      const config = {headers: {Authorization: token}}
       const data = {
          name, 
          phone_number, 
@@ -94,6 +85,8 @@ export default function Profile() {
                       'success'
                     )
                   getData()
+              }).catch((err) => {
+                 console.log(err)
               })
           }
         })
@@ -183,6 +176,13 @@ export default function Profile() {
                            Name :
                         </div>
                         <input ref={nameRef} type='text' defaultValue={name} className='form-control' required/>
+                        <div className="card-title ">
+                           Gender :
+                        </div>
+                        <select ref={genderRef} className="form-control">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        </select>
 
                         <div className="card-title ">
                            Phone Number :
@@ -201,10 +201,7 @@ export default function Profile() {
                            KTP number :
                         </div>
                         <input ref={noktpRef} type='text' defaultValue={ktp_number} className='form-control'/>
-                        <div className="card-title ">
-                           Gender :
-                        </div>
-                        <input ref={genderRef} type='text' defaultValue={WebGLRenderbuffer} className='form-control'/>
+                        
                         
                     </form>
                            </div>

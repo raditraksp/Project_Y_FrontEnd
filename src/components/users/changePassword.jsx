@@ -4,6 +4,7 @@ import {Card, CardImg, CardText, CardBody,
 import { useSelector } from 'react-redux'
 import { useParams, Redirect } from 'react-router-dom'
 import axios from '../../config/api'
+import Swal from 'sweetalert2'
 
 
 export default function ChangePassword() {
@@ -15,16 +16,21 @@ export default function ChangePassword() {
         const password = passwordRef.current.value
         const password2 = passwordRef2.current.value
         password == password2 ?(
-            axios.patch(`user/forget/${user_id}`,{password})
+            axios.patch(`user/forget/${token}/${user_id}`,{password})
         .then(res => {
             axios.delete(`/deletetoken/${user_id}`)
-            alert("password berhasil di ganti")
+            Swal.fire('Password berhasil di ganti')
             window.location = '/'
          })
          .catch(err => {
-            alert(console.log(user_id))
+            alert(err)
          })
-        ) : (alert("password doesnt match"))
+        ) : (Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: '<a href>Why do I have this issue?</a>'
+          }))
         
    
          

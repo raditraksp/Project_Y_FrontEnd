@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {Link} from 'react-router-dom'
 import { useSelector } from 'react-redux'
 // Import action creator
@@ -14,6 +14,8 @@ export default function Home() {
 
     const token = useSelector(state => state.auth.token)
     const [products, setProducts] = useState([])
+    const searchRef = useRef()
+    
         
 
     const getData = () => {
@@ -35,7 +37,18 @@ export default function Home() {
     }
 
     const onButtonSearch = () => {
-        alert('alert search')
+        const search = searchRef.current.value
+        axios.get('/products')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return (
+                    data.product.toLowerCase().includes(search.toLowerCase())
+                )
+            })
+            setProducts(filterResult)
+        })
+        
     }
 
     const renderBackground = () => {
@@ -49,7 +62,7 @@ export default function Home() {
                         <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
                         <div className="row w-50 mx-auto mt-4">
                             <div className="col-10 p-0">
-                                <input type="text" className="form-control my-auto h-100" placeholder='Try "logo design"'/>
+                                <input ref={searchRef} type="text" className="form-control my-auto h-100" placeholder='Try "logo design"'/>
                             </div>
                             <div className="col-2 p-0">
                                 <button onClick={onButtonSearch} className="btn btn-primary btn-lg my-auto" >Search</button>

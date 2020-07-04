@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.0",
+    "canvasjs": "^1.8.3",
     "cors": "^2.8.5",
     "json-server": "^0.16.1",
     "react": "^16.13.1",
