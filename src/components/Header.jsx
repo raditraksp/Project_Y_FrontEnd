@@ -156,6 +156,9 @@ export default function Header() {
                     <NavItem >
                         <NavLink href="/manageproductadmin">Manage Product Admin</NavLink>
                     </NavItem>
+                    <NavItem >
+                        <NavLink href="/manageorderadmin">Manage Order Admin</NavLink>
+                    </NavItem>
                 </Nav>      
                 <NavbarToggler onClick={isToggle} />
                     <Collapse isOpen={isOpen} navbar>

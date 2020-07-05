@@ -29,6 +29,7 @@ import Order from './Product/Orders'
 
 // ADMIN
 import ManageProductAdmin from './Admin/ManageProductAdmin'
+import ManageOrderAdmin from './Admin/ManageOrderAdmin'
 
 export default function App() {
 
@@ -65,6 +66,7 @@ export default function App() {
                     <Route path="/product/editproduct/:product_id" component={EditProduct} />
                     <Route path="/product/detailproduct/:product_id" component={DetailProduct} />
                     <Route path="/orders" component={Order} />   
+                    <Route path="/manageorderadmin" component={ManageOrderAdmin} />
                 </div>
             </BrowserRouter>
             </div>

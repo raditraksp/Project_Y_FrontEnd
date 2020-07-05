@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import axios from '../../config/api'
 import Swal from 'sweetalert2'
-import {Link, Redirect} from 'react-router-dom'
+import {Link, Redirect, NavLink} from 'react-router-dom'
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button,
@@ -115,6 +115,60 @@ export default function Orders() {
         })
     }
 
+    // Button Finish Order Seller
+    const finishOrderSeller = (orders_id) => {
+        Swal.fire({
+            title: 'Apakah kamu yakin orderan sudah selesai?',
+            text: "Setelah ini Anda tinggal menunggu konfirmasi User.",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya!'
+        }).then((res) => {
+            // res.value bernilai true jika kita memilih 'Ya' , sebaliknya
+            if (res.value) {
+                const config = {headers: {Authorization: token}}
+                axios.get(`/seller_finish/orders/${orders_id}`, config)
+                .then(() => { 
+                    Swal.fire(
+                        'Berhasil!',
+                        'Mohon tunggu konfirmasi dari User.',
+                        'success'
+                    )
+                    getData()
+                })
+            }
+        })
+    }
+
+    // Button Finish Order User
+    const finishOrderUser = (orders_id) => {
+        Swal.fire({
+            title: 'Apakah kamu yakin orderan sudah selesai?',
+            text: "Setelah ini Anda tinggal memberikan rating Seller.",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya!'
+        }).then((res) => {
+            // res.value bernilai true jika kita memilih 'Ya' , sebaliknya
+            if (res.value) {
+                const config = {headers: {Authorization: token}}
+                axios.get(`/user_finish/orders/${orders_id}`, config)
+                .then(() => { 
+                    Swal.fire(
+                        'Berhasil!',
+                        'Order Anda sudah selesai.',
+                        'success'
+                    )
+                    getData()
+                })
+            }
+        })
+    }
+
     const changeBukti = (e) => {
         setBuktiTrx({file : URL.createObjectURL(e.target.files[0])})
     }
@@ -134,23 +188,21 @@ export default function Orders() {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ya!'
-          }).then((res) => {
+        }).then((res) => {
             // res.value bernilai true jika kita memilih 'Ya' , sebaliknya
             if (res.value) {
                 const config = {headers: {Authorization: token}}
-     
                 axios.post(`/orders/${orders_id}/payment_photo`, data, config)
                 .then((res) => { 
-     
                     Swal.fire(
                         'Bukti transfer sudah diupload!',
                         'Silahkan tunggu konfirmasi dari Admin',
                         'success'
-                      )
+                    )
                     getData() 
                 })
             }
-          })
+        })
         .catch(err => console.log(err))
     }
 
@@ -219,7 +271,6 @@ export default function Orders() {
                         </td>
                         <Modal isOpen={modal} toggle={toggle}>
                             <ModalBody>
-                                <p>testes</p>
                                 <form className='form-group'>
                                     <label >Preview : </label>
                                     <img className="card m-auto" src={buktiTrx.file} height="200" width="200" />  
@@ -227,7 +278,7 @@ export default function Orders() {
                                 </form>
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="primary" onClick={() => {onSaveBuktiTrx(order.id)}}>Upload Bukti</Button>{' '}
+                                <Button color="primary" onClick={() => {onSaveBuktiTrx(order.id)}}>Upload Bukti</Button>
                                 <Button color="secondary" onClick={toggle}>Cancel</Button>
                             </ModalFooter>
                         </Modal>
@@ -283,6 +334,109 @@ export default function Orders() {
                         <td>
                             <p>Maaf order Anda ditolak oleh Seller</p>
                             <button type="button" onClick={() => {deleteOrder(order.id)}} className="btn btn-outline-danger btn-block">Hapus Order</button>
+                        </td>
+                    </tr>
+                )
+            } else if (id === order.user_id && order.status === 3 && uName != order.username) {
+                return (
+                    <tr> 
+                        <td>
+                            {order.id}
+                        </td>
+                        <td>
+                            {order.username}
+                        </td>
+                        <td>
+                            {order.product_name}
+                        </td>
+                        <td>
+                            {order.detail_order}
+                        </td>
+                        <td>
+                            {order.total_amount}
+                        </td>
+                        <td>
+                            {order.status}
+                        </td>
+                        <td>
+                            <p>Pembayaran Anda sudah kami terima.</p>
+                            <p>Silahkan tunggu pesanan Anda hingga selesai.</p>
+                        </td>
+                    </tr>
+                )
+            } else if (id === order.user_id && order.status === 4 && uName != order.username) {
+                return (
+                    <tr> 
+                        <td>
+                            {order.id}
+                        </td>
+                        <td>
+                            {order.username}
+                        </td>
+                        <td>
+                            {order.product_name}
+                        </td>
+                        <td>
+                            {order.detail_order}
+                        </td>
+                        <td>
+                            {order.total_amount}
+                        </td>
+                        <td>
+                            {order.status}
+                        </td>
+                        <td>
+                            <p>Maaf, pembayaran Anda ditolak. Silahkan upload ulang bukti transfer Anda!</p>
+                            <div className="container_fluid">
+                                <div className="row">
+                                    <div className="col-6">
+                                        <button type="button" onClick={toggle} className="btn btn-outline-primary mb-2 px-4 btn-block">Upload Bukti Transfer</button>
+                                    </div>
+                                    <div className="col-6">
+                                        <button type="button" onClick={() => {deleteOrder(order.id)}} className="btn btn-outline-danger btn-block">Batalkan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <Modal isOpen={modal} toggle={toggle}>
+                            <ModalBody>
+                                <form className='form-group'>
+                                    <label >Preview : </label>
+                                    <img className="card m-auto" src={buktiTrx.file} height="200" width="200" />  
+                                    <input onChange={changeBukti} ref={buktiTrxRef} type='file' className='form-control mt-3'/>
+                                </form>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="primary" onClick={() => {onSaveBuktiTrx(order.id)}}>Upload Bukti</Button>
+                                <Button color="secondary" onClick={toggle}>Cancel</Button>
+                            </ModalFooter>
+                        </Modal>
+                    </tr>
+                )
+            } else if (id === order.user_id && order.status === 5 && uName != order.username) {
+                return (
+                    <tr> 
+                        <td>
+                            {order.id}
+                        </td>
+                        <td>
+                            {order.username}
+                        </td>
+                        <td>
+                            {order.product_name}
+                        </td>
+                        <td>
+                            {order.detail_order}
+                        </td>
+                        <td>
+                            {order.total_amount}
+                        </td>
+                        <td>
+                            {order.status}
+                        </td>
+                        <td>
+                            <p>Order Anda sudah dikerjakan Seller, silahkan klik "Selesai" jika order sudah Anda terima</p>
+                            <button type="button" onClick={() => {finishOrderUser(order.id)}} className="btn btn-primary btn-block">Selesai</button>
                         </td>
                     </tr>
                 )
@@ -376,6 +530,85 @@ export default function Orders() {
                         </td>
                         <td>
                             <p>Anda sudah menolak orderan ini</p>
+                        </td>
+                    </tr>
+                )
+            } else if (id === order.seller_id && order.status === 3 && uName != order.username) {
+                return (
+                    <tr> 
+                        <td>
+                            {order.id}
+                        </td>
+                        <td>
+                            {order.username}
+                        </td>
+                        <td>
+                            {order.product_name}
+                        </td>
+                        <td>
+                            {order.detail_order}
+                        </td>
+                        <td>
+                            {order.total_amount}
+                        </td>
+                        <td>
+                            {order.status}
+                        </td>
+                        <td>
+                            <p>Pembayaran sudah kami terima, Silahkan kerjakan orderan Anda!</p>
+                            <button type="button" onClick={() => {finishOrderSeller(order.id)}} className="btn btn-outline-primary mb-2 px-4 btn-block">Finish</button>
+                        </td>
+                    </tr>
+                )
+            } else if (id === order.seller_id && order.status === 4 && uName != order.username) {
+                return (
+                    <tr> 
+                        <td>
+                            {order.id}
+                        </td>
+                        <td>
+                            {order.username}
+                        </td>
+                        <td>
+                            {order.product_name}
+                        </td>
+                        <td>
+                            {order.detail_order}
+                        </td>
+                        <td>
+                            {order.total_amount}
+                        </td>
+                        <td>
+                            {order.status}
+                        </td>
+                        <td>
+                            <p>Pembayaran User ditolak, silahkan tunggu User mengupload ulang bukti pembayaran.</p>
+                        </td>
+                    </tr>
+                )
+            } else if (id === order.seller_id && order.status === 5 && uName != order.username) {
+                return (
+                    <tr> 
+                        <td>
+                            {order.id}
+                        </td>
+                        <td>
+                            {order.username}
+                        </td>
+                        <td>
+                            {order.product_name}
+                        </td>
+                        <td>
+                            {order.detail_order}
+                        </td>
+                        <td>
+                            {order.total_amount}
+                        </td>
+                        <td>
+                            {order.status}
+                        </td>
+                        <td>
+                            <p>Mohon tunggu User menyelesaikan orderan.</p>
                         </td>
                     </tr>
                 )
