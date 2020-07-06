@@ -1,6 +1,5 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, { useRef} from 'react'
 import { useSelector } from 'react-redux'
-import { Button } from 'reactstrap';
 import Swal from 'sweetalert2'
 import {Redirect} from 'react-router-dom'
 
@@ -15,7 +14,6 @@ export default function AddProduct() {
     const role_id = useSelector(state => state.auth.role_id)
       // ADD PRDUCT
     const productRef = useRef()
-    const categoryRef = useRef()
     const detailProductRef = useRef()
     const priceBasicRef = useRef()
     const detailBasicRef = useRef()

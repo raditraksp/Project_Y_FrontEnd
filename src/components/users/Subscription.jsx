@@ -27,7 +27,6 @@ export default function Subscription() {
     }, [])
 
 
-
     const transferPhotoRef = useRef()    
 
     const onDelete = () => {
@@ -89,7 +88,6 @@ export default function Subscription() {
                       )
                 })
             }
-            getData()
         })
         .catch(err => console.log(err))
      }
@@ -138,7 +136,7 @@ export default function Subscription() {
                     <h1>Pembayaran Anda DITOLAK</h1>
 
                     <div className="container-sm">
-                        <img src={srcTransfer}/>
+                        <img src={srcTransfer} alt=""/>
                     </div>
                     <div>
                         Status: REJECTED
@@ -166,7 +164,7 @@ export default function Subscription() {
                     <h1>Menunggu Konfirmasi Admin</h1>
     
                     <div className="container-sm">
-                        <img src={srcTransfer}/>
+                        <img src={srcTransfer} alt=""/>
                     </div>
                     <div>
                         <h3 className='my-5'>Status konfirmasi: PENDING</h3>

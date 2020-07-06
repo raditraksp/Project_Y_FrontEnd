@@ -56,7 +56,7 @@ export default function ManageProduct() {
 
     const onButtonSearch = () => {
         const search = searchRef.current.value
-        axios.get('/products')
+        axios.get('/products/me', config)
         .then((res) => {
             let filterResult = []
             filterResult = res.data.filter((data) => {

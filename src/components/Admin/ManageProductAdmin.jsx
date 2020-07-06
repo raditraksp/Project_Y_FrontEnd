@@ -118,7 +118,7 @@ export default function ManageProductAdmin() {
                             {product.price_premium}
                         </td>
                         <td>
-                            <img className="card m-auto" src={srcPic} height="100" width="150" />  
+                            <img className="card m-auto" src={srcPic} height="100" alt="" width="150" />  
                         </td>
                         <td>
                             <button type="button" onClick={() => {onApproved(product.id)}}  className="btn btn-warning btn-block"  >Approve</button>

@@ -1,10 +1,10 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import {Link, Redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import axios from '../config/api'
 import {loginAction,logoutAction} from '../config/redux/actions'
 import {
-   Button,
+   
    Collapse,
    DropdownToggle,
    DropdownMenu,
@@ -14,13 +14,10 @@ import {
    Nav,
    NavLink,
    NavItem,
-   NavbarText,
    NavbarBrand,
    UncontrolledDropdown,
    Modal,
-   ModalHeader, 
-   ModalBody, 
-   ModalFooter, 
+   ModalBody,
    Label
    } from 'reactstrap';
 import Swal from 'sweetalert2'
@@ -32,11 +29,6 @@ export default function Header() {
     const [isOpen, setIsOpen] = useState(false)
     const [modal, setModal] = useState(false)
     const [user, setUser] = useState({})    
-    const [checkSearch, setCheckSearch] = useState("")
-
-    const searchRef = useRef()
-
-        
            
     const username = useSelector(state =>  state.auth.username)
     const token = useSelector(state => state.auth.token)
@@ -50,13 +42,6 @@ export default function Header() {
 
     const usernameRef = useRef()
     const passwordRef = useRef()
-
-    const onButtonSearch = () => {
-        const search = searchRef.current.value
-        
-        if(search == "") return console.log('inputan kosong')
-        setCheckSearch(`/searchproduct/${search}`)
- }
 
     const onButtonClick = () => {
         const username = usernameRef.current.value
@@ -79,8 +64,8 @@ export default function Header() {
     }
 
     useEffect(() => {
-        getUserDetail()
         // renderNav()
+        // getUserDetail()
     }, [])
 
     const getUserDetail = () => {
@@ -96,8 +81,10 @@ export default function Header() {
     }
 
     const buttonBecomeSeller = () => {
-        
-        if(!user.ktp_number) return alert('Lengkapi profile anda terlebih dahulu')
+        getUserDetail()
+        console.log(user)
+        if(user.ktp_number === null) return alert('Lengkapi profile anda terlebih dahulu')
+        if(user.ktp_number === undefined) return console.log('error')
 
         Swal.fire({
             title: 'Apakah kamu yakin ingin menjadi penjual?',
@@ -280,17 +267,8 @@ export default function Header() {
         <div className="container-fluid mx-auto">
             <Navbar  className="bg-white" light expand="md">
                 <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>    
-                <div className="row w-25 mx-auto my-2">
-                    <div className="col-10 p-0">
-                        <input ref={searchRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Try "logo design"'/>
-                    </div>
-                    <div className="col-2 p-0">
-                        {/* <button onClick={onButtonSearch} className="btn btn-primary btn-lg my-auto" >Search</button> */}
-                        <Link to={checkSearch }>
-                            <button className="btn btn-primary btn-lg my-auto" onClick={onButtonSearch} >Search</button>
-                        </Link>
-                    </div>
-                </div>
+                <Nav tag={Link} to="/searchproduct" className=" text-dark ml-5 font-weight-bold h5 text-decoration-none">Search Products</Nav>    
+
                 <NavbarToggler onClick={isToggle} />
                     <Collapse isOpen={isOpen} navbar>
                         
@@ -298,24 +276,12 @@ export default function Header() {
 
                     </Collapse>          
                 </Navbar>
-                
-
         </div>
     ) : (
         <div className="container-fluid mx-auto">
             <Navbar  className="bg-transparant" light expand="md">
                 <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>    
-                <div className="row w-25 mx-auto my-2">
-                    <div className="col-10 p-0">
-                        <input ref={searchRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Try "logo design"'/>
-                    </div>
-                    <div className="col-2 p-0">
-                        {/* <button onClick={onButtonSearch} className="btn btn-primary btn-lg my-auto" >Search</button> */}
-                        <Link to={checkSearch }>
-                            <button className="btn btn-primary btn-lg my-auto" onClick={onButtonSearch} >Search</button>
-                        </Link>
-                    </div>
-                </div>
+                <Nav tag={Link} to="/searchproduct" className=" text-dark ml-5 font-weight-bold h5 text-decoration-none">Search Products</Nav>    
                 <NavbarToggler onClick={isToggle} />
                     <Collapse isOpen={isOpen} navbar>
                         
@@ -342,7 +308,7 @@ export default function Header() {
                     <button className="btn btn-outline-dark mb-2" onClick={forgetPassword} >Forget password?</button>
                     <button className="btn btn-dark btn-block" onClick={onButtonClick} >Login</button>
                 </ModalBody>
-            </Modal>
+            </Modal> 
         </div>
     )
 }

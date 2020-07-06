@@ -25,7 +25,8 @@ import AddProduct from './Product/AddProduct'
 import EditProduct from './Product/EditProduct'
 import DetailProduct from './Product/DetailProduct'
 import SearchProduct from './Product/SearchProduct'
-import FilterCategory from './Product/FilterCategory'
+import ProductsPremiumSeller from './Product/ProductsPremiumSeller'
+import ProductsBestRating from './Product/ProductsBestRating'
 
 // CART
 import Cart from './Product/Cart'
@@ -68,13 +69,16 @@ export default function App() {
 
 
                     {/* PRODUCT  */}
-                    {/* <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} /> */}                    
+                                      
                     <Route path="/products/cart" component={Cart} />
                     <Route path="/manageproduct" component={ManageProduct} />
                     <Route path="/product/addproduct" component={AddProduct} />
                     <Route path="/product/editproduct/:product_id" component={EditProduct} />
                     <Route path="/product/detailproduct/:product_id" component={DetailProduct} />
+                    <Route path="/products/premiumseller" component={ProductsPremiumSeller} />
+                    <Route path="/products/bestrating" component={ProductsBestRating} />
                     <Route path="/searchproduct" component={SearchProduct} />
+
                     {/* ADMIN */}
                     <Route path="/manageproductadmin" component={ManageProductAdmin} />
                     <Route path="/checkupgrade" component={CheckTransferSub} />
