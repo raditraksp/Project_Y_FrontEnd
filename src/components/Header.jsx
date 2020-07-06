@@ -132,11 +132,14 @@ export default function Header() {
                         <NavLink href="/manageproductadmin">Manage Product Admin</NavLink>
                     </NavItem>
                     <NavItem >
+                        <NavLink href="/manageorderadmin">Manage Order Admin</NavLink>
+                    </NavItem>
+                    <NavItem >
                         <NavLink href="/checkupgrade">Check Upgrade</NavLink>
                     </NavItem>
                     <UncontrolledDropdown nav inNavbar>
                         <DropdownToggle className="font-weight-bold" nav caret>
-                             Hello, {username}
+                            Hello, {username}
                         </DropdownToggle>
                         <DropdownMenu right>
                             <NavLink tag={Link} to="/profile">
@@ -164,10 +167,13 @@ export default function Header() {
                         <button onClick={buttonBecomeSeller} className="btn btn-primary">Become a Seller!</button>
                     </NavItem>
                     <NavItem>
+                            <NavLink href="/history/transaction/user">History Transaction User</NavLink>
+                    </NavItem>
+                    <NavItem>
                             <NavLink href="/products/cart">Cart</NavLink>
                     </NavItem>
                     <NavItem>
-                            <NavLink href="/products/cart">Order</NavLink>
+                            <NavLink href="/orders">Order</NavLink>
                     </NavItem>
                     <NavItem>
                             <NavLink href="/products/cart">Progress</NavLink>
@@ -180,14 +186,10 @@ export default function Header() {
                             <NavLink tag={Link} to="/profile">
                                 <DropdownItem>Profile</DropdownItem>
                             </NavLink>
-                            
-
-                            <DropdownItem divider />
-
+                        <DropdownItem divider />
                             <NavLink tag={Link} to="/">
                                 <DropdownItem onClick={funLogout}>Logout</DropdownItem>
                             </NavLink>
-
                         </DropdownMenu>
                     </UncontrolledDropdown>
                 </Nav>
@@ -200,6 +202,12 @@ export default function Header() {
                             <Link to="/subscription">
                                 <button className="btn btn-primary">Upgrade to Premium!</button>
                             </Link>
+                        </NavItem>
+                        <NavItem>
+                                <NavLink href="/history/transaction/seller">History Transaction Seller</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="/orders">Order</NavLink>
                         </NavItem>
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle className="font-weight-bold" nav caret>
@@ -231,9 +239,17 @@ export default function Header() {
             else if (role_id === 3 && status_sub === 2){
                 return (
                     <Nav className="bg-transparant ml-auto" navbar>
-                    <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">
-                        <Label className="ml-auto"> PREMIUM MEMBER </Label> 
-                    </NavbarBrand>    
+                        <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">
+                            <Label className="ml-auto"> PREMIUM MEMBER </Label> 
+                        </NavbarBrand>
+                        
+                        <NavItem>
+                                <NavLink href="/history/transaction/seller">History Transaction Seller</NavLink>
+                        </NavItem> 
+
+                        <NavItem>
+                                <NavLink href="/orders">Order</NavLink>
+                        </NavItem>    
                         <UncontrolledDropdown nav inNavbar>
                             <DropdownToggle className="font-weight-bold" nav caret>
                                 Hello, {username}
@@ -277,11 +293,13 @@ export default function Header() {
                     </Collapse>          
                 </Navbar>
         </div>
-    ) : (
+    ) : (    
         <div className="container-fluid mx-auto">
             <Navbar  className="bg-transparant" light expand="md">
                 <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>    
-                <Nav tag={Link} to="/searchproduct" className=" text-dark ml-5 font-weight-bold h5 text-decoration-none">Search Products</Nav>    
+                <Nav tag={Link} to="/searchproduct" className=" text-dark ml-5 font-weight-bold h5 text-decoration-none">Search Products</Nav>
+                <Nav className="mr-auto" navbar>
+                </Nav>     
                 <NavbarToggler onClick={isToggle} />
                     <Collapse isOpen={isOpen} navbar>
                         

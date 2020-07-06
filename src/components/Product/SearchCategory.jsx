@@ -17,6 +17,7 @@ import axios from '../../config/api'
 
 
 export default function SearchProduct() {   
+    let {cat_id} = useParams()
     const [products, setProducts] = useState([])
     const minRef = useRef()
     const searchRef = useRef()
@@ -27,10 +28,14 @@ export default function SearchProduct() {
      }, [])
 
      const getData = () => {
-         axios.get('/products')
-         .then((res) => {
-             setProducts(res.data)
-         })
+         axios.get('/product/search/category')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return data.category_id == cat_id
+            })
+            setProducts(filterResult)
+        })
      }
     
     const onSearchName = () => {
@@ -56,6 +61,7 @@ export default function SearchProduct() {
                 return data.category_id == 8
             })
             setProducts(filterResult)
+            console.log(filterResult)
         })
 
     }
@@ -68,6 +74,7 @@ export default function SearchProduct() {
                 return data.category_id == 9
             })
             setProducts(filterResult)
+            console.log(filterResult)
         })
         
 
@@ -81,6 +88,7 @@ export default function SearchProduct() {
                 return data.category_id == 2
             })
             setProducts(filterResult)
+            console.log(filterResult)
         })
         
 
@@ -94,6 +102,7 @@ export default function SearchProduct() {
                 return data.category_id == 3
             })
             setProducts(filterResult)
+            console.log(filterResult)
         })
         
 
@@ -107,6 +116,7 @@ export default function SearchProduct() {
                 return data.category_id == 4
             })
             setProducts(filterResult)
+            console.log(filterResult)
         })
         
 
@@ -120,6 +130,7 @@ export default function SearchProduct() {
                 return data.category_id == 5
             })
             setProducts(filterResult)
+            console.log(filterResult)
         })
         
 
@@ -133,6 +144,7 @@ export default function SearchProduct() {
                 return data.category_id == 6
             })
             setProducts(filterResult)
+            console.log(filterResult)
         })
         
 
@@ -146,6 +158,7 @@ export default function SearchProduct() {
                 return data.category_id == 7
             })
             setProducts(filterResult)
+            console.log(filterResult)
         })
         
 
@@ -159,6 +172,7 @@ export default function SearchProduct() {
                 return data.category_id == 12
             })
             setProducts(filterResult)
+            console.log(filterResult)
         })
         
 
@@ -172,6 +186,7 @@ export default function SearchProduct() {
                 return data.category_id == 13
             })
             setProducts(filterResult)
+            console.log(filterResult)
         })
         
 
@@ -185,6 +200,7 @@ export default function SearchProduct() {
                 return data.category_id == 10
             })
             setProducts(filterResult)
+            console.log(filterResult)
         })
         
 
@@ -199,6 +215,7 @@ export default function SearchProduct() {
                 return data.category_id == 11
             })
             setProducts(filterResult)
+            console.log(filterResult)
         })
         
 

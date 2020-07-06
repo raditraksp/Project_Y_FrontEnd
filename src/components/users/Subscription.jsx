@@ -93,7 +93,9 @@ export default function Subscription() {
         .catch(err => console.log(err))
     }
 
-    const transferAgain = () => {
+     
+
+     const transferAgain = () => {
         const data = new FormData()
         const config = {headers: {Authorization : token}}
      
@@ -128,8 +130,6 @@ export default function Subscription() {
         })
         .catch(err => console.log(err))
     }
-
-     
 
     if (!user && status_sub === 1) {
     return (
@@ -187,7 +187,7 @@ export default function Subscription() {
                         <input ref={transferPhotoRef} type='file' className='form-control'/>  
                     </form>
                     <div>
-                        <button className="btn btn-success btn-block w-25 m-auto" onClick={transferAgain}>Send Again Photo</button>
+                        <button className="btn btn-success btn-block w-25 m-auto" onClick={transferAgain}>Transfer Again Photo</button>
                     </div>
                     <div>
                         <button className="btn btn-danger btn-block w-25 mx-auto mt-3" onClick={onDelete}>Batalkan Upgrade</button>

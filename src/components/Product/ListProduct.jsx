@@ -95,7 +95,7 @@ export default function ListProduct(props) {
                         </div>
                         <div className="row">
                             <div className="card-title col-4">
-                                <label className="card-text font-weight-bold text-danger">{product.rating_avg} ({product.product_total})</label>
+                                <label className="card-text font-weight-bold text-danger">{product.rating_avg}</label>
                             </div>
                             <div className="card-title col-8">
                                 <label className="card-text font-weight-bold float-right">From Rp {product.price_basic}</label>
@@ -125,7 +125,7 @@ export default function ListProduct(props) {
                         </div>
                         <div className="row">
                             <div className="card-title col-4">
-                                <label className="card-text font-weight-bold text-danger">{product.rating_avg} ({product.product_total})</label>
+                                <label className="card-text font-weight-bold text-danger">{product.rating_avg}</label>
                             </div>
                             <div className="card-title col-8">
                                 <label className="card-text font-weight-bold float-right">From Rp {product.price_basic}</label>
