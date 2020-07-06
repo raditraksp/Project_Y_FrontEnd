@@ -41,15 +41,15 @@ export default function Register() {
                <form onSubmit={registerUser} className="form-group" >
                   <div>
                      <h4>username</h4>
-                     <input className="form-control" ref={usernameRef} type="text"/>
+                     <input required className="form-control" ref={usernameRef} type="text"/>
                   </div>
                   <div>
                      <h4>email</h4>
-                     <input className="form-control" ref={emailRef} type="email"/>
+                     <input required className="form-control" ref={emailRef} type="email"/>
                   </div>
                   <div>
                      <h4>password</h4>
-                     <input className="form-control" ref={passwordRef} type="password"/>
+                     <input required className="form-control" ref={passwordRef} type="password"/>
                   </div>
 
                   <input onClick={registerUser} className="btn btn-block btn-outline-success mt-2" type="submit" value="Register"/>
