@@ -14,6 +14,10 @@ import ForgetPasswordEmail from './Users/ForgetPasswordEmail'
 import ChangePassword from './Users/ChangePassword'
 import EditPassword from './Users/EditPassword'
 import Invoice from './Users/Invoice'
+import HistoryTransactionUser from './Users/HistoryTransactionUser.jsx'
+import Report from './Users/Report'
+import Subscription from './Users/Subscription'
+import Reportlink from './Users/Reportlink'
 
 
 // Product
@@ -21,6 +25,9 @@ import ManageProduct from './Product/ManageProduct'
 import AddProduct from './Product/AddProduct'
 import EditProduct from './Product/EditProduct'
 import DetailProduct from './Product/DetailProduct'
+import SearchProduct from './Product/SearchProduct'
+import ProductsPremiumSeller from './Product/ProductsPremiumSeller'
+import ProductsBestRating from './Product/ProductsBestRating'
 
 // CART
 import Cart from './Product/Cart'
@@ -31,6 +38,7 @@ import Order from './Product/Orders'
 // ADMIN
 import ManageProductAdmin from './Admin/ManageProductAdmin'
 import ManageOrderAdmin from './Admin/ManageOrderAdmin'
+import CheckTransferSub from './Admin/CheckTransferSub'
 
 export default function App() {
 
@@ -56,19 +64,32 @@ export default function App() {
                     <Route path="/" exact component={Home} />
                     <Route path="/register" component={Register} />
                     <Route path="/profile" component={Profile} />
+                    <Route path="/subscription" component={Subscription} />
                     <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} />
                     <Route path="/changePassword/:token/:user_id" component={ChangePassword} />
                     <Route path="/editPassword/" component={EditPassword} />
-                    {/* <Route path="/forgetPasswordEmail" component={ForgetPasswordEmail} /> */}                    
+                    <Route path="/historytransactionuser/" component={HistoryTransactionUser} />
+                    <Route path="/report/" component={Report} />
+                    <Route path="/line" component={Reportlink} />
+
+
+                    {/* PRODUCT  */}
+                                      
                     <Route path="/products/cart" component={Cart} />
                     <Route path="/manageproduct" component={ManageProduct} />
-                    <Route path="/manageproductadmin" component={ManageProductAdmin} />
                     <Route path="/product/addproduct" component={AddProduct} />
                     <Route path="/product/editproduct/:product_id" component={EditProduct} />
                     <Route path="/product/detailproduct/:product_id" component={DetailProduct} />
                     <Route path="/orders" component={Order} />   
                     <Route path="/manageorderadmin" component={ManageOrderAdmin} />
                     <Route path="/invoice/:user_id/:order_id" component={Invoice} />
+                    <Route path="/products/premiumseller" component={ProductsPremiumSeller} />
+                    <Route path="/products/bestrating" component={ProductsBestRating} />
+                    <Route path="/searchproduct" component={SearchProduct} />
+
+                    {/* ADMIN */}
+                    <Route path="/manageproductadmin" component={ManageProductAdmin} />
+                    <Route path="/checkupgrade" component={CheckTransferSub} />
                 </div>
             </BrowserRouter>
             </div>

@@ -1,0 +1,36 @@
+.jumbotron {
+    background: url(../assets/carousel/per-loov-4wOkqiXNP7M-unsplash.jpg);
+    background-image: transparant;
+    background-size: cover;
+    height: 75vh;
+    text-align: center;
+    margin-top: -80px;
+}
+
+.jumbotron .display-5 {
+    margin-top: 200px;
+}
+
+.jumbotron p {
+    font-size: 18px;
+}
+
+.jumbotron h1 {
+    font-size: 28px;
+}
+
+.jumbotron hr {
+    border-color: #6100e8;
+    width: 70px;
+    border-width: 3px;
+}
+
+.jumbotron .btn {
+    border-radius: 0px;
+
+}
+
+.jumbotron .container{
+    text-align: center;
+    margin-top: -130px;
+}

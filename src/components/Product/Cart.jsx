@@ -3,10 +3,6 @@ import { useSelector } from 'react-redux'
 import axios from '../../config/api'
 import Swal from 'sweetalert2'
 import {Link, Redirect} from 'react-router-dom'
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
-} from 'reactstrap';
 
 
 export default function Cart() {    
@@ -110,7 +106,7 @@ export default function Cart() {
                                 {cart.status}
                             </td>
                             <td>
-                                <img className="card m-auto" src={srcPic} height="100" width="150" />  
+                                <img className="card m-auto" src={srcPic} alt="" height="100" width="150" />  
                             </td>
                             <td>
                                 {/* <Link to={`/product/detailproduct/${cart.product_id}`}> */}

@@ -4,6 +4,7 @@ import {Card, CardImg, CardText, CardBody,
 import { useSelector } from 'react-redux'
 import { useParams, Redirect } from 'react-router-dom'
 import axios from '../../config/api'
+import Swal from 'sweetalert2'
 
 
 export default function ChangePassword() {
@@ -11,23 +12,27 @@ export default function ChangePassword() {
     const passwordRef = useRef()
     const passwordRef2 = useRef()
     const {token,user_id} = useParams()
+    const tokenRedux = useSelector(state => state.auth.token)
+    const user_idToken = useSelector(state => state.auth.user_id)
     const sendpassword = () => {
         const password = passwordRef.current.value
         const password2 = passwordRef2.current.value
-        password == password2 ?(
-            axios.patch(`user/forget/${user_id}`,{password})
-        .then(res => {
-            axios.delete(`/deletetoken/${user_id}`)
-            alert("password berhasil di ganti")
-            window.location = '/'
-         })
-         .catch(err => {
-            alert("tidak berhasil terganti")
-         })
-        ) : (alert("password doesnt match"))
+    
+            password == password2 ?(
+                axios.patch(`user/forget/${token}/${user_id}`,{password2})
+            .then(res => {
+
+                Swal.fire(res.data)
+             })
+             .catch(err => {
+                alert(err)
+             })
+            ) : (Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Password tidak sama',
+              }))   
         
-   
-         
     }
 
     return (
@@ -41,13 +46,13 @@ export default function ChangePassword() {
                   <form className='form-group'>
                         <div className="card-title ">
                         </div>
-                        <input ref={passwordRef} type='password' placeholder="password" className='form-control'/>
+                        <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
                         <div className="card-title ">
                         </div>
-                        <input ref={passwordRef2} type='password' placeholder="password" className='form-control'/>
+                        <input ref={passwordRef2} type='password' placeholder="Confirm Password" className='form-control'/>
                     </form>
                   
-                  <button onClick={sendpassword} className="btn btn-block btn-dark mt-2 mb-1">verifed password</button>
+                  <button onClick={sendpassword} className="btn btn-block btn-dark mt-2 mb-1">Change Password</button>
                   </CardBody>
                   </Card>
                 </div>

@@ -1,8 +1,6 @@
-import React, {useState, useEffect, useRef} from 'react'
-import {Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button} from 'reactstrap'
+import React, { useRef} from 'react'
+import {Card, CardBody} from 'reactstrap'
 import { useSelector } from 'react-redux'
-import { useParams, Redirect } from 'react-router-dom'
 import axios from '../../config/api'
 
 
@@ -24,7 +22,7 @@ export default function EditPassword() {
 
         axios.patch(`/changepassword`, {oldPassword,newPassword1,newPassword2}, config)
         .then(res => {
-            alert(res)
+            alert("berhasil")
         }).catch( err => {
             console.log(err)
         })

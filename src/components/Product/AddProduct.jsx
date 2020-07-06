@@ -1,6 +1,5 @@
-import React, {useState, useEffect, useRef} from 'react'
+import React, { useRef} from 'react'
 import { useSelector } from 'react-redux'
-import { Button } from 'reactstrap';
 import Swal from 'sweetalert2'
 import {Redirect} from 'react-router-dom'
 
@@ -12,9 +11,9 @@ import axios from '../../config/api'
 export default function AddProduct() {
 
     const token = useSelector(state => state.auth.token)
+    const role_id = useSelector(state => state.auth.role_id)
       // ADD PRDUCT
     const productRef = useRef()
-    const categoryRef = useRef()
     const detailProductRef = useRef()
     const priceBasicRef = useRef()
     const detailBasicRef = useRef()
@@ -60,8 +59,8 @@ export default function AddProduct() {
          .catch(err => console.log({err}))
    }
 
-    
-        return token ? (
+    if(token && role_id === 3){
+        return  (
             <div className="container">
             <h1 className="text-center display-4">Add Product</h1>
                 <form className='form-group'>
@@ -70,42 +69,30 @@ export default function AddProduct() {
                     <label >Product Name:</label>
                     <input ref={productRef} type='text' placeholder="Input Product Name" className='form-control' required/>
 
-                    {/* <div className="card-title ">
-                    </div>
-                    <label for="category">Choose product category:</label>
-                        <select ref={categoryRef} id="category" name="category" className='form-control'>
-                            <option value="1">Design</option>
-                            <option value="2">Software Development</option>
-                            <option value="3">Games</option>
-                            <option value="4">Training Online</option>
-                            <option value="5">Song</option>
-                            <option value="6">Adds</option>
-                            <option value="7">Other</option>
-                        </select> */}
                     <div className="card-title ">
                     </div>
                     <label >Product Detail:</label>
-                    <textarea ref={detailProductRef} type='text' placeholder="Input detail product" className='form-control'/>
+                    <textarea ref={detailProductRef} type='text' placeholder="Input detail product" className='form-control' required/>
 
                     <div className="card-title ">
                     </div>
                     <label >Basic Price:</label>
-                    <input ref={priceBasicRef} type='text' placeholder="Input basic price" className='form-control'/>
+                    <input ref={priceBasicRef} type='text' placeholder="Input basic price" className='form-control' required/>
                     
                     <div className="card-title ">
                     </div>
                     <label >Product Basic Detail:</label>
-                    <textarea ref={detailBasicRef} type='text' placeholder="Input detail basic" className='form-control'/>
+                    <textarea ref={detailBasicRef} type='text' placeholder="Input detail basic" className='form-control' required/>
                     
                     <div className="card-title ">
                     </div>
                     <label >Premium Price:</label>
-                    <input ref={pricePremiumRef} type='text' placeholder="Input premium price (Isi angka 0 jika tidak ada product premium)" className='form-control'/>
+                    <input ref={pricePremiumRef} type='text' placeholder="Input premium price" className='form-control' required/>
                     
                     <div className="card-title ">
                     </div>
                     <label >Product Premium Detail:</label>
-                    <textarea ref={detailPremiumRef} type='text' placeholder="Input detail premium (Kosongkan kolom jika tidak ada product premium)" className='form-control'/>
+                    <textarea ref={detailPremiumRef} type='text' placeholder="Input detail premium" className='form-control' required/>
                     
                     <div className="card-title ">
                     </div>
@@ -117,7 +104,9 @@ export default function AddProduct() {
                 </div>
 
             </div>
-        ): (
+        )}
+        else {
+        return (
             <Redirect to='/' />
-          )
+        )}
     }
