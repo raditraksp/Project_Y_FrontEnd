@@ -102,13 +102,18 @@ export default function Orders() {
             // res.value bernilai true jika kita memilih 'Ya' , sebaliknya
             if (res.value) {
                 const config = {headers: {Authorization: token}}
-                axios.delete(`/orders/${orders_id}`, config)
-                .then((res) => { 
-                    Swal.fire(
-                        'Berhasil!',
-                        'Order sudah Anda tolak.',
-                        'success'
-                    )
+                const data = {orders}
+
+                axios.post(`/orders/${orders_id}`, data, config)
+                .then((res) => {
+                    // axios.delete(`/orders/${orders_id}`, config)
+                    // .then((res) => {
+                        Swal.fire(
+                            'Berhasil!',
+                            'Order sudah Anda tolak.',
+                            'success'
+                        )
+                    // }) 
                     getData()
                 })
             }
@@ -173,6 +178,7 @@ export default function Orders() {
         setBuktiTrx({file : URL.createObjectURL(e.target.files[0])})
     }
 
+    // BUTTON UPLOAD BUKTI
     const onSaveBuktiTrx = (orders_id) => {
         const data = new FormData()
 
@@ -193,6 +199,40 @@ export default function Orders() {
             if (res.value) {
                 const config = {headers: {Authorization: token}}
                 axios.post(`/orders/${orders_id}/payment_photo`, data, config)
+                .then((res) => { 
+                    Swal.fire(
+                        'Bukti transfer sudah diupload!',
+                        'Silahkan tunggu konfirmasi dari Admin',
+                        'success'
+                    )
+                    getData() 
+                })
+            }
+        })
+        .catch(err => console.log(err))
+    }
+
+    // BUTTON UPLOAD ULANG BUKTI
+    const repeatSaveBuktiTrx = (orders_id) => {
+        const data = new FormData()
+
+        const bukti_trx = buktiTrxRef.current.files[0]
+
+        data.append("payment_photo", bukti_trx)
+
+        Swal.fire({
+            title: 'Apakah bukti transfer sudah benar?',
+            text: "Data sebelumnya akan diubah!",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya!'
+        }).then((res) => {
+            // res.value bernilai true jika kita memilih 'Ya' , sebaliknya
+            if (res.value) {
+                const config = {headers: {Authorization: token}}
+                axios.post(`/orders/repeat/${orders_id}/payment_photo`, data, config)
                 .then((res) => { 
                     Swal.fire(
                         'Bukti transfer sudah diupload!',
@@ -386,7 +426,8 @@ export default function Orders() {
                             {order.status}
                         </td>
                         <td>
-                            <p>Maaf, pembayaran Anda ditolak. Silahkan upload ulang bukti transfer Anda!</p>
+                            <p>Maaf, pembayaran Anda ditolak karena {order.message_admin}</p>
+                            <p>Silahkan upload ulang bukti transfer Anda!</p>
                             <div className="container_fluid">
                                 <div className="row">
                                     <div className="col-6">
@@ -407,7 +448,7 @@ export default function Orders() {
                                 </form>
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="primary" onClick={() => {onSaveBuktiTrx(order.id)}}>Upload Bukti</Button>
+                                <Button color="primary" onClick={() => {repeatSaveBuktiTrx(order.id)}}>Upload Bukti</Button>
                                 <Button color="secondary" onClick={toggle}>Cancel</Button>
                             </ModalFooter>
                         </Modal>
@@ -437,6 +478,37 @@ export default function Orders() {
                         <td>
                             <p>Order Anda sudah dikerjakan Seller, silahkan klik "Selesai" jika order sudah Anda terima</p>
                             <button type="button" onClick={() => {finishOrderUser(order.id)}} className="btn btn-primary btn-block">Selesai</button>
+                        </td>
+                    </tr>
+                )
+            } else if (id === order.user_id && order.status === 6 && uName != order.username) {
+                return(
+                    <tr> 
+                        <td>
+                            {order.id}
+                        </td>
+                        <td>
+                            {order.username}
+                        </td>
+                        <td>
+                            {order.product_name}
+                        </td>
+                        <td>
+                            {order.detail_order}
+                        </td>
+                        <td>
+                            {order.total_amount}
+                        </td>
+                        <td>
+                            {order.status}
+                        </td>
+                        <td>
+                            <p>Silahkan cek invoice Anda dengan klik "Cek Invoice"</p>
+                            <p className="text-danger">Order akan terhapus dari list ini jika Anda sudah mengklik</p>
+                            <p className="text-danger">dan Anda tidak dapat mengunduh Invoice lagi!</p>
+                            <Link to={`/invoice/${order.user_id}/${order.id}`}>
+                                <button type="button" className="btn btn-primary btn-block">Cek Invoice</button>
+                            </Link>
                         </td>
                     </tr>
                 )
@@ -609,6 +681,33 @@ export default function Orders() {
                         </td>
                         <td>
                             <p>Mohon tunggu User menyelesaikan orderan.</p>
+                        </td>
+                    </tr>
+                )
+            } else if (id === order.seller_id && order.status === 6 && uName != order.username) {
+                return (
+                    <tr> 
+                        <td>
+                            {order.id}
+                        </td>
+                        <td>
+                            {order.username}
+                        </td>
+                        <td>
+                            {order.product_name}
+                        </td>
+                        <td>
+                            {order.detail_order}
+                        </td>
+                        <td>
+                            {order.total_amount}
+                        </td>
+                        <td>
+                            {order.status}
+                        </td>
+                        <td>
+                            <p>Order sudah diselesaikan oleh User</p>
+                            <p>Pembayaran sudah cair</p>
                         </td>
                     </tr>
                 )

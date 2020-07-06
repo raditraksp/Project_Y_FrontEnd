@@ -13,6 +13,7 @@ import Profile from './Users/Profile'
 import ForgetPasswordEmail from './Users/ForgetPasswordEmail'
 import ChangePassword from './Users/ChangePassword'
 import EditPassword from './Users/EditPassword'
+import Invoice from './Users/Invoice'
 
 
 // Product
@@ -67,6 +68,7 @@ export default function App() {
                     <Route path="/product/detailproduct/:product_id" component={DetailProduct} />
                     <Route path="/orders" component={Order} />   
                     <Route path="/manageorderadmin" component={ManageOrderAdmin} />
+                    <Route path="/invoice/:user_id/:order_id" component={Invoice} />
                 </div>
             </BrowserRouter>
             </div>
