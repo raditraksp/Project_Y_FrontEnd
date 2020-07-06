@@ -13,6 +13,7 @@ import Profile from './Users/Profile'
 import ForgetPasswordEmail from './Users/ForgetPasswordEmail'
 import ChangePassword from './Users/ChangePassword'
 import EditPassword from './Users/EditPassword'
+import Invoice from './Users/Invoice'
 import HistoryTransactionUser from './Users/HistoryTransactionUser.jsx'
 import Report from './Users/Report'
 import Subscription from './Users/Subscription'
@@ -31,8 +32,12 @@ import ProductsBestRating from './Product/ProductsBestRating'
 // CART
 import Cart from './Product/Cart'
 
+// ORDER
+import Order from './Product/Orders'
+
 // ADMIN
 import ManageProductAdmin from './Admin/ManageProductAdmin'
+import ManageOrderAdmin from './Admin/ManageOrderAdmin'
 import CheckTransferSub from './Admin/CheckTransferSub'
 
 export default function App() {
@@ -75,6 +80,9 @@ export default function App() {
                     <Route path="/product/addproduct" component={AddProduct} />
                     <Route path="/product/editproduct/:product_id" component={EditProduct} />
                     <Route path="/product/detailproduct/:product_id" component={DetailProduct} />
+                    <Route path="/orders" component={Order} />   
+                    <Route path="/manageorderadmin" component={ManageOrderAdmin} />
+                    <Route path="/invoice/:user_id/:order_id" component={Invoice} />
                     <Route path="/products/premiumseller" component={ProductsPremiumSeller} />
                     <Route path="/products/bestrating" component={ProductsBestRating} />
                     <Route path="/searchproduct" component={SearchProduct} />

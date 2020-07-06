@@ -92,6 +92,42 @@ export default function Subscription() {
         .catch(err => console.log(err))
      }
 
+     const transferAgain = () => {
+        const data = new FormData()
+        const config = {headers: {Authorization : token}}
+     
+        const transfer_photo  = transferPhotoRef.current.files[0]
+     
+        data.append("transfer_photo", transfer_photo)
+     
+        Swal.fire({
+            title: 'Apakah kamu yakin?',
+            text: "Upload nominal uang sesuai dengan deskripsi!",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya!'
+          }).then((res) => {
+            // res.value bernilai true jika kita memilih 'Ya' , sebaliknya
+            if (res.value) {
+                const config = {headers: {Authorization: token}}
+     
+                axios.post(`/transfer_photo/again/`, data, config)
+                .then((res) => { 
+     
+                    Swal.fire(
+                        'Bukti Transfer berhasil dikirim ulang!',
+                        'Akan dikonfirmasi oleh admin paling lambat 1x24 jam',
+                        'success'
+                      )
+                })
+            }
+            getData()
+        })
+        .catch(err => console.log(err))
+    }
+
     if (!user && status_sub === 1) {
     return (
         <div className="container">
@@ -148,7 +184,7 @@ export default function Subscription() {
                         <input ref={transferPhotoRef} type='file' className='form-control'/>  
                     </form>
                     <div>
-                        <button className="btn btn-success btn-block w-25 m-auto" onClick={onTransferPhoto}>Send Photo</button>
+                        <button className="btn btn-success btn-block w-25 m-auto" onClick={transferAgain}>Transfer Again Photo</button>
                     </div>
                     <div>
                         <button className="btn btn-danger btn-block w-25 mx-auto mt-3" onClick={onDelete}>Batalkan Upgrade</button>

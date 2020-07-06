@@ -13,14 +13,14 @@ export default function Cart() {
 
     const getData = () => {
         const config = {headers: {Authorization: token}}
-         axios.get('/products/cart', config)
+        axios.get('/products/cart', config)
             .then(res => setCart(res.data))
             .catch(err => console.log({err}))
     } 
 
     useEffect(() => {
         getData()
-     }, [])
+    }, [])
 
      // button delete product
     const deleteCart = (cart_id) => {
@@ -32,7 +32,7 @@ export default function Cart() {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ya!'
-          }).then((res) => {
+        }).then((res) => {
             // res.value bernilai true jika kita memilih 'Ya' , sebaliknya
             if (res.value) {
                 const config = {headers: {Authorization: token}}
@@ -47,9 +47,38 @@ export default function Cart() {
                     getData() 
                 })
             }
-          })
+        })
     }
 
+    // button checkout
+    const checkout = () => {
+        Swal.fire({
+            title: 'Apakah kamu yakin ingin memesan ini?',
+            text: "Orderan akan segera diproses!",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya!'
+        }).then((res) => {
+            // res.value bernilai true jika kita memilih 'Ya' , sebaliknya
+            if (res.value) {
+                const config = {headers: {Authorization: token}}
+                const data = {carts}
+
+                axios.post(`/orders`, data, config)
+                .then((res) => { 
+
+                    Swal.fire(
+                        'Berhasil checkout!',
+                        'Produk akan segera dicek oleh seller.',
+                        'success'
+                    )
+                    getData() 
+                })
+            }
+        })
+    }
     
     const renderList = () => {
         return carts.map((cart) => {
@@ -80,13 +109,12 @@ export default function Cart() {
                                 <img className="card m-auto" src={srcPic} alt="" height="100" width="150" />  
                             </td>
                             <td>
-                                <Link to={`/product/detailproduct/${cart.product_id}`}>
-                                    <button type="button" className="btn btn-outline-primary mb-2 px-4 btn-block">Detail</button>
-                                </Link>
+                                {/* <Link to={`/product/detailproduct/${cart.product_id}`}> */}
+                                {/* </Link> */}
                                 <button type="button" onClick={() => {deleteCart(cart.id)}} className="btn btn-outline-danger btn-block">Delete</button>
                             </td>
                         </tr>
-
+                        
                     )
                 })
     }
@@ -115,10 +143,11 @@ export default function Cart() {
                 {renderList()}
             </tbody>
         </table>
+        <button type="button" onClick={() => {checkout()}} className="btn btn-outline-primary mb-2 px-4 btn-block">Checkout</button>
         
     </div>
         
     ) : (
         <Redirect to='/' />
-      )
+    )
 }

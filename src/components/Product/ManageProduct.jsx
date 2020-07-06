@@ -76,7 +76,6 @@ export default function ManageProduct() {
         if (products.length === 0) return <div className="text-center my-3"> <h3>No Product Added</h3> </div>
         return products.map((product) => {
             const srcPic = `http://localhost:2022/product/picture/${product.product_photo}`
-            // simpan ke redux
 
             return (
                     <tr> 
