@@ -12,6 +12,8 @@ export default function ManageProduct() {
     const role_id = useSelector(state => state.auth.role_id)
     const config = {headers: {Authorization: token}}
     const searchRef = useRef()
+    const minRef = useRef()
+    const maxRef = useRef()
 
     const [products, setProducts] = useState([])        
 
@@ -52,6 +54,24 @@ export default function ManageProduct() {
                 })
             }
           })
+    }
+
+    const onSearchPrice = () => {
+        const config = {headers: {Authorization: token}}
+
+        const min = parseInt(minRef.current.value)
+        const max = parseInt(maxRef.current.value)
+        
+        axios.get('/products/me', config)
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return (
+                    data.price_basic >= min && data.price_basic <= max
+                )
+            })
+            setProducts(filterResult)
+        }) 
     }
 
     const onButtonSearch = () => {
@@ -127,15 +147,29 @@ export default function ManageProduct() {
                 <button type="button" className="btn btn-success mb-2 px-4 btn-block w-25 float-right mr-3">Add Product</button>
             </Link>
 
-            <div className="row w-25 mx-2 mb-5">
-                <div className="col-10 p-0">
-                    <input ref={searchRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Try "logo design"'/>
+            <div className="row my-5">
+                    <div className="row w-25 ml-3">
+                        <div className="col-10 p-0">
+                            <input ref={searchRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Try "logo design"'/>
+                        </div>
+                        <div className="col-2 p-0">
+                            {/* <button onClick={onButtonSearch} className="btn btn-primary btn-lg my-auto" >Search</button> */}
+                                <button className="btn btn-primary btn-lg my-auto" onClick={onButtonSearch} >Search</button>
+                        </div>
+                    </div>
+                    {/* Filter Price */}
+                    <div className="row w-50 ml-5">
+                        <div className="col-3 p-0">
+                            <input ref={minRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Price Min'/>
+                        </div>
+                        <div className="col-3 p-0">
+                            <input ref={maxRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Price Max'/>
+                        </div>
+                        <div className="col-5 p-0">    
+                                <button className="btn btn-primary btn-lg my-auto" onClick={onSearchPrice} >Search</button>
+                        </div>
+                    </div>
                 </div>
-                <div className="col-2 p-0">
-                    {/* <button onClick={onButtonSearch} className="btn btn-primary btn-lg my-auto" >Search</button> */}
-                        <button className="btn btn-primary btn-lg my-auto" onClick={onButtonSearch} >Search</button>
-                </div>
-            </div>
 
             <label className="ml-3 font-italic">Note: Status 0 = Pending, Status 1 = Approved, Status 2 = Rejected</label>
             <table class="table table-hover text-center mb-5">

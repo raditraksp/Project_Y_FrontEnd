@@ -88,9 +88,12 @@ export default function Subscription() {
                       )
                 })
             }
+            getData()
         })
         .catch(err => console.log(err))
-     }
+    }
+
+     
 
      const transferAgain = () => {
         const data = new FormData()

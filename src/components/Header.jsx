@@ -167,6 +167,9 @@ export default function Header() {
                         <button onClick={buttonBecomeSeller} className="btn btn-primary">Become a Seller!</button>
                     </NavItem>
                     <NavItem>
+                            <NavLink href="/history/transaction/user">History Transaction User</NavLink>
+                    </NavItem>
+                    <NavItem>
                             <NavLink href="/products/cart">Cart</NavLink>
                     </NavItem>
                     <NavItem>
@@ -199,6 +202,9 @@ export default function Header() {
                             <Link to="/subscription">
                                 <button className="btn btn-primary">Upgrade to Premium!</button>
                             </Link>
+                        </NavItem>
+                        <NavItem>
+                                <NavLink href="/history/transaction/seller">History Transaction Seller</NavLink>
                         </NavItem>
                         <NavItem>
                             <NavLink href="/orders">Order</NavLink>
@@ -236,6 +242,11 @@ export default function Header() {
                         <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">
                             <Label className="ml-auto"> PREMIUM MEMBER </Label> 
                         </NavbarBrand>
+                        
+                        <NavItem>
+                                <NavLink href="/history/transaction/seller">History Transaction Seller</NavLink>
+                        </NavItem> 
+
                         <NavItem>
                                 <NavLink href="/orders">Order</NavLink>
                         </NavItem>    

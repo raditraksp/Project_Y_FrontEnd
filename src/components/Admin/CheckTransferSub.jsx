@@ -72,7 +72,7 @@ export default function CheckTransferSub() {
 
                     Swal.fire(
                         'Berhasil!',
-                        'Produk berhasil di tolak.',
+                        'User berhasil di tolak.',
                         'success'
                     )
                     getData() 

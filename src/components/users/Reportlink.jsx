@@ -16,6 +16,15 @@ export default function Reportlink() {
 		const config = {headers: {Authorization: token}}
 		axios.get('/report/line',config)
 		.then((res) => {
+			/*
+			
+			res.data = [
+				{
+
+				}
+			]
+
+			*/
             grapDat.push(res.data)
 			for(const dataObj of res.data){
             
@@ -50,13 +59,13 @@ export default function Reportlink() {
 
             })
             console.log(grapDat)
-			SetChartData({
+			// SetChartData({
 			
-				labels: dateDat,
-				datasets: [
-                        renderGrapDat
-				]
-			})
+			// 	labels: dateDat,
+			// 	datasets: 
+            //             renderGrapDat
+				
+			// })
         }) .catch(err => console.log(err))
     // })
 	// 	.catch(err => console.log(err))
