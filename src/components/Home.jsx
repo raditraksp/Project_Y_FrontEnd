@@ -261,6 +261,7 @@ export default function Home() {
         return (!token) ? (
             <div>
                 <div className="jumbotron">
+                <img src="../assets/logojasaja.png" alt=""/>
                     <div className="container float-right">
                         <h1 className="display-5 fa-font-awesome font-weight-bold">SELAMAT DATANG DI JASAJA.COM </h1>
                         <h1 className="lead font-weight-bold text-light">PORTAL PENJUALAN JASA TERBAIK DI INDONESIA</h1>

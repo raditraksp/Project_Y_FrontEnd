@@ -180,9 +180,7 @@ export default function Header() {
                             <NavLink tag={Link} to="/profile">
                                 <DropdownItem>Profile</DropdownItem>
                             </NavLink>
-                            <NavLink tag={Link} to="/report">
-                                <DropdownItem>Report</DropdownItem>
-                            </NavLink>
+                            
 
                             <DropdownItem divider />
 
@@ -211,6 +209,9 @@ export default function Header() {
     
                                 <NavLink tag={Link} to="/manageproduct" >
                                     <DropdownItem> Manage Product</DropdownItem>
+                                </NavLink>
+                                <NavLink tag={Link} to="/report">
+                                    <DropdownItem>Report</DropdownItem>
                                 </NavLink>
     
                                 <NavLink tag={Link} to="/profile">
@@ -241,6 +242,9 @@ export default function Header() {
     
                                 <NavLink tag={Link} to="/manageproduct" >
                                     <DropdownItem> Manage Product</DropdownItem>
+                                </NavLink>
+                                <NavLink tag={Link} to="/report">
+                                    <DropdownItem>Report</DropdownItem>
                                 </NavLink>
     
                                 <NavLink tag={Link} to="/profile">

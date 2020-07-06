@@ -1,9 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react'
 import {
+    Navbar,
+    NavbarToggler, 
+    Nav,
+    NavLink,
+    NavItem,
+    NavbarText,
+    NavbarBrand,
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button
   } from 'reactstrap';
-import {useParams} from 'react-router-dom'
+import {useParams , Link} from 'react-router-dom'
 import { useSelector } from 'react-redux'
 // Import action creator
 // import {onLoginUser} from '../actions/index'
@@ -12,18 +19,26 @@ import { useSelector } from 'react-redux'
 import axios from '../../config/api'
 
 
+
 export default function SearchProduct() {   
     let {product_name} = useParams()
     const [products, setProducts] = useState([])
-
-    const searchRef = useRef()
+    const [productsCategory, setProduct] = useState([])
+    const minRef = useRef()
+    const maxRef = useRef()
 
     useEffect(() => {
         getData()
      }, [])
 
+     const getData = () => {
+         axios.get('products')
+         .then((res) => {
+             setProducts(res.data)
+         })
+     }
     
-    const getData = () => {
+    const onSearchName = () => {
         axios.get('/products')
         .then((res) => {
             let filterResult = []
@@ -37,18 +52,195 @@ export default function SearchProduct() {
         
     }
 
-    const onButtonSearch = () => {
-        const search = searchRef.current.value
-        axios.get('/products')
+    const onProg = () => {
+        axios.get('/product/search/category')
         .then((res) => {
             let filterResult = []
             filterResult = res.data.filter((data) => {
-                return (
-                    data.product.toLowerCase().includes(search.toLowerCase())
-                )
+                return data.category_id == 8
             })
             setProducts(filterResult)
+            console.log(filterResult)
         })
+        
+
+    }
+
+    const onTech = () => {
+        axios.get('/product/search/category')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return data.category_id == 9
+            })
+            setProducts(filterResult)
+            console.log(filterResult)
+        })
+        
+
+    }
+
+    const onWrit = () => {
+        axios.get('/product/search/category')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return data.category_id == 2
+            })
+            setProducts(filterResult)
+            console.log(filterResult)
+        })
+        
+
+    }
+
+    const onTrans = () => {
+        axios.get('/product/search/category')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return data.category_id == 3
+            })
+            setProducts(filterResult)
+            console.log(filterResult)
+        })
+        
+
+    }
+
+    const onVideo = () => {
+        axios.get('/product/search/category')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return data.category_id == 4
+            })
+            setProducts(filterResult)
+            console.log(filterResult)
+        })
+        
+
+    }
+
+    const onAni = () => {
+        axios.get('/product/search/category')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return data.category_id == 5
+            })
+            setProducts(filterResult)
+            console.log(filterResult)
+        })
+        
+
+    }
+
+    const onMusic = () => {
+        axios.get('/product/search/category')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return data.category_id == 6
+            })
+            setProducts(filterResult)
+            console.log(filterResult)
+        })
+        
+
+    }
+
+    const onAudio = () => {
+        axios.get('/product/search/category')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return data.category_id == 7
+            })
+            setProducts(filterResult)
+            console.log(filterResult)
+        })
+        
+
+    }
+
+    const onDesign = () => {
+        axios.get('/product/search/category')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return data.category_id == 12
+            })
+            setProducts(filterResult)
+            console.log(filterResult)
+        })
+        
+
+    }
+
+    const onGraph = () => {
+        axios.get('/product/search/category')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return data.category_id == 13
+            })
+            setProducts(filterResult)
+            console.log(filterResult)
+        })
+        
+
+    }
+
+    const onBusiness = () => {
+        axios.get('/product/search/category')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return data.category_id == 10
+            })
+            setProducts(filterResult)
+            console.log(filterResult)
+        })
+        
+
+    }
+
+
+    const onLife = () => {
+        axios.get('/product/search/category')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return data.category_id == 11
+            })
+            setProducts(filterResult)
+            console.log(filterResult)
+        })
+        
+
+    }
+
+
+
+    const onSearchPrice = () => {
+        const min = parseInt(minRef.current.value)
+        const max = parseInt(maxRef.current.value)
+
+        console.log(min)
+        console.log(max)
+
+        
+            
+            let priceList = []
+              
+                priceList = products.filter((data) => {
+                    return (
+                        data.price_basic >= min && data.price_basic <= max
+                    )
+            })
+            setProducts(priceList)
+        
         
     }
     
@@ -85,23 +277,61 @@ export default function SearchProduct() {
         )
     })
     return (
-            <div>
-                <div className= "row">
-                    <div className="row w-25 mx-2 mb-5">
-                        <div className="col-10 p-0">
-                            <input ref={searchRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Try "logo design"'/>
-                        </div>
-                        <div className="col-2 p-0">
-                            {/* <button onClick={onButtonSearch} className="btn btn-primary btn-lg my-auto" >Search</button> */}
-                                <button className="btn btn-primary btn-lg my-auto" onClick={onButtonSearch} >Search</button>
-                        </div>
-                    </div>
-                </div>
-                <div className= "row">
-                {renderSearch}    
-
-                </div>
+        <div>
+            <Navbar  className="bg-light list-unstyled" expand="md">
+                    <NavItem className="mx-auto">
+                        <button className="btn btn-group-vertical" onClick={onProg}>Programming</button>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <button className="btn btn-group-vertical" onClick={onTech}>Tech</button>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <button className="btn btn-group-vertical" onClick={onWrit}>Writing</button>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <button className="btn btn-group-vertical" onClick={onTrans}>Translation</button>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <button className="btn btn-group-vertical" onClick={onVideo}>Video</button>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <button className="btn btn-group-vertical" onClick={onAni}>Animation</button>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <button className="btn btn-group-vertical" onClick={onMusic}>Music</button>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <button className="btn btn-group-vertical" onClick={onAudio}>Audio</button>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <button className="btn btn-group-vertical" onClick={onDesign}>Design</button>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <button className="btn btn-group-vertical" onClick={onGraph}>Graphic</button>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <button className="btn btn-group-vertical" onClick={onBusiness}>Business</button>
+                    </NavItem>
+                    <NavItem className="mx-auto">
+                        <button className="btn btn-group-vertical" onClick={onLife}>Lifestyle</button>
+                    </NavItem>
+                </Navbar>
+            <div className="row w-50 mt-4 ml-5">
+                            <div className="col-3 p-0">
+                                <input ref={minRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Price Min'/>
+                            </div>
+                            <div className="col-3 p-0">
+                                <input ref={maxRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Price Max'/>
+                            </div>
+                            <div className="col-5 p-0">    
+                                    <button className="btn btn-primary btn-lg my-auto" onClick={onSearchPrice} >Search</button>
             </div>
+            </div>
+            <div className= "row">
+                {renderSearch}    
+            </div>
+            </div>
+           
         
     )
 }

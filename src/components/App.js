@@ -16,6 +16,7 @@ import EditPassword from './Users/EditPassword'
 import HistoryTransactionUser from './Users/HistoryTransactionUser.jsx'
 import Report from './Users/Report'
 import Subscription from './Users/Subscription'
+import Reportlink from './Users/Reportlink'
 
 
 // Product
@@ -64,6 +65,7 @@ export default function App() {
                     <Route path="/editPassword/" component={EditPassword} />
                     <Route path="/historytransactionuser/" component={HistoryTransactionUser} />
                     <Route path="/report/" component={Report} />
+                    <Route path="/line" component={Reportlink} />
 
 
                     {/* PRODUCT  */}
@@ -73,9 +75,9 @@ export default function App() {
                     <Route path="/product/addproduct" component={AddProduct} />
                     <Route path="/product/editproduct/:product_id" component={EditProduct} />
                     <Route path="/product/detailproduct/:product_id" component={DetailProduct} />
-                    <Route path="/searchproduct/:product_name" component={SearchProduct} />
                     <Route path="/products/premiumseller" component={ProductsPremiumSeller} />
                     <Route path="/products/bestrating" component={ProductsBestRating} />
+                    <Route path="/searchproduct" component={SearchProduct} />
 
                     {/* ADMIN */}
                     <Route path="/manageproductadmin" component={ManageProductAdmin} />
