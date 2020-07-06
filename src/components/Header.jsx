@@ -80,7 +80,7 @@ export default function Header() {
 
     useEffect(() => {
         getUserDetail()
-        renderNav()
+        // renderNav()
     }, [])
 
     const getUserDetail = () => {
@@ -193,9 +193,7 @@ export default function Header() {
                             <NavLink tag={Link} to="/profile">
                                 <DropdownItem>Profile</DropdownItem>
                             </NavLink>
-                            <NavLink tag={Link} to="/report">
-                                <DropdownItem>Report</DropdownItem>
-                            </NavLink>
+                            
 
                             <DropdownItem divider />
 
@@ -224,6 +222,9 @@ export default function Header() {
     
                                 <NavLink tag={Link} to="/manageproduct" >
                                     <DropdownItem> Manage Product</DropdownItem>
+                                </NavLink>
+                                <NavLink tag={Link} to="/report">
+                                    <DropdownItem>Report</DropdownItem>
                                 </NavLink>
     
                                 <NavLink tag={Link} to="/profile">
@@ -254,6 +255,9 @@ export default function Header() {
     
                                 <NavLink tag={Link} to="/manageproduct" >
                                     <DropdownItem> Manage Product</DropdownItem>
+                                </NavLink>
+                                <NavLink tag={Link} to="/report">
+                                    <DropdownItem>Report</DropdownItem>
                                 </NavLink>
     
                                 <NavLink tag={Link} to="/profile">
@@ -294,49 +298,8 @@ export default function Header() {
 
                     </Collapse>          
                 </Navbar>
-                <Navbar  className="bg-light" expand="md">
-                    <NavItem className="mx-auto">
-                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Programming & Tech</NavLink>
-                    </NavItem>
-                    <NavItem className="mx-auto">
-                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Writing & Translation</NavLink>
-                    </NavItem>
-                    <NavItem className="mx-auto">
-                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Video & Animation</NavLink>
-                    </NavItem>
-                    <NavItem className="mx-auto">
-                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Music & Audio</NavLink>
-                    </NavItem>
-                    <NavItem className="mx-auto">
-                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Design & Graphic</NavLink>
-                    </NavItem>
-                    <NavItem className="mx-auto">
-                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Business</NavLink>
-                    </NavItem>
-                    <NavItem className="mx-auto">
-                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Lifestyle</NavLink>
-                    </NavItem>
-                </Navbar>
+                
 
-            {/* <Modal isOpen={modal} toggle={funModal}>
-                        
-                <ModalBody>
-                    <div className="border-bottom border-secondary card-title text-center ">
-                        <h1>Login to Jasaja</h1>
-                    </div>
-                    <form className='form-group'>
-                        <div className="card-title ">
-                        </div>
-                        <input ref={usernameRef} type='text' placeholder="Username" className='form-control' required/>
-
-                        <div className="card-title ">
-                        </div>
-                        <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
-                    </form>
-                    <button className="btn btn-outline-dark mb-2" onClick={forgetPassword} >Forget password?</button>
-                    <button className="btn btn-dark btn-block" onClick={onButtonClick} >Login</button>
-                </ModalBody>
-            </Modal> */}
         </div>
     ) : (
         <div className="container-fluid mx-auto">
@@ -376,8 +339,8 @@ export default function Header() {
                         </div>
                         <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
                     </form>
-                    <button onClick={forgetPassword} >Forget password?</button>
-                    <button className="btn btn-success btn-block" onClick={onButtonClick} >Login</button>
+                    <button className="btn btn-outline-dark mb-2" onClick={forgetPassword} >Forget password?</button>
+                    <button className="btn btn-dark btn-block" onClick={onButtonClick} >Login</button>
                 </ModalBody>
             </Modal>
         </div>

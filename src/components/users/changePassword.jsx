@@ -17,13 +17,12 @@ export default function ChangePassword() {
     const sendpassword = () => {
         const password = passwordRef.current.value
         const password2 = passwordRef2.current.value
-        tokenRedux == token && user_idToken == user_id ?(
+    
             password == password2 ?(
-                axios.patch(`user/forget/${token}/${user_id}`,{password})
+                axios.patch(`user/forget/${token}/${user_id}`,{password2})
             .then(res => {
-                axios.delete(`/deletetoken/${user_id}`)
-                Swal.fire('Password berhasil di ganti')
-                window.location = '/'
+
+                Swal.fire(res.data)
              })
              .catch(err => {
                 alert(err)
@@ -33,13 +32,7 @@ export default function ChangePassword() {
                 title: 'Oops...',
                 text: 'Password tidak sama',
               }))   
-        ) : (
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Pastikan kamu menggunakan Link yang dari email',
-              })
-        )
+        
     }
 
     return (

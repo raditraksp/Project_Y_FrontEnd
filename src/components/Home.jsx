@@ -17,14 +17,14 @@ export default function Home() {
     const [products, setProducts] = useState([])
     const [checkSearch, setCheckSearch] = useState("")
     const searchRef = useRef()
+   
     
     const onButtonSearch = () => {
         const search = searchRef.current.value
         
         if(search == "") return console.log('inputan kosong')
         setCheckSearch(`/searchproduct/${search}`)
-    }    
-        
+    }
 
     const getData = () => {
         // const config = {headers: {Authorization: token}}
@@ -44,22 +44,7 @@ export default function Home() {
         )
     }
 
-    // const onButtonSearch = () => {
-    //     const search = searchRef.current.value
-    //     axios.get('/products')
-    //     .then((res) => {
-    //         let filterResult = []
-    //         filterResult = res.data.filter((data) => {
-    //             return (
-    //                 data.product.toLowerCase().includes(search.toLowerCase())
-    //             )
-    //         })
-    //         setProducts(filterResult)
-    //     })
-        
-    // }
-
-        return (
+        return (!token) ? (
             <div>
                 <div className="jumbotron">
                     <div className="container">
@@ -103,6 +88,11 @@ export default function Home() {
                         <a className="text-decoration-none h6 font-weight-bold pr-3 text-dark ml-auto" href="#">More ... </a>
                     </div>
                 </div>
+            </div>
+        ) : (
+            <div>
+
+                {renderProducts()}
             </div>
         )
     }
