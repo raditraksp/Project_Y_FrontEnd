@@ -26,16 +26,14 @@ export default function DetailProduct() {
          axios.get(`/product/${product_id}`)
             .then(res => setProducts(res.data))
             .catch(err => console.log({err}))
-    } 
-    const getCategory = () => {
+
         axios.get(`/product/category/${product_id}`)
         .then((res)=> setCategories(res.data))
         .catch((err)=> console.log(err))
-    }
+    } 
 
     useEffect(() => {
         getData()
-        getCategory()
      }, [])
 
 

@@ -16,6 +16,8 @@ export default function SearchProduct() {
     let {product_name} = useParams()
     const [products, setProducts] = useState([])
 
+    const searchRef = useRef()
+
     useEffect(() => {
         getData()
      }, [])
@@ -28,6 +30,21 @@ export default function SearchProduct() {
             filterResult = res.data.filter((data) => {
                 return (
                     data.product.toLowerCase().includes(product_name.toLowerCase())
+                )
+            })
+            setProducts(filterResult)
+        })
+        
+    }
+
+    const onButtonSearch = () => {
+        const search = searchRef.current.value
+        axios.get('/products')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return (
+                    data.product.toLowerCase().includes(search.toLowerCase())
                 )
             })
             setProducts(filterResult)
@@ -68,8 +85,22 @@ export default function SearchProduct() {
         )
     })
     return (
-            <div className= "row">
+            <div>
+                <div className= "row">
+                    <div className="row w-25 mx-2 mb-5">
+                        <div className="col-10 p-0">
+                            <input ref={searchRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Try "logo design"'/>
+                        </div>
+                        <div className="col-2 p-0">
+                            {/* <button onClick={onButtonSearch} className="btn btn-primary btn-lg my-auto" >Search</button> */}
+                                <button className="btn btn-primary btn-lg my-auto" onClick={onButtonSearch} >Search</button>
+                        </div>
+                    </div>
+                </div>
+                <div className= "row">
                 {renderSearch}    
+
+                </div>
             </div>
         
     )

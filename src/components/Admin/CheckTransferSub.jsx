@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import axios from '../../config/api'
 import Swal from 'sweetalert2'
-import {Link, Redirect} from 'react-router-dom'
+import { Redirect} from 'react-router-dom'
 
 
 export default function CheckTransferSub() {
@@ -101,7 +101,7 @@ export default function CheckTransferSub() {
                             {user.user_id}
                         </td>
                         <td>
-                            <img className="card m-auto" src={srcTransfer} height="100" width="150" />  
+                            <img className="card m-auto" src={srcTransfer} alt="" height="100" width="150" />  
                         </td>
                         <td>
                             <button type="button" onClick={() => {onApproved(user.user_id)}}  className="btn btn-warning btn-block"  >Approve</button>

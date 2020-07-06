@@ -1,9 +1,30 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+// Import action creator
+// import {onLoginUser} from '../actions/index'
+// Akan me-redirect ke alamat tertentu
+// import ListProduct from '.'
+import axios from '../../config/api'
 
 
-export default function ListProduct(props) {    
+export default function ProductsPremiumSeller() {   
+
+    const [products, setProducts] = useState([])
+    const searchRef = useRef()
+
+    useEffect(() => {
+        getData()
+     }, [])
+
     
-    const renderList = props.products.map((product) => {
+    const getData = () => {
+        axios.get('/products/bestrating')
+        .then((res) => {setProducts(res.data)})
+    }
+
+   const renderProductBestRating = () => {
+        
+    return (
+        products.map((product) => {
             const srcPic = `http://localhost:2022/product/picture/${product.product_photo}`
             const srcDetail = `/product/detailproduct/${product.id}`
             const sellerAvatar = `http://localhost:2022/user/avatar/${product.user_id}?unq=${new Date()}`
@@ -135,11 +156,44 @@ export default function ListProduct(props) {
                 )
 
             }
-    })
+            })
+    )
+    }
+
+    const onButtonSearch = () => {
+        const search = searchRef.current.value
+        axios.get('/products')
+        .then((res) => {
+            let filterResult = []
+            filterResult = res.data.filter((data) => {
+                return (
+                    data.product.toLowerCase().includes(search.toLowerCase())
+                )
+            })
+            setProducts(filterResult)
+        })
+        
+    }
+
     return (
-            <div className= "row">
-                {renderList}    
+        <div>
+            <h2 className="text-center">Best Rating Products</h2>
+            <div className= "row ml-3">
+                <div className="row w-25 mx-2 mb-5">
+                    <div className="col-10 p-0">
+                        <input ref={searchRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Try "logo design"'/>
+                    </div>
+                    <div className="col-2 p-0">
+                        {/* <button onClick={onButtonSearch} className="btn btn-primary btn-lg my-auto" >Search</button> */}
+                            <button className="btn btn-primary btn-lg my-auto" onClick={onButtonSearch} >Search</button>
+                    </div>
+                </div>
             </div>
+            <div className= "mx-auto row" style={{width:'80%'}}>
+            {renderProductBestRating()}    
+            </div>
+        </div>
+        
         
     )
 }

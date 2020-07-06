@@ -1,10 +1,10 @@
 import React, {useState, useRef, useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import {Link, Redirect} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import axios from '../config/api'
 import {loginAction,logoutAction} from '../config/redux/actions'
 import {
-   Button,
+   
    Collapse,
    DropdownToggle,
    DropdownMenu,
@@ -14,13 +14,10 @@ import {
    Nav,
    NavLink,
    NavItem,
-   NavbarText,
    NavbarBrand,
    UncontrolledDropdown,
    Modal,
-   ModalHeader, 
-   ModalBody, 
-   ModalFooter, 
+   ModalBody,
    Label
    } from 'reactstrap';
 import Swal from 'sweetalert2'
@@ -32,11 +29,6 @@ export default function Header() {
     const [isOpen, setIsOpen] = useState(false)
     const [modal, setModal] = useState(false)
     const [user, setUser] = useState({})    
-    const [checkSearch, setCheckSearch] = useState("")
-
-    const searchRef = useRef()
-
-        
            
     const username = useSelector(state =>  state.auth.username)
     const token = useSelector(state => state.auth.token)
@@ -50,13 +42,6 @@ export default function Header() {
 
     const usernameRef = useRef()
     const passwordRef = useRef()
-
-    const onButtonSearch = () => {
-        const search = searchRef.current.value
-        
-        if(search == "") return console.log('inputan kosong')
-        setCheckSearch(`/searchproduct/${search}`)
- }
 
     const onButtonClick = () => {
         const username = usernameRef.current.value
@@ -79,8 +64,8 @@ export default function Header() {
     }
 
     useEffect(() => {
-        getUserDetail()
-        renderNav()
+        // renderNav()
+        // getUserDetail()
     }, [])
 
     const getUserDetail = () => {
@@ -96,8 +81,10 @@ export default function Header() {
     }
 
     const buttonBecomeSeller = () => {
-        
-        if(!user.ktp_number) return alert('Lengkapi profile anda terlebih dahulu')
+        getUserDetail()
+        console.log(user)
+        if(user.ktp_number === null) return alert('Lengkapi profile anda terlebih dahulu')
+        if(user.ktp_number === undefined) return console.log('error')
 
         Swal.fire({
             title: 'Apakah kamu yakin ingin menjadi penjual?',
@@ -276,17 +263,8 @@ export default function Header() {
         <div className="container-fluid mx-auto">
             <Navbar  className="bg-white" light expand="md">
                 <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>    
-                <div className="row w-25 mx-auto my-2">
-                    <div className="col-10 p-0">
-                        <input ref={searchRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Try "logo design"'/>
-                    </div>
-                    <div className="col-2 p-0">
-                        {/* <button onClick={onButtonSearch} className="btn btn-primary btn-lg my-auto" >Search</button> */}
-                        <Link to={checkSearch }>
-                            <button className="btn btn-primary btn-lg my-auto" onClick={onButtonSearch} >Search</button>
-                        </Link>
-                    </div>
-                </div>
+                <Nav tag={Link} to="/searchproduct" className=" text-dark ml-5 font-weight-bold h5 text-decoration-none">Search Products</Nav>    
+
                 <NavbarToggler onClick={isToggle} />
                     <Collapse isOpen={isOpen} navbar>
                         
@@ -294,65 +272,12 @@ export default function Header() {
 
                     </Collapse>          
                 </Navbar>
-                <Navbar  className="bg-light" expand="md">
-                    <NavItem className="mx-auto">
-                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Programming & Tech</NavLink>
-                    </NavItem>
-                    <NavItem className="mx-auto">
-                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Writing & Translation</NavLink>
-                    </NavItem>
-                    <NavItem className="mx-auto">
-                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Video & Animation</NavLink>
-                    </NavItem>
-                    <NavItem className="mx-auto">
-                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Music & Audio</NavLink>
-                    </NavItem>
-                    <NavItem className="mx-auto">
-                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Design & Graphic</NavLink>
-                    </NavItem>
-                    <NavItem className="mx-auto">
-                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Business</NavLink>
-                    </NavItem>
-                    <NavItem className="mx-auto">
-                        <NavLink className="text-dark text-decoration-none font-weight-bold" tag={Link} to="/register">Lifestyle</NavLink>
-                    </NavItem>
-                </Navbar>
-
-            {/* <Modal isOpen={modal} toggle={funModal}>
-                        
-                <ModalBody>
-                    <div className="border-bottom border-secondary card-title text-center ">
-                        <h1>Login to Jasaja</h1>
-                    </div>
-                    <form className='form-group'>
-                        <div className="card-title ">
-                        </div>
-                        <input ref={usernameRef} type='text' placeholder="Username" className='form-control' required/>
-
-                        <div className="card-title ">
-                        </div>
-                        <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
-                    </form>
-                    <button className="btn btn-outline-dark mb-2" onClick={forgetPassword} >Forget password?</button>
-                    <button className="btn btn-dark btn-block" onClick={onButtonClick} >Login</button>
-                </ModalBody>
-            </Modal> */}
         </div>
     ) : (
         <div className="container-fluid mx-auto">
             <Navbar  className="bg-transparant" light expand="md">
                 <NavbarBrand tag={Link} to="/" className=" font-weight-bolder">JASAJA DOTCOM</NavbarBrand>    
-                <div className="row w-25 mx-auto my-2">
-                    <div className="col-10 p-0">
-                        <input ref={searchRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Try "logo design"'/>
-                    </div>
-                    <div className="col-2 p-0">
-                        {/* <button onClick={onButtonSearch} className="btn btn-primary btn-lg my-auto" >Search</button> */}
-                        <Link to={checkSearch }>
-                            <button className="btn btn-primary btn-lg my-auto" onClick={onButtonSearch} >Search</button>
-                        </Link>
-                    </div>
-                </div>
+                <Nav tag={Link} to="/searchproduct" className=" text-dark ml-5 font-weight-bold h5 text-decoration-none">Search Products</Nav>    
                 <NavbarToggler onClick={isToggle} />
                     <Collapse isOpen={isOpen} navbar>
                         
@@ -376,10 +301,10 @@ export default function Header() {
                         </div>
                         <input ref={passwordRef} type='password' placeholder="Password" className='form-control'/>
                     </form>
-                    <button onClick={forgetPassword} >Forget password?</button>
-                    <button className="btn btn-success btn-block" onClick={onButtonClick} >Login</button>
+                    <button className="btn btn-outline-dark mb-2" onClick={forgetPassword} >Forget password?</button>
+                    <button className="btn btn-dark btn-block" onClick={onButtonClick} >Login</button>
                 </ModalBody>
-            </Modal>
+            </Modal> 
         </div>
     )
 }

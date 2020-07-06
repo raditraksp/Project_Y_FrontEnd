@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react'
 import { useSelector } from 'react-redux'
-import { Button } from 'reactstrap';
 import {useParams, Redirect} from 'react-router-dom'
 import Swal from 'sweetalert2'
 
@@ -14,14 +13,17 @@ export default function EditProduct() {
     const config = {headers: {Authorization: token}}
 
     const getData = () => {
-         axios.get(`/product/${product_id}`, config)
+        axios.get(`/product/${product_id}`, config)
             .then(res => setProducts(res.data))
             .catch(err => console.log({err}))
+
+        axios.get(`/product/category/${product_id}`)
+            .then((res)=> setCategories(res.data))
+            .catch((err)=> console.log(err))
     } 
 
     useEffect(() => {
         getData()
-        getCategory()
      }, [])
 
     // STATE PRODUCT YANG DIPILIH
@@ -98,14 +100,8 @@ export default function EditProduct() {
                 'Category berhasil ditambahkan',
                 'success'
                 )
-            getCategory()
+            getData()
             })
-    }
-
-    const getCategory = () => {
-        axios.get(`/product/category/${product_id}`)
-        .then((res)=> setCategories(res.data))
-        .catch((err)=> console.log(err))
     }
 
     const deleteCategory = (product_category_id) => {
@@ -128,7 +124,7 @@ export default function EditProduct() {
                         'Ctaegory telah dihapus',
                         'success'
                       )
-                    getCategory() 
+                    getData() 
                 })
             }
           })
@@ -249,7 +245,7 @@ export default function EditProduct() {
                 {/* SAVE PHOTO */}
                 <div className="card-title">
                 </div>
-                <img className="card ml-3" src={srcPic} height="250" width="300" />  
+                <img className="card ml-3" src={srcPic} height="250" width="300" alt=""/>  
                 <label >Product Photo:</label>
                 <input ref={productPhotoRef} type='file' className='form-control'/>  
                 <div>
