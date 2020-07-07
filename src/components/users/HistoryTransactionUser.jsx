@@ -1,24 +1,28 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import { useSelector } from 'react-redux'
 import axios from '../../config/api'
 import Swal from 'sweetalert2'
 import {Link, Redirect} from 'react-router-dom'
 import {
     Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
+    CardTitle, CardSubtitle, Button, Modal, ModalHeader, ModalBody, ModalFooter
   } from 'reactstrap';
 
 
 export default function HistoryTransactionUser() {    
 
     const token = useSelector(state => state.auth.token)
-    const [historys, setHistory] = useState([])
-        
+    const [histories, setHistories] = useState([])
+    const [ratings, setRatings] = useState([])
+    const [modal, setModal] = useState(false)
+    const toggle = () => setModal(!modal)
+    const msgUser = useRef() 
+    const selectRating = useRef()         
 
     const getData = () => {
         const config = {headers: {Authorization: token}}
          axios.get('/historytransaction/me', config)
-            .then(res => setHistory(res.data))
+            .then(res => setHistories(res.data))
             .catch(err => console.log({err}))
     } 
 
@@ -26,43 +30,105 @@ export default function HistoryTransactionUser() {
         getData()
      }, [])
 
+     // ADD RATING PRODUCT
+    const onAddRating = (product_id, order_id) => {  
+
+        console.log(product_id, order_id)
+
+        const config = {headers: {Authorization: token}}
+        
+        const getRating = () => {
+            axios.get(`/product/ratings/${product_id}/${order_id}`, config)
+            .then(res => { 
+                setRatings(res.data)
+            })
+            getRating()
+        }
+
+        const message = msgUser.current.value
+        const rating = parseInt(selectRating.current.value)
+        const data = {message, rating}
+        axios.post(`/product/addrating/${product_id}/${order_id}`, data, config)
+        .then((res) => Swal.fire(
+            'Ratting Submit!',
+            'Terima kasih telah memberikan ulasan untuk produk ini',
+            'success'
+        ))
+            .catch(err => alert('Product sudah di beri rating'))
+
+    }
+
     
-    const renderList = () => {
-        return historys.map((History) => {
-            if (historys.length === 0) return <div className="text-center"> <h3>No Product in History</h3> </div>
-                const srcPic = `http://localhost:2022/product/picture/${History.picture}`
+     const renderList = () => {
+        return histories.map((history) => {
+            if (histories.length === 0) return <div className="text-center"> <h3>No Product in History</h3> </div>
+                const srcPic = `http://localhost:2022/product/picture/${history.picture}`
 
                 return (
                         <tr> 
                             <td>
-                                {History.id}
+                                {history.id}
                             </td>
                             <td>
-                                {History.username}
+                                {history.username}
                             </td>
                             <td>
-                                {History.product_name}
+                                {history.order_id}
+                            </td>
+                            
+                            <td>
+                                {history.product_name}
                             </td>
                             <td>
-                                {History.detail_order}
+                                {history.detail_order}
                             </td>
                             <td>
-                               {History.total_amount}
+                               {history.total_amount}
                             </td>     
                             <td>
-                                {History.status}
+                                {history.status}
                             </td>
                             <td>
-                                {History.order_time}
+                                {history.order_time}
                             </td>
                             <td>
-                                {History.finish_time}
+                                {history.finish_time}
                             </td>
                             <td>
-                                <Link to={`/product/detailproduct/${History.product_id}`}>
+                                <Link to={`/product/detailproduct/${history.product_id}`}>
                                     <button type="button" className="btn btn-outline-primary mb-2 px-4 btn-block">Detail</button>
                                 </Link>
+                                <button type="button" onClick={toggle} className="btn btn-success mb-2 px-4 btn-block">Add Rating</button>
                             </td>
+
+                            <Modal isOpen={modal} toggle={toggle}>
+                                    <ModalBody>
+                                        <div>
+                                            <label >Feedback untuk product ini :</label>
+                                            <textarea ref={msgUser} type='text' className='form-control'/>
+                                        </div>
+                                        <div>
+                                            <label >Pilih Rating :</label>
+                                            <select ref={selectRating} className='form-control'>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                        <div className="container_fluid">
+                                            <div className="row">
+                                                <div className="col-6">
+                                                    <button type="button" onClick={() => {onAddRating(history.product_id, history.order_id)}} className="btn btn-primary btn-block">Submit</button>
+                                                </div>
+                                                <div className="col-6">
+                                                    <button type="button" onClick={toggle} className="btn btn-danger mb-2 px-4 btn-block">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ModalBody>
+                                </Modal>
                         </tr>
 
                     )
@@ -81,6 +147,7 @@ export default function HistoryTransactionUser() {
                 <tr>
                 <th scope="col">ID</th>
                 <th scope="col">SELLER</th>
+                <th scope="col">ORDER ID</th>
                 <th scope="col">PRODUCT NAME</th>
                 <th scope="col">DETAIL</th>
                 <th scope="col">AMOUNT</th>
