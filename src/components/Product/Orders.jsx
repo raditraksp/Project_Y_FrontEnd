@@ -22,6 +22,7 @@ export default function Orders() {
     const toggle = () => setModal(!modal)
     const [buktiTrx, setBuktiTrx] = useState({})
     const buktiTrxRef = useRef()
+    const statSub = useSelector(state => state.auth.status_subscription)
     
     const getData = () => {
         const config = {headers: {Authorization: token}}
@@ -244,6 +245,14 @@ export default function Orders() {
             }
         })
         .catch(err => console.log(err))
+    }
+
+    const finishTrx = (orders_id) => {
+        const config = {headers: {Authorization: token}}
+        axios.delete(`/user_finish/orders/${orders_id}`, config)
+        .then(getData())
+        .catch(err => console.log({err}))
+        
     }
 
     const renderListUser = () => {
@@ -507,7 +516,7 @@ export default function Orders() {
                             <p className="text-danger">Order akan terhapus dari list ini jika Anda sudah mengklik</p>
                             <p className="text-danger">dan Anda tidak dapat mengunduh Invoice lagi!</p>
                             <Link to={`/invoice/${order.user_id}/${order.id}`}>
-                                <button type="button" className="btn btn-primary btn-block">Cek Invoice</button>
+                                <button type="button" onClick={() => {finishTrx(order.id)}} className="btn btn-primary btn-block">Cek Invoice</button>
                             </Link>
                         </td>
                     </tr>
