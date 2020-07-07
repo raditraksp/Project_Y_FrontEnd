@@ -12,14 +12,14 @@ import {
 export default function HistoryTransactionSeller() {    
 
     const token = useSelector(state => state.auth.token)
-    const [historys, setHistory] = useState([])
+    const [histories, setHistories] = useState([])
     const searchRef = useRef()
         
 
     const getData = () => {
         const config = {headers: {Authorization: token}}
          axios.get('/historytransaction/seller', config)
-            .then(res => setHistory(res.data))
+            .then(res => setHistories(res.data))
             .catch(err => console.log({err}))
     } 
 
@@ -38,44 +38,44 @@ export default function HistoryTransactionSeller() {
                     data.product_name.toLowerCase().includes(search.toLowerCase())
                 )
             })
-            setHistory(filterResult)
+            setHistories(filterResult)
         })
         
     }
     
     const renderList = () => {
-        return historys.map((History) => {
-            if (historys.length === 0) return <div className="text-center"> <h3>No Product in History</h3> </div>
-                const srcPic = `http://localhost:2022/product/picture/${History.picture}`
+        return histories.map((history) => {
+            if (histories.length === 0) return <div className="text-center"> <h3>No Product in History</h3> </div>
+                const srcPic = `http://localhost:2022/product/picture/${history.picture}`
 
                 return (
                         <tr> 
                             <td>
-                                {History.id}
+                                {history.id}
                             </td>
                             <td>
-                                {History.username}
+                                {history.username}
                             </td>
                             <td>
-                                {History.product_name}
+                                {history.product_name}
                             </td>
                             <td>
-                                {History.detail_order}
+                                {history.detail_order}
                             </td>
                             <td>
-                               {History.total_amount}
+                               {history.total_amount}
                             </td>     
                             <td>
-                                {History.status}
+                                {history.status}
                             </td>
                             <td>
-                                {History.order_time}
+                                {history.order_time}
                             </td>
                             <td>
-                                {History.finish_time}
+                                {history.finish_time}
                             </td>
                             <td>
-                                <Link to={`/product/detailproduct/${History.product_id}`}>
+                                <Link to={`/product/detailproduct/${history.product_id}`}>
                                     <button type="button" className="btn btn-outline-primary mb-2 px-4 btn-block">Detail</button>
                                 </Link>
                             </td>
@@ -93,7 +93,7 @@ export default function HistoryTransactionSeller() {
         </Link> */}
         <div className="row w-25 ml-5">
             <div className="col-10 p-0">
-                <input ref={searchRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Try "logo design"'/>
+                <input ref={searchRef} type="text" defaultValue="" className="form-control my-auto h-100" placeholder='Input product name"'/>
             </div>
             <div className="col-2 p-0">
                 {/* <button onClick={onButtonSearch} className="btn btn-primary btn-lg my-auto" >Search</button> */}
